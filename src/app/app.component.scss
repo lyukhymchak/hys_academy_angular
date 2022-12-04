@@ -63,6 +63,11 @@ $btn-add-color: $bg-color;
 }
 
 .card {
+  display: grid;
+  grid-template-rows: 35% 25% 40%;
+  row-gap: 20px;
+  justify-items: start;
+  align-items: start;
   padding: 30px;
   background: $bg-card-color;
   border-radius: 10px;
