@@ -1,5 +1,10 @@
+@import "~normalize.css";
 @import "../src/assets/fonts/fonts.scss";
+
+$text-color: rgb(38, 27, 50);
 
 body {
   font-family: "Inter";
+  font-size: 24px;
+  color: $text-color;
 }
