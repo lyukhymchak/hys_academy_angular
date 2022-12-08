@@ -8,7 +8,6 @@ import Product from '../../interfaces/product.interface';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
-  // = { id: 0, name: 'Liana', price: 10 };
 
   ngOnInit(): void {}
 }
