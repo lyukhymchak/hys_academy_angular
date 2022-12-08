@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+import { Component, OnInit } from '@angular/core';
+import Product from '../interfaces/product.interface';
 
 @Component({
   selector: 'app-products-section',
   templateUrl: './products-section.component.html',
   styleUrls: ['./products-section.component.scss'],
 })
-export class ProductsSectionComponent {
-  products: Array<Product> = this.getProducts();
+export class ProductsSectionComponent implements OnInit {
+  products: Array<Product>;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.products = this.getProducts();
+  }
 
   getProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
