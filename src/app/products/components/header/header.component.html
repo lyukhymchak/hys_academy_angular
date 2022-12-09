@@ -3,11 +3,11 @@
     <div class="navbar-item">
       <img class="logo" src="../favicon.ico" width="50" alt="coffee cup" />
     </div>
-    <div class="navbar-item">
-      <a class="navbar-link" href="#">Products</a>
+    <div class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['']">Products</a>
     </div>
-    <div class="navbar-item">
-      <a class="navbar-link" href="#">Cart</a>
+    <div class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['cart']">Cart</a>
     </div>
   </nav>
 </header>

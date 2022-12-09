@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from './products/error/error.component';
 
 const routes: Routes = [
   {
-    path: 'products',
-    pathMatch: 'full',
+    path: '',
     loadChildren: () =>
       import('./products/products.module').then((mod) => mod.ProductsModule),
   },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/products',
+    path: '**',
+    component: ErrorComponent,
   },
 ];
 

@@ -12,6 +12,8 @@ import { ProductsRoutingModule } from './products-routing.module';
 
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { SetColorDirective } from './directives/setcolor.directive';
+import { ErrorComponent } from './error/error.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { SetColorDirective } from './directives/setcolor.directive';
     ButtonComponent,
     CurrencyPipe,
     SetColorDirective,
+    ErrorComponent,
+    CartComponent,
   ],
   imports: [CommonModule, ProductsRoutingModule],
 })
