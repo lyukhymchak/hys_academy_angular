@@ -22,12 +22,12 @@ export class SetColorDirective implements OnInit {
   setColor(): string {
     let result: string = '';
 
-    if (this.price > 4) {
-      result = 'yellow';
+    if (this.price > 30) {
+      result = '#8A2BE2';
     }
 
-    if (this.price > 5) {
-      result = 'red';
+    if (this.price > 50) {
+      result = '#C71585';
     }
 
     return result;

@@ -41,7 +41,7 @@ export class ProductsService {
         typeOfDrink[this.getRandomInteger(typeOfDrink.length)] +
         ' ' +
         producers[this.getRandomInteger(producers.length)];
-      const productPrice: number = 2 + this.getRandomInteger(5);
+      const productPrice: number = 10 + this.getRandomInteger(70);
 
       data.push({ id: i + 1, name: productName, price: productPrice });
     }

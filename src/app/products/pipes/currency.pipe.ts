@@ -7,7 +7,7 @@ export class CurrencyPipe implements PipeTransform {
   transform(value: number): string {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'EUR',
+      currency: 'UAH',
       minimumFractionDigits: 2,
     }).format(Number(value));
   }
