@@ -9,5 +9,7 @@ import Product from '../../interfaces/product.interface';
 export class ProductComponent implements OnInit {
   @Input() product: Product;
 
+  buttonClassNames: string[] = ['button', 'btn-add'];
+
   ngOnInit(): void {}
 }

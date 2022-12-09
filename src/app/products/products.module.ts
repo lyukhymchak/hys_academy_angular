@@ -8,6 +8,7 @@ import { ProductsSectionComponent } from './products-section/products-section.co
 import { ProductComponent } from './products-section/product/product.component';
 
 import { ProductsRoutingModule } from './products-routing.module';
+import { ButtonComponent } from './products-section/button/button.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ProductsRoutingModule } from './products-routing.module';
     FooterComponent,
     ProductsSectionComponent,
     ProductComponent,
+    ButtonComponent,
   ],
   imports: [CommonModule, ProductsRoutingModule],
 })

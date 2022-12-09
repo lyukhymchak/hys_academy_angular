@@ -8,6 +8,7 @@ import Product from '../interfaces/product.interface';
 })
 export class ProductsSectionComponent implements OnInit {
   products: Array<Product>;
+  buttonClassNames: string[] = ['button', 'btn-load'];
 
   constructor() {}
 
