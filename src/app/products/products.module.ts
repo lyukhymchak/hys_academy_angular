@@ -9,7 +9,8 @@ import { ProductComponent } from './products-section/product/product.component';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ButtonComponent } from './products-section/button/button.component';
-import { CurrencyPipe } from './currency-pipe.pipe';
+import { CurrencyPipe } from './pipes/currency.pipe';
+import { SetColorDirective } from './directives/setcolor.directive';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CurrencyPipe } from './currency-pipe.pipe';
     ProductComponent,
     ButtonComponent,
     CurrencyPipe,
+    SetColorDirective,
   ],
   imports: [CommonModule, ProductsRoutingModule],
 })

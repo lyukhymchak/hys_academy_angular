@@ -1,5 +1,7 @@
 <div class="card" [attr.id]="'card-' + product.id">
   <div class="card-name">{{ product.name }}</div>
-  <div class="card-price">{{ product.price | currencyPipe }}</div>
+  <div class="card-price" setColor [price]="product.price">
+    {{ product.price | currencyPipe }}
+  </div>
   <app-button [class]="buttonClassNames.join(' ')">Add to cart </app-button>
 </div>
