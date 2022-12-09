@@ -9,6 +9,7 @@ import { ProductComponent } from './products-section/product/product.component';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ButtonComponent } from './products-section/button/button.component';
+import { CurrencyPipe } from './currency-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ButtonComponent } from './products-section/button/button.component';
     ProductsSectionComponent,
     ProductComponent,
     ButtonComponent,
+    CurrencyPipe,
   ],
   imports: [CommonModule, ProductsRoutingModule],
 })
