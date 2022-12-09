@@ -21,6 +21,7 @@ export class SetColorDirective implements OnInit {
 
   setColor(): string {
     let result: string = '';
+
     if (this.price > 4) {
       result = 'yellow';
     }
