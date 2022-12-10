@@ -1,0 +1,11 @@
+<section class="section">
+  <h1>Products>{{ product.name }}</h1>
+  <div class="card" [attr.id]="'card-' + product.id">
+    <div class="card-name">{{ product.name }}</div>
+    <div class="card-description">Description</div>
+    <div class="card-price" [price]="product.price" setColor>
+      {{ product.price | currencyPipe }}
+    </div>
+    <app-button [class]="buttonClassNames.join(' ')">Add to cart </app-button>
+  </div>
+</section>

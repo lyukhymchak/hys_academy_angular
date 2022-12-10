@@ -11,9 +11,9 @@ export class ProductsSectionComponent implements OnInit {
   products: Array<Product>;
   buttonClassNames: string[] = ['button', 'btn-load'];
 
-  constructor(private productsService: ProductsService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.products = this.productsService.getProducts();
+    this.products = ProductsService.products;
   }
 }

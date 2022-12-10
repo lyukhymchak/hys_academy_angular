@@ -5,9 +5,9 @@ import Product from '../interfaces/product.interface';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor() {}
+  static products: Array<Product> = ProductsService.getProducts();
 
-  getProducts(count: number = 8): Array<Product> {
+  static getProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
       'Starbucks',
       'Nespresso',
@@ -38,10 +38,10 @@ export class ProductsService {
 
     for (let i = 0; i < count; i++) {
       const productName: string =
-        typeOfDrink[this.getRandomInteger(typeOfDrink.length)] +
+        typeOfDrink[ProductsService.getRandomInteger(typeOfDrink.length)] +
         ' ' +
-        producers[this.getRandomInteger(producers.length)];
-      const productPrice: number = 10 + this.getRandomInteger(70);
+        producers[ProductsService.getRandomInteger(producers.length)];
+      const productPrice: number = 10 + ProductsService.getRandomInteger(70);
 
       data.push({ id: i + 1, name: productName, price: productPrice });
     }
@@ -49,7 +49,7 @@ export class ProductsService {
     return data;
   }
 
-  getRandomInteger(max: number): number {
+  static getRandomInteger(max: number): number {
     return Math.floor(Math.random() * max);
   }
 }
