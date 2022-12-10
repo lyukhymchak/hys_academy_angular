@@ -9,9 +9,9 @@ import { ProductsService } from '../../services/products.service';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent {
-  product: any;
+  product: Product;
 
-  productId: string | null;
+  productId: string;
 
   buttonClassNames: string[] = ['button', 'btn-load'];
 
@@ -21,9 +21,18 @@ export class ProductDetailsComponent {
   ) {}
 
   ngOnInit(): void {
-    this.productId = this.activatedroute.snapshot.paramMap.get('id');
-    this.product = ProductsService.products.find(
-      (x) => x.id == Number(this.productId)
-    );
+    if (this.activatedroute.snapshot.paramMap.get('id')) {
+      this.productId = this.activatedroute.snapshot.paramMap.get(
+        'id'
+      ) as string;
+    }
+
+    if (
+      this.productsService.products.find((x) => x.id == Number(this.productId))
+    ) {
+      this.product = this.productsService.products.find(
+        (x) => x.id == Number(this.productId)
+      ) as Product;
+    }
   }
 }

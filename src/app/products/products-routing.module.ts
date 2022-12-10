@@ -23,14 +23,14 @@ const routes: Routes = [
         component: ProductsSectionComponent,
       },
       {
-        path: ':id',
-        component: ProductDetailsComponent,
-      },
-
-      {
         path: 'cart',
         component: CartComponent,
       },
+      {
+        path: 'product/:id',
+        component: ProductDetailsComponent,
+      },
+
       {
         path: '**',
         component: ErrorComponent,
