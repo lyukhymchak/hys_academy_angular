@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Product from '../../interfaces/product.interface';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -9,7 +10,12 @@ import Product from '../../interfaces/product.interface';
 export class ProductComponent implements OnInit {
   @Input() product: Product;
 
-  buttonClassNames: string[] = ['button', 'btn-add'];
-
+  buttonClassNames: string[] = ['button btn-add'];
+  constructor(private cartService: CartService) {}
   ngOnInit(): void {}
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+    console.log('Your product has been added to the cart!');
+  }
 }

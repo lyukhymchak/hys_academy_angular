@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Product from '../../interfaces/product.interface';
+import { CartService } from '../../services/cart.service';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -8,16 +9,16 @@ import { ProductsService } from '../../services/products.service';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
+  private productId: string;
+
   product: Product;
-
-  productId: string;
-
   buttonClassNames: string[] = ['button', 'btn-load'];
 
   constructor(
     private activatedroute: ActivatedRoute,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -28,11 +29,16 @@ export class ProductDetailsComponent {
     }
 
     if (
-      this.productsService.products.find((x) => x.id == Number(this.productId))
+      this.productsService.products.find((x) => x.id === Number(this.productId))
     ) {
       this.product = this.productsService.products.find(
-        (x) => x.id == Number(this.productId)
+        (x) => x.id === Number(this.productId)
       ) as Product;
     }
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+    console.log('Your product has been added to the cart!');
   }
 }
