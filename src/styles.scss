@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~normalize.css";
+@import "../src/assets/fonts/fonts.scss";
+@import "../src/assets/scss/variables.scss";
+
+body {
+  font-family: "Inter";
+  font-size: 24px;
+  color: $text-color;
+  margin: 50px 0;
+}
