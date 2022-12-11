@@ -9,11 +9,12 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductsSectionComponent implements OnInit {
   products: Array<Product>;
-  buttonClassNames: string[] = ['button', 'btn-load'];
+  buttonClassNames: string;
 
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.getProducts();
+    this.buttonClassNames = ['btn-dark'].join(' ');
+    this.products = this.productsService.products;
   }
 }

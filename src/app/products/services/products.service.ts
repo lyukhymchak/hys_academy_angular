@@ -5,7 +5,11 @@ import Product from '../interfaces/product.interface';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor() {}
+  products: Array<Product>;
+
+  constructor() {
+    this.products = this.getProducts();
+  }
 
   getProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
