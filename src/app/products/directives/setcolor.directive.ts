@@ -1,4 +1,3 @@
-import { ResourceLoader } from '@angular/compiler';
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
@@ -20,16 +19,14 @@ export class SetColorDirective implements OnInit {
   }
 
   setColor(): string {
-    let result: string = '';
+    if (this.price > 50) {
+      return '#C71585';
+    }
 
     if (this.price > 30) {
-      result = '#8A2BE2';
+      return '#8A2BE2';
     }
 
-    if (this.price > 50) {
-      result = '#C71585';
-    }
-
-    return result;
+    return '';
   }
 }

@@ -8,9 +8,6 @@ import Product from '../../interfaces/product.interface';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
-  buttonClassNames: string;
 
-  ngOnInit(): void {
-    this.buttonClassNames = ['btn-light'].join(' ');
-  }
+  ngOnInit(): void {}
 }
