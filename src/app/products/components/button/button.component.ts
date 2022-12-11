@@ -6,5 +6,5 @@ import { Component, HostBinding, Input } from '@angular/core';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() class: string;
+  @Input() classes: string;
 }

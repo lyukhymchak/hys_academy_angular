@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import Product from '../../interfaces/product.interface';
-import { CartService } from '../../services/cart.service';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -10,15 +9,12 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductsSectionComponent implements OnInit {
   products: Array<Product>;
+  buttonClassNames: string;
 
-  buttonClassNames: string[] = ['button', 'btn-load'];
-
-  constructor(
-    private productsService: ProductsService,
-    private cartService: CartService
-  ) {}
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
+    this.buttonClassNames = ['btn-dark'].join(' ');
     this.products = this.productsService.products;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-error',
@@ -7,10 +7,13 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent implements OnInit {
-  buttonClassNames: string[] = ['button', 'btn-load'];
+  buttonClassNames: string;
 
   constructor(private route: Router) {}
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.buttonClassNames = ['btn-dark'].join(' ');
+  }
 
   backToHome() {
     this.route.navigate(['products']);

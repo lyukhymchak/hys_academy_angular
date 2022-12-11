@@ -13,7 +13,7 @@ export class ProductDetailsComponent implements OnInit {
   private productId: string;
 
   product: Product;
-  buttonClassNames: string[] = ['button', 'btn-load'];
+  buttonClassNames: string;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -22,6 +22,8 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.buttonClassNames = ['btn-dark'].join(' ');
+
     if (this.activatedroute.snapshot.paramMap.get('id')) {
       this.productId = this.activatedroute.snapshot.paramMap.get(
         'id'

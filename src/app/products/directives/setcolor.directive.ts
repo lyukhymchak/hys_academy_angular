@@ -1,4 +1,3 @@
-import { ResourceLoader } from '@angular/compiler';
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({

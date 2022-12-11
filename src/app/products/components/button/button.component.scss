@@ -7,22 +7,22 @@
   padding: 15px 55px;
 }
 
-.btn-add {
-  background-color: $btn-add-color;
-  color: $btn-add-text-color;
+.btn-light {
+  background-color: $btn-light-color;
+  color: $btn-light-text-color;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn-add:hover {
+.btn-light:hover {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-.btn-load {
-  background: $btn-load-color;
-  color: $btn-load-text-color;
+.btn-dark {
+  background: $btn-dark-color;
+  color: $btn-dark-text-color;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn-load:hover {
+.btn-dark:hover {
   box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
 }
