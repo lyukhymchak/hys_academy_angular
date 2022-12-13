@@ -78,8 +78,8 @@
 }
 
 .btn-add {
-  background-color: $btn-add-color;
-  color: $btn-add-text-color;
+  background-color: $btn-light-color;
+  color: $btn-light-text-color;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -88,8 +88,8 @@
 }
 
 .btn-load {
-  background: $btn-load-color;
-  color: $btn-load-text-color;
+  background: $btn-dark-color;
+  color: $btn-dark-text-color;
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
