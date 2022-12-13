@@ -1,0 +1,11 @@
+<div *ngIf="isVisible()">
+  <div class="tooltip" [style.left]="left + 'px'" [style.top]="top + 'px'">
+    <div class="row" *ngFor="let item of items | keyvalue">
+      <span>{{ item.key.name }}</span>
+      <div>
+        <span>{{ item.value }}</span
+        ><button class="btn btn-dark">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

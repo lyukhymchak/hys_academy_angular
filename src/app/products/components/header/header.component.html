@@ -10,7 +10,7 @@
     >
       <a class="navbar-link" [routerLink]="['/products']">Products</a>
     </div>
-    <div class="navbar-item" [routerLinkActive]="'active'">
+    <div appCartTooltip class="navbar-item" [routerLinkActive]="'active'">
       <a class="navbar-link" [routerLink]="['/products/cart']">
         <span>Cart</span>
         <span class="amount" *ngIf="isCartEmpty()">

@@ -1,0 +1,19 @@
+@import "/src/assets/scss/variables.scss";
+
+.tooltip {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: $bg-color;
+  border-radius: 10px;
+  border: 2px solid $text-color;
+  transform: translateX(-50%);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+}
