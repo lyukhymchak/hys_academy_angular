@@ -16,6 +16,12 @@ body {
   padding: 15px 55px;
 }
 
+.btn-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
 .btn-light {
   background-color: $btn-light-color;
   color: $btn-light-text-color;

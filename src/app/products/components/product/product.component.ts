@@ -9,12 +9,30 @@ import { CartService } from '../../services/cart.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
+  @Input() count: number;
+
+  buttonLabel = 'Add to cart';
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.count = this.cartService.getCountOfItem(this.product);
+  }
 
-  addToCart(product: Product) {
-    this.cartService.addToCart(product);
+  addToCart(product: Product, count: number) {
+    this.cartService.addToCart(product, count);
+    this.buttonLabel = 'In cart';
+  }
+
+  setCountInc() {
+    this.count++;
+    this.buttonLabel = 'Add to cart';
+  }
+
+  setCountDec() {
+    if (this.count > 1) {
+      this.count--;
+      this.buttonLabel = 'Add to cart';
+    }
   }
 }

@@ -7,8 +7,15 @@
       {{ product.price | currencyPipe }}
     </div>
     <div>
-      <button class="btn btn-dark" (click)="addToCart(product)">
-        Add to cart
+      <button type="button" class="btn-small" (click)="setCountDec()">-</button>
+      <span>{{ count }}</span>
+      <button type="button" class="btn-small" (click)="setCountInc()">+</button>
+      <button
+        class="btn btn-dark"
+        type="button"
+        (click)="addToCart(product, count)"
+      >
+        {{ buttonLabel }}
       </button>
     </div>
   </div>

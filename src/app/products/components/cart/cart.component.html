@@ -10,14 +10,29 @@
       class="card"
       [attr.id]="'card-' + item.key.id"
     >
+      <!-- [count]="item.value" [product]="item.key" -->
       <h2 class="card-name">
         {{ item.key.name }}
       </h2>
       <div class="card-price">
         {{ item.key.price | currencyPipe }}
       </div>
-      <p>Quantity {{ item.value }}</p>
-      <button class="btn" (click)="removeFromCart(item.key)">
+      <!-- <p>Quantity {{ item.value }}</p> -->
+
+      <div class="button-container">
+        <button type="button" class="btn-small" (click)="setCountDec(item.key)">
+          -
+        </button>
+        <span>{{ item.value }}</span>
+        <button type="button" class="btn-small" (click)="setCountInc(item.key)">
+          +
+        </button>
+      </div>
+      <button
+        class="btn btn-light"
+        type="button"
+        (click)="removeFromCart(item.key)"
+      >
         Remove from cart
       </button>
     </div>

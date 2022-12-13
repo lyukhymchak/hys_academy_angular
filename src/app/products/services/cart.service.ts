@@ -11,11 +11,11 @@ export class CartService {
     this.items = new Map();
   }
 
-  addToCart(product: Product): void {
-    if (!this.items.has(product)) {
-      this.items.set(product, 1);
+  addToCart(product: Product, count: number): void {
+    if (count !== 0) {
+      this.items.set(product, count);
     } else {
-      this.items.set(product, this.items.get(product)! + 1);
+      this.removeFromCart(product);
     }
   }
 
@@ -27,6 +27,10 @@ export class CartService {
 
   getItems(): Map<Product, number> {
     return this.items;
+  }
+
+  getCountOfItem(product: Product): number {
+    return this.items.get(product) ? this.items.get(product)! : 1;
   }
 
   clearCart(): void {

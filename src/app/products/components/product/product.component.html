@@ -5,7 +5,17 @@
   <div class="card-price" [price]="product.price" setColor>
     {{ product.price | currencyPipe }}
   </div>
-  <button class="btn btn-light" (click)="addToCart(product)">
-    Add to cart
-  </button>
+
+  <div class="button-container">
+    <button type="button" class="btn-small" (click)="setCountDec()">-</button>
+    <span>{{ count }}</span>
+    <button type="button" class="btn-small" (click)="setCountInc()">+</button>
+    <button
+      class="btn btn-light"
+      type="button"
+      (click)="addToCart(product, count)"
+    >
+      {{ buttonLabel }}
+    </button>
+  </div>
 </div>

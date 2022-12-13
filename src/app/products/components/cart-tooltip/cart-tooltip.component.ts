@@ -10,7 +10,6 @@ import { CartService } from '../../services/cart.service';
 export class CartTooltipComponent {
   left: number = 0;
   top: number = 0;
-
   items: Map<Product, number>;
 
   constructor(private cartService: CartService) {}

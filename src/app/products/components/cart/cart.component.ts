@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import Product from '../../interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
 
@@ -7,12 +7,21 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   items: Map<Product, number>;
+  @Input() product: Product;
+  counter: number[];
+  isVisible: boolean = true;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
+    this.items = this.cartService.getItems();
+    console.log(this.items.values());
+    this.isVisible = false;
+  }
+
+  ngAfterViewInit(): void {
     this.items = this.cartService.getItems();
   }
 
@@ -32,5 +41,13 @@ export class CartComponent implements OnInit {
     }
 
     return totalPrice;
+  }
+
+  setCountInc(product: Product) {
+    this.cartService.addToCart(product, this.items.get(product)! + 1);
+  }
+
+  setCountDec(product: Product) {
+    this.cartService.addToCart(product, this.items.get(product)! - 1);
   }
 }
