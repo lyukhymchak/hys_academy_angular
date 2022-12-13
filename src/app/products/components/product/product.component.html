@@ -5,7 +5,7 @@
   <div class="card-price" [price]="product.price" setColor>
     {{ product.price | currencyPipe }}
   </div>
-  <app-button [classes]="buttonClassNames" (click)="addToCart(product)"
-    >Add to cart
-  </app-button>
+  <button class="btn btn-light" (click)="addToCart(product)">
+    Add to cart
+  </button>
 </div>

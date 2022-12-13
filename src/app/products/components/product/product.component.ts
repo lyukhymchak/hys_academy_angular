@@ -9,13 +9,10 @@ import { CartService } from '../../services/cart.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
-  buttonClassNames: string;
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.buttonClassNames = ['btn-light'].join(' ');
-  }
+  ngOnInit(): void {}
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);

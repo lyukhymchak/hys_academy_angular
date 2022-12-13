@@ -17,12 +17,9 @@
         {{ item.key.price | currencyPipe }}
       </div>
       <p>Quantity {{ item.value }}</p>
-      <app-button
-        [classes]="buttonClassNames"
-        (click)="removeFromCart(item.key)"
-      >
+      <button class="btn" (click)="removeFromCart(item.key)">
         Remove from cart
-      </app-button>
+      </button>
     </div>
   </div>
 </div>

@@ -9,12 +9,10 @@ import { CartService } from '../../services/cart.service';
 })
 export class CartComponent implements OnInit {
   items: Map<Product, number>;
-  buttonClassNames: string;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.buttonClassNames = ['btn-light'].join(' ');
     this.items = this.cartService.getItems();
   }
 
