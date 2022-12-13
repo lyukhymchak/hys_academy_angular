@@ -43,11 +43,15 @@ export class CartComponent implements OnInit, AfterViewInit {
     return totalPrice;
   }
 
-  setCountInc(product: Product) {
+  setCountInc(product: Product): void {
     this.cartService.addToCart(product, this.items.get(product)! + 1);
   }
 
-  setCountDec(product: Product) {
+  setCountDec(product: Product): void {
     this.cartService.addToCart(product, this.items.get(product)! - 1);
+  }
+
+  clearCart(): void {
+    this.cartService.items.clear();
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Product from '../interfaces/product.interface';
+import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,7 @@ import Product from '../interfaces/product.interface';
 export class CartService {
   items: Map<Product, number>;
 
-  constructor() {
+  constructor(private localstorageService: LocalstorageService) {
     this.items = new Map();
   }
 
@@ -17,12 +18,14 @@ export class CartService {
     } else {
       this.removeFromCart(product);
     }
+    this.localstorageService.set(this.items);
   }
 
   removeFromCart(product: Product): void {
     if (this.items.has(product)) {
       this.items.delete(product);
     }
+    this.localstorageService.set(this.items);
   }
 
   getItems(): Map<Product, number> {

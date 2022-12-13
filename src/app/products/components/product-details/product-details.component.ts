@@ -53,15 +53,19 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.buttonLabel = 'In cart';
   }
 
-  setCountInc() {
+  setCountInc(): void {
     this.count++;
-    this.buttonLabel = 'Add to cart';
+    if (this.buttonLabel === 'In cart') {
+      this.buttonLabel = 'Refresh cart';
+    }
   }
 
-  setCountDec() {
+  setCountDec(): void {
     if (this.count > 1) {
       this.count--;
-      this.buttonLabel = 'Add to cart';
+      if (this.buttonLabel === 'In cart') {
+        this.buttonLabel = 'Refresh cart';
+      }
     }
   }
 }
