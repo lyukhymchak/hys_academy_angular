@@ -8,11 +8,31 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  items: Product[];
+  items: Map<Product, number>;
+  buttonClassNames: string;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.items = this.cartService.items;
+    this.buttonClassNames = ['btn-light'].join(' ');
+    this.items = this.cartService.getItems();
+  }
+
+  removeFromCart(product: Product): void {
+    this.cartService.removeFromCart(product);
+  }
+
+  isCartEmpty(): boolean {
+    return this.items.size ? false : true;
+  }
+
+  getTotalPriceOfProducts(): number {
+    let totalPrice = 0;
+
+    for (let [key, value] of this.items) {
+      totalPrice += key.price * value;
+    }
+
+    return totalPrice;
   }
 }
