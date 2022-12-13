@@ -1,11 +1,17 @@
 @import "/src/assets/scss/variables.scss";
+.container {
+  position: relative;
+}
 
-.tooltip {
-  position: fixed;
+.carttooltip {
+  position: absolute;
+  left: 250px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  padding: 10px;
+  max-height: 400px;
+  width: 500px;
+  overflow: auto;
   background: $bg-color;
   border-radius: 10px;
   border: 2px solid $text-color;
@@ -16,8 +22,14 @@
   display: grid;
   grid-template-columns: 2fr 50px 1fr;
   align-items: center;
+  padding: 10px 20px;
 }
 
-.countOfItems {
-  margin: 0 10px;
+.row:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 1), -23px 0 20px -23px rgba(0, 0, 0, 0.8),
+    23px 0 20px -23px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+.count {
+  padding: 0 20px;
 }

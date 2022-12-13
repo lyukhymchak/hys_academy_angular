@@ -1,9 +1,11 @@
-<div *ngIf="isVisible()">
-  <div class="tooltip" [style.left]="left + 'px'" [style.top]="top + 'px'">
+<div class="container" *ngIf="visibility">
+  <div class="carttooltip">
     <div class="row" *ngFor="let item of items | keyvalue">
-      <div>{{ item.key.name }}</div>
-      <div class="countOfItems">{{ item.value }}</div>
-      <button class="btn btn-dark" type="button">Delete</button>
+      <div class="name">{{ item.key.name }}</div>
+      <div class="count">{{ item.value }}</div>
+      <button class="btn btn-dark" type="button" (click)="deleteItem(item.key)">
+        Delete
+      </button>
     </div>
   </div>
 </div>

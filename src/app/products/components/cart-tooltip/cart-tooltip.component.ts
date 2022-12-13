@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { retryWhen } from 'rxjs';
 import Product from '../../interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
 
@@ -8,17 +9,17 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-tooltip.component.scss'],
 })
 export class CartTooltipComponent {
-  left: number = 0;
-  top: number = 0;
   items: Map<Product, number>;
+  visibility: boolean;
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.items = this.cartService.getItems();
+  public deleteItem(item: Product): void {
+    this.cartService.removeFromCart(item);
   }
 
-  isVisible(): boolean {
-    return this.items.size ? true : false;
+  ngOnInit(): void {
+    this.items = this.cartService.getItems();
+    this.visibility = this.items.size ? true : false;
   }
 }
