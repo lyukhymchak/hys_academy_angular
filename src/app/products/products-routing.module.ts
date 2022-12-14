@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductsSectionComponent } from './components/products-section/products-section.component';
 import { ProductsComponent } from './products.component';
 import { CartComponent } from './components/cart/cart.component';
-import { ErrorComponent } from './error/error.component';
+import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
 
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
@@ -33,7 +33,7 @@ const routes: Routes = [
 
       {
         path: '**',
-        component: ErrorComponent,
+        component: PageNotFoundComponent,
       },
     ],
   },
