@@ -18,6 +18,16 @@ export class CartTooltipComponent {
     this.cartService.removeFromCart(item);
   }
 
+  public getTotalPriceOfProducts(): number {
+    let totalPrice = 0;
+
+    for (let [key, value] of this.items) {
+      totalPrice += key.price * value;
+    }
+
+    return totalPrice;
+  }
+
   ngOnInit(): void {
     this.items = this.cartService.getItems();
     this.visibility = this.items.size ? true : false;
