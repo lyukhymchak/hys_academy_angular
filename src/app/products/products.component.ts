@@ -11,9 +11,9 @@ export class ProductsComponent implements OnInit {
   constructor(
     private localstorageService: LocalstorageService,
     private cartService: CartService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.cartService.items = this.localstorageService.get();
   }
-
-  ngOnInit(): void {}
 }
