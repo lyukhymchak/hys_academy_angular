@@ -1,22 +1,18 @@
 <table class="table">
-  <thead>
+  <thead class="thead">
     <tr>
       <th class="col-1">
-        <select class="select">
-          <option value="">ID</option>
-        </select>
+        <p>ID <i class="arrow down"></i></p>
       </th>
       <th class="col-2">
-        <select class="select">
-          <option value="">Name</option>
-        </select>
+        <p>Name <i class="arrow up"></i></p>
       </th>
       <th class="col-3">
-        <select class="select">
-          <option value="">Price</option>
-        </select>
+        <p>Price <i class="arrow down"></i></p>
       </th>
-      <th class="col-4"><span class="dot"></span></th>
+      <th class="col-4">
+        <button type="button" class="btn-circle">+</button>Add
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -24,7 +20,10 @@
       <td>{{ product.id }}</td>
       <td>{{ product.name }}</td>
       <td>{{ product.price | currencyPipe }}</td>
-      <td></td>
+      <td>
+        <button type="button" class="btn-circle">&#9998;</button>
+        <button type="button" class="btn-circle">&#10007;</button>
+      </td>
     </tr>
   </tbody>
 </table>
