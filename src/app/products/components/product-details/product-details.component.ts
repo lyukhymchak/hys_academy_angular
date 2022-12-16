@@ -7,7 +7,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import Product from '../../interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../shared/services/products.service';
 
 @Component({
   selector: 'app-product-details',

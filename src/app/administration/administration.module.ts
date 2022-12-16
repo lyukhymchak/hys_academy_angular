@@ -8,6 +8,7 @@ import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TableComponent } from './components/table/table.component';
+import { CurrencyPipe } from '../shared/pipes/currency.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TableComponent } from './components/table/table.component';
     ProductsComponent,
     SidebarComponent,
     TableComponent,
+    CurrencyPipe,
   ],
   imports: [CommonModule, AdministrationRoutingModule],
 })

@@ -9,7 +9,7 @@ import { ProductsSectionComponent } from './components/products-section/products
 
 import { ProductsRoutingModule } from './products-routing.module';
 
-import { CurrencyPipe } from './pipes/currency.pipe';
+import { CurrencyPipe } from '../shared/pipes/currency.pipe';
 import { SetColorDirective } from './directives/setcolor.directive';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
