@@ -1,0 +1,28 @@
+@import "/src/assets/scss/variables.scss";
+.table {
+  width: 100%;
+}
+
+.col-1 {
+  width: 30%;
+}
+
+.col-2 {
+  width: 30%;
+}
+
+.col-3 {
+  width: 30%;
+}
+
+.col-4 {
+  width: 10%;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}

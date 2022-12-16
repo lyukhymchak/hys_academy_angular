@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TableComponent } from './components/table/table.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     UsersComponent,
     ProductsComponent,
     SidebarComponent,
+    TableComponent,
   ],
   imports: [CommonModule, AdministrationRoutingModule],
 })

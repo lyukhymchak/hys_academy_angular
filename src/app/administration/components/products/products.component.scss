@@ -1,0 +1,35 @@
+:host {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+  column-gap: 25px;
+  padding: 10px;
+}
+
+#form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.input-search,
+.input-price,
+.select {
+  box-sizing: border-box;
+  display: inline-block;
+  outline: none;
+  height: 60px;
+  border-radius: 10px;
+  padding: 0 0 0 10px;
+  border: 1px solid #c2c0ca;
+}
+
+.input-price {
+  width: 50px;
+}
+
+.btn-apply {
+  display: inline-block;
+}
