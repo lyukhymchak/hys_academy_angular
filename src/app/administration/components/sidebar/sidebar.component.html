@@ -1,0 +1,26 @@
+<nav class="side-navbar">
+  <div class="navbar-item">
+    <img class="logo" src="../favicon.ico" width="50" alt="coffee cup" />
+  </div>
+  <ul class="navbar-list">
+    <li class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['./users']">Users</a>
+    </li>
+    <li class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['./products']">Products</a>
+    </li>
+    <li
+      class="navbar-item"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a class="navbar-link" [routerLink]="['']">Log out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="footer-item">
+  <a class="footer-link" [routerLink]="['/products']">
+    Landing <span class="arrow">→</span>
+  </a>
+</div>

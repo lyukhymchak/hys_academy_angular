@@ -6,6 +6,7 @@ import { AdministrationComponent } from './administration.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ProductsComponent } from './components/products/products.component';
     LoginComponent,
     UsersComponent,
     ProductsComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, AdministrationRoutingModule],
 })
