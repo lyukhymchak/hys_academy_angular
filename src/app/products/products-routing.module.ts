@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProductsSectionComponent } from './components/products-section/products-section.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductsComponent } from './products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
-
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 const routes: Routes = [
   {

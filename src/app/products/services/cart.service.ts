@@ -1,42 +1,48 @@
 import { Injectable } from '@angular/core';
 import Product from '../interfaces/product.interface';
-import { LocalstorageService } from './localstorage.service';
+import { LocalStorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  items: Map<Product, number>;
+  private items: Map<Product, number>;
 
-  constructor(private localstorageService: LocalstorageService) {
+  constructor(private localStorageService: LocalStorageService) {
     this.items = new Map();
   }
 
-  addToCart(product: Product, count: number): void {
+  public addToCart(product: Product, count: number): void {
     if (count !== 0) {
       this.items.set(product, count);
     } else {
       this.removeFromCart(product);
     }
-    this.localstorageService.set(this.items);
+
+    this.localStorageService.setData(this.items);
   }
 
-  removeFromCart(product: Product): void {
+  public removeFromCart(product: Product): void {
     if (this.items.has(product)) {
       this.items.delete(product);
     }
-    this.localstorageService.set(this.items);
+
+    this.localStorageService.setData(this.items);
   }
 
-  getItems(): Map<Product, number> {
+  public getItems(): Map<Product, number> {
     return this.items;
   }
 
-  getCountOfItem(product: Product): number {
+  public setItems(items: Map<Product, number>): void {
+    this.items = items;
+  }
+
+  public getCountOfItem(product: Product): number {
     return this.items.get(product) ? this.items.get(product)! : 1;
   }
 
-  clearCart(): void {
+  public clearCart(): void {
     this.items.clear();
   }
 }

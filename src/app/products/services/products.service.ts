@@ -5,13 +5,13 @@ import Product from '../interfaces/product.interface';
   providedIn: 'root',
 })
 export class ProductsService {
-  products: Array<Product>;
+  public products: Array<Product>;
 
   constructor() {
     this.products = this.getProducts();
   }
 
-  getProducts(count: number = 8): Array<Product> {
+  private getProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
       'Starbucks',
       'Nespresso',
@@ -53,7 +53,7 @@ export class ProductsService {
     return data;
   }
 
-  getRandomInteger(max: number): number {
+  private getRandomInteger(max: number): number {
     return Math.floor(Math.random() * max);
   }
 }

@@ -52,6 +52,6 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   clearCart(): void {
-    this.cartService.items.clear();
+    this.cartService.clearCart();
   }
 }

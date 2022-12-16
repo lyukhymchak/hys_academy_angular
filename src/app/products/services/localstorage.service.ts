@@ -4,15 +4,13 @@ import Product from '../interfaces/product.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class LocalstorageService {
-  constructor() {}
-
-  set(items: Map<Product, number>): void {
+export class LocalStorageService {
+  public setData(items: Map<Product, number>): void {
     localStorage.setItem('cart', JSON.stringify([...items]));
   }
 
-  get(): Map<Product, number> {
-    if (JSON.parse(localStorage.getItem('cart')!)) {
+  public getData(): Map<Product, number> {
+    if (localStorage.getItem('cart')) {
       return new Map(JSON.parse(localStorage.getItem('cart')!));
     }
 
