@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  items: Map<Product, number>;
+  private items: Map<Product, number>;
 
   constructor(private cartService: CartService) {}
 
@@ -16,11 +16,11 @@ export class HeaderComponent implements OnInit {
     this.items = this.cartService.getItems();
   }
 
-  isCartEmpty(): boolean {
+  public isCartEmpty(): boolean {
     return this.items.size ? true : false;
   }
 
-  getCountOfItems(): number {
+  public getCountOfItemsInCart(): number {
     let count = 0;
 
     for (let value of this.items.values()) {

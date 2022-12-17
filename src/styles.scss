@@ -16,10 +16,18 @@ body {
   padding: 15px 55px;
 }
 
-.btn-small {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+.btn-circle {
+  cursor: pointer;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin: 5px;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-circle:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .btn-light {
