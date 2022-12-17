@@ -9,8 +9,8 @@ import { CartService } from '../../services/cart.service';
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
-  @Input() count: number;
-  buttonLabel: string;
+  public count: number;
+  public buttonLabel: string;
 
   constructor(private cartService: CartService) {}
 
@@ -19,19 +19,19 @@ export class ProductComponent implements OnInit {
     this.buttonLabel = 'Add to cart';
   }
 
-  addToCart(product: Product, count: number): void {
+  public addToCart(product: Product, count: number): void {
     this.cartService.addToCart(product, count);
     this.buttonLabel = 'In cart';
   }
 
-  setCountInc(): void {
+  public setCountInc(): void {
     this.count++;
     if (this.buttonLabel === 'In cart') {
       this.buttonLabel = 'Refresh cart';
     }
   }
 
-  setCountDec(): void {
+  public setCountDec(): void {
     if (this.count > 1) {
       this.count--;
       if (this.buttonLabel === 'In cart') {

@@ -7,9 +7,15 @@
   </div>
 
   <div class="button-container">
-    <button type="button" class="btn-small" (click)="setCountDec()">-</button>
-    <span>{{ count }}</span>
-    <button type="button" class="btn-small" (click)="setCountInc()">+</button>
+    <div class="btn-circle-group">
+      <button type="button" class="btn-circle" (click)="setCountDec()">
+        -
+      </button>
+      <div class="count">{{ count }}</div>
+      <button type="button" class="btn-circle" (click)="setCountInc()">
+        +
+      </button>
+    </div>
     <button
       class="btn btn-light"
       type="button"
