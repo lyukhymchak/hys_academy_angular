@@ -2,7 +2,7 @@
   <h1>Cart</h1>
   <h3 *ngIf="isCartEmpty(); else totalPrice">Cart is empty</h3>
   <ng-template #totalPrice>
-    <h3>Total price {{ getTotalPriceOfProducts() | currencyPipe }}</h3>
+    <h3>Total price {{ getTotalPriceOfItems() | currencyPipe }}</h3>
     <button class="btn btn-dark" type="button" (click)="clearCart()">
       Clear cart
     </button>

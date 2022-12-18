@@ -42,6 +42,16 @@ export class CartService {
     return this.items.get(product) ? this.items.get(product)! : 1;
   }
 
+  public getTotalPriceOfItems(): number {
+    let totalPrice = 0;
+
+    for (let [key, value] of this.items) {
+      totalPrice += key.price * value;
+    }
+
+    return totalPrice;
+  }
+
   public clearCart(): void {
     this.items.clear();
   }

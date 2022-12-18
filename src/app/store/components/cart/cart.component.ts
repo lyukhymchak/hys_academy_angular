@@ -24,14 +24,8 @@ export class CartComponent implements OnInit {
     return this.items.size ? false : true;
   }
 
-  public getTotalPriceOfProducts(): number {
-    let totalPrice = 0;
-
-    for (let [key, value] of this.items) {
-      totalPrice += key.price * value;
-    }
-
-    return totalPrice;
+  public getTotalPriceOfItems() {
+    return this.cartService.getTotalPriceOfItems();
   }
 
   public setCountInc(product: Product): void {
