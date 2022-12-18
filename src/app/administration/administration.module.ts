@@ -8,7 +8,7 @@ import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TableComponent } from './components/table/table.component';
-import { CurrencyPipe } from '../shared/pipes/currency.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,7 @@ import { CurrencyPipe } from '../shared/pipes/currency.pipe';
     ProductsComponent,
     SidebarComponent,
     TableComponent,
-    CurrencyPipe,
   ],
-  imports: [CommonModule, AdministrationRoutingModule],
+  imports: [CommonModule, AdministrationRoutingModule, SharedModule],
 })
 export class AdministrationModule {}
