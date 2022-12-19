@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageKeys } from './enums/localstorage-keys.enum';
 import { CartService } from './services/cart.service';
 import { LocalStorageService } from './services/localstorage.service';
 
@@ -14,6 +15,8 @@ export class StoreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cartService.setItems(this.localStorageService.getData());
+    this.cartService.setItems(
+      this.localStorageService.getData(LocalStorageKeys.CART)
+    );
   }
 }

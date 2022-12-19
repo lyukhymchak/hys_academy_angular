@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 import Product from '../interfaces/product.interface';
 import { LocalStorageService } from './localstorage.service';
 
@@ -19,7 +20,7 @@ export class CartService {
       this.removeFromCart(product);
     }
 
-    this.localStorageService.setData(this.items);
+    this.localStorageService.setData(LocalStorageKeys.CART, this.items);
   }
 
   public removeFromCart(product: Product): void {
@@ -27,7 +28,7 @@ export class CartService {
       this.items.delete(product);
     }
 
-    this.localStorageService.setData(this.items);
+    this.localStorageService.setData(LocalStorageKeys.CART, this.items);
   }
 
   public getItems(): Map<Product, number> {

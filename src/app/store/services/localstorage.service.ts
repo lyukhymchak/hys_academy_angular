@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import Product from '../interfaces/product.interface';
+import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  public setData(items: Map<Product, number>): void {
-    localStorage.setItem('cart', JSON.stringify([...items]));
+  public setData<T>(key: LocalStorageKeys, items: T): void {
+    localStorage.setItem(
+      key,
+      JSON.stringify(items, (key, value) =>
+        value instanceof Map ? Array.from(value.entries()) : value
+      )
+    );
   }
 
-  public getData(): Map<Product, number> {
-    if (localStorage.getItem('cart')) {
-      return new Map(JSON.parse(localStorage.getItem('cart')!));
-    }
-
-    return new Map();
+  public getData<T>(key: LocalStorageKeys): T {
+    return JSON.parse(localStorage.getItem(key)!, (key, value) =>
+      key === '' ? new Map(value) : value
+    );
   }
 }
