@@ -1,0 +1,12 @@
+<section class="section">
+  <h1 class="section-title">Products</h1>
+  <div class="cards">
+    <app-product
+      *ngFor="let curProduct of products"
+      [product]="curProduct"
+    ></app-product>
+  </div>
+  <div class="button-container">
+    <button class="btn btn-dark">Load more</button>
+  </div>
+</section>
