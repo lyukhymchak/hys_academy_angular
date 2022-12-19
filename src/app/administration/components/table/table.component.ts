@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import Product from 'src/app/products/interfaces/product.interface';
-import { ProductsService } from 'src/app/shared/services/products.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -8,11 +6,10 @@ import { ProductsService } from 'src/app/shared/services/products.service';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  public products: Product[];
+  @Input() public items: any;
+  public objectKeys = Object.keys;
 
-  constructor(private productsService: ProductsService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.products = this.productsService.products;
-  }
+  ngOnInit(): void {}
 }
