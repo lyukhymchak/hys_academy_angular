@@ -8,10 +8,10 @@
       [routerLinkActive]="'active'"
       [routerLinkActiveOptions]="{ exact: true }"
     >
-      <a class="navbar-link" [routerLink]="['/products']">Products</a>
+      <a class="navbar-link" [routerLink]="['/store']">Products</a>
     </div>
     <div cartTooltip class="navbar-item" [routerLinkActive]="'active'">
-      <a class="navbar-link" [routerLink]="['/products/cart']">
+      <a class="navbar-link" [routerLink]="['/store/cart']">
         <span>Cart</span>
         <span class="amount" *ngIf="isCartEmpty()">
           ({{ getCountOfItemsInCart() }})

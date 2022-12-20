@@ -1,7 +1,0 @@
-<div class="card" [attr.id]="'card-' + product.id">
-  <div class="card-name">{{ product.name }}</div>
-  <div class="card-price" [price]="product.price" setColor>
-    {{ product.price | currencyPipe }}
-  </div>
-  <button class="btn btn-light" type="button">Add to cart</button>
-</div>

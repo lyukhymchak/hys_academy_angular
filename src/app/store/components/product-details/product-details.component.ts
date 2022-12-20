@@ -1,13 +1,9 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import Product from '../../interfaces/product.interface';
+
 import { CartService } from '../../services/cart.service';
-import { ProductsService } from '../../../shared/services/products.service';
+import Product from '../../interfaces/product.interface';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 @Component({
   selector: 'app-product-details',

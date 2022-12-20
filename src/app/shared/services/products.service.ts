@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Product from '../../products/interfaces/product.interface';
+import Product from 'src/app/store/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',

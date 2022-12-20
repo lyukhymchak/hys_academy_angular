@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import Product from 'src/app/products/interfaces/product.interface';
+
 import { ProductsService } from 'src/app/shared/services/products.service';
+import Product from 'src/app/store/interfaces/product.interface';
 
 @Component({
   selector: 'app-products',
