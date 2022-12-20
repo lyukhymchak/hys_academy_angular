@@ -1,0 +1,27 @@
+<div class="card" [attr.id]="'card-' + product.id">
+  <a class="card-name" routerLink="/products/product/{{ product.id }}">
+    {{ product.name }}
+  </a>
+  <div class="card-price" [price]="product.price" setColor>
+    {{ product.price | currencyPipe }}
+  </div>
+
+  <div class="button-container">
+    <div class="btn-circle-group">
+      <button type="button" class="btn-circle" (click)="setCountDec()">
+        -
+      </button>
+      <div class="count">{{ count }}</div>
+      <button type="button" class="btn-circle" (click)="setCountInc()">
+        +
+      </button>
+    </div>
+    <button
+      class="btn btn-light"
+      type="button"
+      (click)="addToCart(product, count)"
+    >
+      {{ buttonLabel }}
+    </button>
+  </div>
+</div>

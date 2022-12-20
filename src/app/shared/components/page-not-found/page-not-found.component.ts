@@ -10,7 +10,7 @@ export class PageNotFoundComponent implements OnInit {
   constructor(private route: Router) {}
 
   public backToHomePage(): void {
-    this.route.navigate(['products']);
+    this.route.navigate(['']);
   }
 
   ngOnInit(): void {}

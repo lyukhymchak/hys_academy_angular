@@ -16,9 +16,9 @@ import { ProductsService } from '../../../shared/services/products.service';
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
   private productId: string;
-  product: Product;
-  count: number;
-  buttonLabel: string = 'Add to cart';
+  public product: Product;
+  public count: number;
+  public buttonLabel: string = 'Add to cart';
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -48,19 +48,19 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.count = this.cartService.getCountOfItem(this.product);
   }
 
-  addToCart(product: Product, count: number) {
+  public addToCart(product: Product, count: number) {
     this.cartService.addToCart(product, count);
     this.buttonLabel = 'In cart';
   }
 
-  setCountInc(): void {
+  public setCountInc(): void {
     this.count++;
     if (this.buttonLabel === 'In cart') {
       this.buttonLabel = 'Refresh cart';
     }
   }
 
-  setCountDec(): void {
+  public setCountDec(): void {
     if (this.count > 1) {
       this.count--;
       if (this.buttonLabel === 'In cart') {

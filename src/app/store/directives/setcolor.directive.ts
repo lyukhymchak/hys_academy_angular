@@ -4,11 +4,9 @@ import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
   selector: '[setColor]',
 })
 export class SetColorDirective implements OnInit {
-  @Input() price: number;
+  @Input() public price: number;
 
-  constructor(private element: ElementRef, private renderer: Renderer2) {
-    this.element = element;
-  }
+  constructor(private element: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.renderer.setStyle(
@@ -18,7 +16,7 @@ export class SetColorDirective implements OnInit {
     );
   }
 
-  setColor(): string {
+  private setColor(): string {
     if (this.price > 50) {
       return '#C71585';
     }

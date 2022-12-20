@@ -1,21 +1,7 @@
 <div class="card" [attr.id]="'card-' + product.id">
-  <a class="card-name" routerLink="/products/product/{{ product.id }}">
-    {{ product.name }}
-  </a>
+  <div class="card-name">{{ product.name }}</div>
   <div class="card-price" [price]="product.price" setColor>
     {{ product.price | currencyPipe }}
   </div>
-
-  <div class="button-container">
-    <button type="button" class="btn-small" (click)="setCountDec()">-</button>
-    <span>{{ count }}</span>
-    <button type="button" class="btn-small" (click)="setCountInc()">+</button>
-    <button
-      class="btn btn-light"
-      type="button"
-      (click)="addToCart(product, count)"
-    >
-      {{ buttonLabel }}
-    </button>
-  </div>
+  <button class="btn btn-light" type="button">Add to cart</button>
 </div>

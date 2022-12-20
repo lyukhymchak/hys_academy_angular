@@ -3,20 +3,11 @@
     <div class="navbar-item">
       <img class="logo" src="../favicon.ico" width="50" alt="coffee cup" />
     </div>
-    <div
-      class="navbar-item"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a class="navbar-link" [routerLink]="['/products']">Products</a>
+    <div class="navbar-item">
+      <a class="navbar-link" href="#">Products</a>
     </div>
-    <div cartTooltip class="navbar-item" [routerLinkActive]="'active'">
-      <a class="navbar-link" [routerLink]="['/products/cart']">
-        <span>Cart</span>
-        <span class="amount" *ngIf="isCartEmpty()">
-          ({{ getCountOfItems() }})
-        </span>
-      </a>
+    <div class="navbar-item">
+      <a class="navbar-link" href="#">Cart</a>
     </div>
   </nav>
 </header>

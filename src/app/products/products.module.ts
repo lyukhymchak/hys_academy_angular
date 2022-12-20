@@ -10,10 +10,6 @@ import { ProductsSectionComponent } from './components/products-section/products
 import { ProductsRoutingModule } from './products-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { SetColorDirective } from './directives/setcolor.directive';
-import { CartComponent } from './components/cart/cart.component';
-import { ProductDetailsComponent } from './components/product-details/product-details.component';
-import { CartTooltipComponent } from './components/cart-tooltip/cart-tooltip.component';
-import { CartTooltipDirective } from './directives/cart-tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -23,10 +19,6 @@ import { CartTooltipDirective } from './directives/cart-tooltip.directive';
     ProductsSectionComponent,
     ProductComponent,
     SetColorDirective,
-    CartComponent,
-    ProductDetailsComponent,
-    CartTooltipComponent,
-    CartTooltipDirective,
   ],
   imports: [CommonModule, ProductsRoutingModule, SharedModule],
 })

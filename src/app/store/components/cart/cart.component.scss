@@ -2,6 +2,7 @@
 
 .cart {
   padding: 0 100px;
+  min-height: 800px;
 }
 
 .cards {
@@ -32,4 +33,16 @@
 .card-price {
   font-size: 36px;
   margin: 20px 0;
+}
+
+.btn-circle-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.count {
+  width: 20px;
+  text-align: center;
+  padding: 0 5px;
 }

@@ -2,7 +2,7 @@
   <h1>Cart</h1>
   <h3 *ngIf="isCartEmpty(); else totalPrice">Cart is empty</h3>
   <ng-template #totalPrice>
-    <h3>Total price {{ getTotalPriceOfProducts() | currencyPipe }}</h3>
+    <h3>Total price {{ getTotalPriceOfItems() | currencyPipe }}</h3>
     <button class="btn btn-dark" type="button" (click)="clearCart()">
       Clear cart
     </button>
@@ -18,18 +18,18 @@
         <div class="card-price">
           {{ item.key.price | currencyPipe }}
         </div>
-        <div class="button-container">
+        <div class="btn-circle-group">
           <button
             type="button"
-            class="btn-small"
+            class="btn-circle"
             (click)="setCountDec(item.key)"
           >
             -
           </button>
-          <span>{{ item.value }}</span>
+          <div class="count">{{ item.value }}</div>
           <button
             type="button"
-            class="btn-small"
+            class="btn-circle"
             (click)="setCountInc(item.key)"
           >
             +
