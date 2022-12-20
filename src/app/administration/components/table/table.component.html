@@ -1,15 +1,20 @@
 <table class="table">
   <thead class="thead">
-    <th *ngFor="let key of objectKeys(items[0])">
-      <p>{{ key }} <i class="arrow down"></i></p>
+    <th *ngFor="let key of keys">
+      <p>
+        {{ capitalizeFirstLetter(key) }}
+        <i class="arrow down"></i>
+      </p>
     </th>
     <th><button type="button" class="btn-circle">+</button>Add</th>
   </thead>
   <tbody>
     <tr class="row" *ngFor="let item of items">
-      <td>{{ item.id }}</td>
-      <td>{{ item.name }}</td>
-      <td>{{ item.price | currencyPipe }}</td>
+      <td *ngFor="let key of keys" [ngSwitch]="key">
+        <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
+        <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
+        <span *ngSwitchDefault>{{ item[key] }}</span>
+      </td>
       <td>
         <button type="button" class="btn-circle">&#9998;</button>
         <button type="button" class="btn-circle">&#10007;</button>

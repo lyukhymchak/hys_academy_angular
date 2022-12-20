@@ -7,9 +7,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
   @Input() public items: any;
-  public objectKeys = Object.keys;
+  public keys: string[];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.keys = Object.keys(this.items[0]);
+  }
+
+  public capitalizeFirstLetter(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
 }
