@@ -14,7 +14,7 @@
       <a class="navbar-link" [routerLink]="['/store/cart']">
         <span>Cart</span>
         <span class="amount" *ngIf="isCartEmpty()">
-          ({{ getCountOfItemsInCart() }})
+          ({{ getTotalQuantityOfItems() }})
         </span>
       </a>
     </div>

@@ -9,21 +9,26 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-tooltip.component.scss'],
 })
 export class CartTooltipComponent {
-  items: Map<Product, number>;
-  visibility: boolean;
+  public cart: Map<Product, number>;
+  public totalPrice: number;
+  public visibility: boolean;
 
-  constructor(private cartService: CartService) {}
-
-  public deleteItem(item: Product): void {
-    this.cartService.removeFromCart(item);
-  }
-
-  public getTotalPriceOfItems() {
-    return this.cartService.getTotalPriceOfItems();
+  constructor(private cartService: CartService) {
+    this.visibility = !this.cartService.isCartEmpty();
   }
 
   ngOnInit(): void {
-    this.items = this.cartService.getItems();
-    this.visibility = this.items.size ? true : false;
+    this.cart = this.cartService.getCart();
+    this.totalPrice = this.cartService.getTotalPrice();
+
+    this.cartService.cartState$.subscribe((cart) => {
+      this.cart = cart;
+      this.totalPrice = this.cartService.getTotalPrice();
+      this.visibility = !this.cartService.isCartEmpty();
+    });
+  }
+
+  public deleteItem(item: Product): void {
+    this.cartService.removeItemFromCart(item);
   }
 }

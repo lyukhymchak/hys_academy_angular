@@ -1,14 +1,14 @@
 <div class="cart">
   <h1>Cart</h1>
-  <h3 *ngIf="isCartEmpty(); else totalPrice">Cart is empty</h3>
-  <ng-template #totalPrice>
-    <h3>Total price {{ getTotalPriceOfItems() | currencyPipe }}</h3>
+  <h3 *ngIf="isCartEmpty(); else totalPriceSection">Cart is empty</h3>
+  <ng-template #totalPriceSection>
+    <h3>Total price {{ totalPrice | currencyPipe }}</h3>
     <button class="btn btn-dark" type="button" (click)="clearCart()">
       Clear cart
     </button>
     <div class="cards">
       <div
-        *ngFor="let item of items | keyvalue"
+        *ngFor="let item of cart | keyvalue"
         class="card"
         [attr.id]="'card-' + item.key.id"
       >
@@ -22,7 +22,7 @@
           <button
             type="button"
             class="btn-circle"
-            (click)="setCountDec(item.key)"
+            (click)="removeOneItemFromCart(item.key)"
           >
             -
           </button>
@@ -30,7 +30,7 @@
           <button
             type="button"
             class="btn-circle"
-            (click)="setCountInc(item.key)"
+            (click)="addOneItemToCart(item.key)"
           >
             +
           </button>

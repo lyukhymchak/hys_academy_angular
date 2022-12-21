@@ -15,7 +15,7 @@ export class StoreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cartService.setItems(
+    this.cartService.setCart(
       this.localStorageService.getData(LocalStorageKeys.CART)
     );
   }

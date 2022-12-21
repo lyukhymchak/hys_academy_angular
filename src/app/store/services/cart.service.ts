@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 import Product from '../interfaces/product.interface';
 import { LocalStorageService } from './localstorage.service';
@@ -7,53 +8,71 @@ import { LocalStorageService } from './localstorage.service';
   providedIn: 'root',
 })
 export class CartService {
-  private items: Map<Product, number>;
+  private cart: Map<Product, number> = new Map();
+  private cartChanged = new Subject<Map<Product, number>>();
+  public cartState$ = this.cartChanged.asObservable();
 
-  constructor(private localStorageService: LocalStorageService) {
-    this.items = new Map();
-  }
+  constructor(private localStorageService: LocalStorageService) {}
 
-  public addToCart(product: Product, count: number): void {
-    if (count !== 0) {
-      this.items.set(product, count);
+  public addItemToCart(item: Product, quantity: number): void {
+    if (quantity !== 0) {
+      this.cart.set(item, quantity);
     } else {
-      this.removeFromCart(product);
+      this.cart.delete(item);
     }
 
-    this.localStorageService.setData(LocalStorageKeys.CART, this.items);
+    this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
+
+    this.cartChanged.next(this.cart);
   }
 
-  public removeFromCart(product: Product): void {
-    if (this.items.has(product)) {
-      this.items.delete(product);
+  public removeItemFromCart(product: Product): void {
+    this.cart.delete(product);
+
+    this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
+
+    this.cartChanged.next(this.cart);
+  }
+
+  public clearCart(): void {
+    this.cart.clear();
+
+    this.cartChanged.next(this.cart);
+  }
+
+  public getCart(): Map<Product, number> {
+    return this.cart;
+  }
+
+  public setCart(cart: Map<Product, number>): void {
+    this.cart = cart;
+  }
+
+  public getQuantity(product: Product): number {
+    return this.cart.get(product) || 1;
+  }
+
+  public getTotalQuantityOfItems(): number {
+    let totalQuantity = 0;
+
+    for (const [item, quantity] of this.cart) {
+      totalQuantity += quantity;
     }
 
-    this.localStorageService.setData(LocalStorageKeys.CART, this.items);
+    return totalQuantity;
   }
 
-  public getItems(): Map<Product, number> {
-    return this.items;
-  }
-
-  public setItems(items: Map<Product, number>): void {
-    this.items = items;
-  }
-
-  public getCountOfItem(product: Product): number {
-    return this.items.get(product) ? this.items.get(product)! : 1;
-  }
-
-  public getTotalPriceOfItems(): number {
+  public getTotalPrice(): number {
     let totalPrice = 0;
 
-    for (let [key, value] of this.items) {
-      totalPrice += key.price * value;
+    for (let [item, quantity] of this.cart) {
+      totalPrice += item.price * quantity;
     }
 
     return totalPrice;
   }
 
-  public clearCart(): void {
-    this.items.clear();
+  public isCartEmpty(): boolean {
+    return this.cart.size === 0;
   }
 }

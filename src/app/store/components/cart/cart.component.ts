@@ -8,35 +8,38 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  public items: Map<Product, number>;
+  public cart: Map<Product, number>;
+  public totalPrice: number;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.items = this.cartService.getItems();
+    this.cart = this.cartService.getCart();
+    this.totalPrice = this.cartService.getTotalPrice();
+
+    this.cartService.cartState$.subscribe((cart) => {
+      this.cart = cart;
+      this.totalPrice = this.cartService.getTotalPrice();
+    });
   }
 
   public removeFromCart(product: Product): void {
-    this.cartService.removeFromCart(product);
+    this.cartService.removeItemFromCart(product);
   }
 
   public isCartEmpty(): boolean {
-    return this.items.size ? false : true;
-  }
-
-  public getTotalPriceOfItems() {
-    return this.cartService.getTotalPriceOfItems();
-  }
-
-  public setCountInc(product: Product): void {
-    this.cartService.addToCart(product, this.items.get(product)! + 1);
-  }
-
-  public setCountDec(product: Product): void {
-    this.cartService.addToCart(product, this.items.get(product)! - 1);
+    return this.cartService.isCartEmpty();
   }
 
   public clearCart(): void {
     this.cartService.clearCart();
+  }
+
+  public addOneItemToCart(product: Product): void {
+    this.cartService.addItemToCart(product, this.cart.get(product)! + 1);
+  }
+
+  public removeOneItemFromCart(product: Product): void {
+    this.cartService.addItemToCart(product, this.cart.get(product)! - 1);
   }
 }
