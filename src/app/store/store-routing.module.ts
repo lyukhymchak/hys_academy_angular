@@ -6,6 +6,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { StoreComponent } from './store.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PageNotFoundComponent } from '../shared/components/page-not-found/page-not-found.component';
+import { ProductResolver } from './services/product.resolver';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       {
         path: 'product/:id',
         component: ProductDetailsComponent,
+        resolve: { product: ProductResolver },
       },
 
       {

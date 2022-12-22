@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Product from '../../interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
 
@@ -12,7 +13,7 @@ export class ProductComponent implements OnInit {
   public quantity: number;
   public buttonLabel: string;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.quantity = this.cartService.getQuantity(this.product);
@@ -22,6 +23,10 @@ export class ProductComponent implements OnInit {
     this.cartService.cartState$.subscribe((cart) => {
       this.checkButtonLabel(cart, this.product);
     });
+  }
+
+  public onProductClick(product: Product): void {
+    this.router.navigate(['/store/product', product.id]);
   }
 
   public addToCart(product: Product, quantity: number): void {

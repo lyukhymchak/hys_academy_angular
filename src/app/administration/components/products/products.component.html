@@ -35,7 +35,17 @@
   </div>
 </header>
 
-<app-table [items]="products"></app-table>
+<section>
+  <ng-container *ngIf="products$ | async as products; else loading">
+    <app-table [items]="products"></app-table>
+  </ng-container>
+  <ng-template #loading>
+    <div class="spinner">
+      <app-spinner></app-spinner>
+    </div>
+  </ng-template>
+</section>
+
 <footer class="footer">
   <span class="page">5/10</span>
   <button type="button" class="btn-circle"><i class="arrow left"></i></button>

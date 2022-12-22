@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { delay, map, Observable, of } from 'rxjs';
 import Product from 'src/app/store/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  products: Array<Product>;
+  public products$: Observable<Product[]>;
 
   constructor() {
-    this.products = this.getProducts();
+    this.products$ = this.getProductsAsync();
   }
 
-  getProductsAsync(): Observable<Product[]> {
-    return of(this.products).pipe(delay(1000));
+  public getProductsAsync(): Observable<Product[]> {
+    return of(this.getProducts()).pipe(delay(500));
   }
 
-  getProducts(count: number = 8): Array<Product> {
+  public getProductById(id: number): Observable<Product | undefined> {
+    return this.products$.pipe(
+      map((products) => products.find((product) => product.id === id))
+    );
+  }
+
+  private getProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
       'Starbucks',
       'Nespresso',
@@ -58,7 +64,7 @@ export class ProductsService {
     return data;
   }
 
-  getRandomInteger(max: number): number {
+  private getRandomInteger(max: number): number {
     return Math.floor(Math.random() * max);
   }
 }

@@ -1,10 +1,14 @@
 :host {
-  width: 80%;
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
   row-gap: 50px;
   column-gap: 25px;
   padding: 10px;
+  min-height: 1000px;
+  width: 80%;
 }
 
 #form {
@@ -81,4 +85,13 @@ i {
 
 .page {
   padding: 5px;
+}
+
+.spinner {
+  display: flex;
+  justify-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
 }
