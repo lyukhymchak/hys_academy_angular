@@ -13,6 +13,8 @@ export class ProductsSectionComponent implements OnInit {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.products;
+    this.productsService.getProductsAsync().subscribe((products) => {
+      this.products = products;
+    });
   }
 }
