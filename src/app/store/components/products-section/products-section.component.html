@@ -1,6 +1,6 @@
 <section class="section">
   <h1 class="section-title">Products</h1>
-  <div class="spinner" *ngIf="loading; else cardsSection">
+  <div class="spinner" *ngIf="showSpinner; else cardsSection">
     <app-spinner></app-spinner>
   </div>
   <ng-template #cardsSection>

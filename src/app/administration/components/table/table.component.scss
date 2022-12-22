@@ -1,10 +1,12 @@
 @import "/src/assets/scss/variables.scss";
 
 .table {
+  position: relative;
   width: 100%;
   text-align: center;
   border-collapse: separate;
   border-spacing: 2em;
+  min-height: 1000px;
 }
 
 .btn-circle {
@@ -46,4 +48,13 @@ i {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+.spinner {
+  display: flex;
+  justify-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -8,8 +8,11 @@
     </th>
     <th><button type="button" class="btn-circle">+</button>Add</th>
   </thead>
+  <div class="spinner">
+    <app-spinner *ngIf="showSpinner"></app-spinner>
+  </div>
   <tbody>
-    <tr class="row" *ngFor="let item of items">
+    <tr class="row" *ngFor="let item of loading$ | async">
       <td *ngFor="let key of keys" [ngSwitch]="key">
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
