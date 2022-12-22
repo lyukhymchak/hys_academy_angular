@@ -9,12 +9,16 @@ import Product from '../../interfaces/product.interface';
 })
 export class ProductsSectionComponent implements OnInit {
   public products: Array<Product>;
+  public loading: boolean;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService) {
+    this.loading = true;
+  }
 
   ngOnInit(): void {
     this.productsService.getProductsAsync().subscribe((products) => {
       this.products = products;
+      this.loading = false;
     });
   }
 }
