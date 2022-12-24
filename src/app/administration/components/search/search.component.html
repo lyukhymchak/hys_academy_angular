@@ -1,0 +1,10 @@
+<div class="search">
+  <input
+    type="text"
+    class="input"
+    placeholder="Search"
+    [(ngModel)]="query"
+    (ngModelChange)="sendData()"
+  />
+  <button type="button" class="btn" (click)="sendData()">Search</button>
+</div>

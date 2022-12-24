@@ -9,6 +9,8 @@ import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TableComponent } from './components/table/table.component';
 import { SharedModule } from '../shared/shared.module';
+import { SearchComponent } from './components/search/search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,13 @@ import { SharedModule } from '../shared/shared.module';
     ProductsComponent,
     SidebarComponent,
     TableComponent,
+    SearchComponent,
   ],
-  imports: [CommonModule, AdministrationRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    AdministrationRoutingModule,
+    SharedModule,
+    FormsModule,
+  ],
 })
 export class AdministrationModule {}
