@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -10,7 +15,7 @@ export class TableComponent implements OnInit {
   public keys: string[];
   public data: Array<any>;
   public sortKey: string;
-  public sortDirection: 'asc' | 'desc' = 'asc';
+  public sortDirection: SortDirection = SortDirection.Ascending;
 
   constructor() {}
 
@@ -18,15 +23,19 @@ export class TableComponent implements OnInit {
     if (this.items.length) {
       this.keys = Object.keys(this.items[0]);
       this.data = [...this.items];
+      this.sort(this.keys[0]);
     }
   }
 
   sort(key: string) {
     if (key === this.sortKey) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      this.sortDirection =
+        this.sortDirection === SortDirection.Ascending
+          ? SortDirection.Descending
+          : SortDirection.Ascending;
     } else {
       this.sortKey = key;
-      this.sortDirection = 'asc';
+      this.sortDirection = SortDirection.Ascending;
     }
     this.data.sort((a, b) => {
       const fieldA = a[key];
@@ -34,17 +43,20 @@ export class TableComponent implements OnInit {
       const type = typeof fieldA;
       switch (type) {
         case 'number':
-          return (fieldA - fieldB) * (this.sortDirection === 'asc' ? 1 : -1);
+          return (
+            (fieldA - fieldB) *
+            (this.sortDirection === SortDirection.Ascending ? 1 : -1)
+          );
         case 'string':
           return (
             fieldA.localeCompare(fieldB) *
-            (this.sortDirection === 'asc' ? 1 : -1)
+            (this.sortDirection === SortDirection.Ascending ? 1 : -1)
           );
         case 'object':
           if (fieldA instanceof Date) {
             return (
               (fieldA.getTime() - fieldB.getTime()) *
-              (this.sortDirection === 'asc' ? 1 : -1)
+              (this.sortDirection === SortDirection.Ascending ? 1 : -1)
             );
           }
           break;
