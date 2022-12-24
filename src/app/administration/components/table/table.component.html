@@ -1,26 +1,37 @@
 <table class="table">
-  <thead class="thead">
-    <th *ngFor="let key of keys">
-      <p>
-        {{ capitalizeFirstLetter(key) }}
-        <i class="arrow down"></i>
-      </p>
-    </th>
-    <th><button type="button" class="btn-circle">+</button>Add</th>
+  <thead>
+    <tr class="row">
+      <ng-template ngFor let-key [ngForOf]="keys">
+        <th (click)="sort(key)" class="column">
+          <span
+            [ngClass]="{
+              'sort-asc': sortKey === key && sortDirection === 'asc',
+              'sort-desc': sortKey === key && sortDirection === 'desc'
+            }"
+          >
+            {{ capitalizeFirstLetter(key) }}
+          </span>
+        </th>
+      </ng-template>
+      <th class="column">
+        <button type="button" class="btn-add">+</button>Add
+      </th>
+    </tr>
   </thead>
-  <!-- <div class="spinner">
-    <app-spinner *ngIf="showSpinner"></app-spinner>
-  </div> -->
   <tbody>
-    <tr class="row" *ngFor="let item of items">
-      <td *ngFor="let key of keys" [ngSwitch]="key">
+    <tr class="row" *ngFor="let item of data">
+      <td *ngFor="let key of keys" [ngSwitch]="key" class="column">
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
         <span *ngSwitchDefault>{{ item[key] }}</span>
       </td>
-      <td>
-        <button type="button" class="btn-circle">&#9998;</button>
-        <button type="button" class="btn-circle">&#10007;</button>
+      <td class="column">
+        <button type="button" class="btn-edit">
+          <span>&#9998;</span>
+        </button>
+        <button type="button" class="btn-delete">
+          <span>&#10007;</span>
+        </button>
       </td>
     </tr>
   </tbody>
