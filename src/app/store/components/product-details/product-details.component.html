@@ -1,0 +1,28 @@
+<section class="section">
+  <h1>Products>{{ product.name }}</h1>
+  <div class="card" [attr.id]="'card-' + product.id">
+    <div class="card-name">{{ product.name }}</div>
+    <div class="card-description">Description</div>
+    <div class="card-price" [price]="product.price" setColor>
+      {{ product.price | currencyPipe }}
+    </div>
+    <div class="button-container">
+      <div class="btn-circle-group">
+        <button type="button" class="btn-circle" (click)="setCountDec()">
+          -
+        </button>
+        <div class="count">{{ count }}</div>
+        <button type="button" class="btn-circle" (click)="setCountInc()">
+          +
+        </button>
+      </div>
+      <button
+        class="btn btn-dark"
+        type="button"
+        (click)="addToCart(product, count)"
+      >
+        {{ buttonLabel }}
+      </button>
+    </div>
+  </div>
+</section>

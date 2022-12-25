@@ -1,0 +1,9 @@
+@import "/src/assets/scss/variables.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 1920px;
+  background: $bg-color;
+}

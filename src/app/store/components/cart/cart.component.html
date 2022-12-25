@@ -1,0 +1,48 @@
+<div class="cart">
+  <h1>Cart</h1>
+  <h3 *ngIf="isCartEmpty(); else totalPrice">Cart is empty</h3>
+  <ng-template #totalPrice>
+    <h3>Total price {{ getTotalPriceOfItems() | currencyPipe }}</h3>
+    <button class="btn btn-dark" type="button" (click)="clearCart()">
+      Clear cart
+    </button>
+    <div class="cards">
+      <div
+        *ngFor="let item of items | keyvalue"
+        class="card"
+        [attr.id]="'card-' + item.key.id"
+      >
+        <h2 class="card-name">
+          {{ item.key.name }}
+        </h2>
+        <div class="card-price">
+          {{ item.key.price | currencyPipe }}
+        </div>
+        <div class="btn-circle-group">
+          <button
+            type="button"
+            class="btn-circle"
+            (click)="setCountDec(item.key)"
+          >
+            -
+          </button>
+          <div class="count">{{ item.value }}</div>
+          <button
+            type="button"
+            class="btn-circle"
+            (click)="setCountInc(item.key)"
+          >
+            +
+          </button>
+        </div>
+        <button
+          class="btn btn-light"
+          type="button"
+          (click)="removeFromCart(item.key)"
+        >
+          Remove from cart
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>
