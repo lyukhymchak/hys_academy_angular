@@ -10,6 +10,13 @@ const routes: Routes = [
       import('./store/store.module').then((mod) => mod.StoreModule),
   },
   {
+    path: 'administration',
+    loadChildren: () =>
+      import('./administration/administration.module').then(
+        (mod) => mod.AdministrationModule
+      ),
+  },
+  {
     path: '**',
     component: PageNotFoundComponent,
   },

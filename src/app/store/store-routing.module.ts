@@ -10,11 +10,11 @@ import { PageNotFoundComponent } from '../shared/components/page-not-found/page-
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/products',
+    redirectTo: '/store',
     pathMatch: 'full',
   },
   {
-    path: 'products',
+    path: 'store',
     component: StoreComponent,
     children: [
       {

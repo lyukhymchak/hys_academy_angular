@@ -1,24 +1,22 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import Product from '../../interfaces/product.interface';
+
 import { CartService } from '../../services/cart.service';
-import { ProductsService } from '../../services/products.service';
+import Product from '../../interfaces/product.interface';
+import { ProductsService } from 'src/app/shared/services/products.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent implements OnInit, AfterViewInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   private productId: string;
   public product: Product;
-  public count: number;
+  public quantity: number;
   public buttonLabel: string = 'Add to cart';
+  private subscription: Subscription;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -27,8 +25,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.count = this.cartService.getCountOfItem(this.product);
-
     if (this.activatedroute.snapshot.paramMap.get('id')) {
       this.productId = this.activatedroute.snapshot.paramMap.get(
         'id'
@@ -42,30 +38,46 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         (x) => x.id === Number(this.productId)
       ) as Product;
     }
+
+    this.quantity = this.cartService.getQuantity(this.product);
+    this.checkButtonLabel(this.cartService.getCart(), this.product);
+
+    this.subscription = this.cartService.cartState$.subscribe((cart) => {
+      this.quantity = this.cartService.getQuantity(this.product);
+      this.checkButtonLabel(cart, this.product);
+    });
   }
 
-  ngAfterViewInit(): void {
-    this.count = this.cartService.getCountOfItem(this.product);
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public addToCart(product: Product, count: number) {
-    this.cartService.addToCart(product, count);
+    this.cartService.addItemToCart(product, count);
     this.buttonLabel = 'In cart';
   }
 
   public setCountInc(): void {
-    this.count++;
+    this.quantity++;
     if (this.buttonLabel === 'In cart') {
       this.buttonLabel = 'Refresh cart';
     }
   }
 
   public setCountDec(): void {
-    if (this.count > 1) {
-      this.count--;
+    if (this.quantity > 1) {
+      this.quantity--;
       if (this.buttonLabel === 'In cart') {
         this.buttonLabel = 'Refresh cart';
       }
+    }
+  }
+
+  private checkButtonLabel(cart: Map<Product, number>, product: Product) {
+    if (cart.has(this.product)) {
+      this.buttonLabel = 'In cart';
+    } else {
+      this.buttonLabel = 'Add to cart';
     }
   }
 }

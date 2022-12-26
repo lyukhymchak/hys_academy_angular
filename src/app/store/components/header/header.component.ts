@@ -8,25 +8,15 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  private items: Map<Product, number>;
-
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.items = this.cartService.getItems();
-  }
+  ngOnInit(): void {}
 
   public isCartEmpty(): boolean {
-    return this.items.size ? true : false;
+    return !this.cartService.isCartEmpty();
   }
 
-  public getCountOfItemsInCart(): number {
-    let count = 0;
-
-    for (let value of this.items.values()) {
-      count += value;
-    }
-
-    return count;
+  public getTotalQuantityOfItems(): number {
+    return this.cartService.getTotalQuantityOfItems();
   }
 }
