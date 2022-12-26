@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { ProductsService } from 'src/app/shared/services/products.service';
-import { SearchService } from 'src/app/shared/services/services.service';
+import { SearchService } from 'src/app/shared/services/search.service';
 import Product from 'src/app/store/interfaces/product.interface';
 
 @Component({
@@ -22,6 +22,7 @@ export class ProductsComponent {
 
   ngOnInit(): void {
     this.products$ = this.productsService.products$.pipe(
+      switchMap((products) => this.searchService.search('', products)),
       takeUntil(this.destroy$)
     );
   }
@@ -33,7 +34,7 @@ export class ProductsComponent {
 
   public search(value: string): void {
     this.products$ = this.productsService.products$.pipe(
-      map((products) => this.searchService.search(value, products)),
+      switchMap((products) => this.searchService.search(value, products)),
       takeUntil(this.destroy$)
     );
   }

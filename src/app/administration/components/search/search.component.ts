@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { debounceTime, Subject, Subscription, tap } from 'rxjs';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',

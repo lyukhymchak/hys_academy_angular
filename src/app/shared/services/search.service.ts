@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -6,14 +7,15 @@ import { Injectable } from '@angular/core';
 export class SearchService {
   constructor() {}
 
-  public search(query: string, items: Array<any>): Array<any> {
-    return items.filter((item) => this.searchInItem(query, item));
+  public search(query: string, items: any[]): Observable<any[]> {
+    return of(items).pipe(
+      map((items) => {
+        return items.filter((item) => this.searchInItem(query, item));
+      })
+    );
   }
 
   public searchInItem(query: string, item: any): boolean {
-    if (!query) {
-      return true;
-    }
     for (const key of Object.keys(item)) {
       const value = item[key];
       const type = typeof value;

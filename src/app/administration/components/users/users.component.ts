@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { UsersService } from 'src/app/shared/services/users.service';
-import { SearchService } from 'src/app/shared/services/services.service';
+import { SearchService } from 'src/app/shared/services/search.service';
 import User from '../../interfaces/user.interface';
 
 @Component({
@@ -21,7 +21,10 @@ export class UsersComponent {
   ) {}
 
   ngOnInit(): void {
-    this.users$ = this.usersService.users$.pipe(takeUntil(this.destroy$));
+    this.users$ = this.usersService.users$.pipe(
+      switchMap((users) => this.searchService.search('', users)),
+      takeUntil(this.destroy$)
+    );
   }
 
   ngOnDestroy(): void {
@@ -31,7 +34,7 @@ export class UsersComponent {
 
   public search(value: string): void {
     this.users$ = this.usersService.users$.pipe(
-      map((users) => this.searchService.search(value, users)),
+      switchMap((users) => this.searchService.search(value, users)),
       takeUntil(this.destroy$)
     );
   }
