@@ -35,7 +35,10 @@
   </div>
 </header>
 
-<app-table [items]="products"></app-table>
+<app-table
+  *ngIf="products && products.length > 0"
+  [items]="products"
+></app-table>
 <footer class="footer">
   <span class="page">5/10</span>
   <button type="button" class="btn-circle"><i class="arrow left"></i></button>
