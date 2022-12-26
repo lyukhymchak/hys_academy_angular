@@ -31,11 +31,7 @@ export class UsersComponent {
 
   public search(value: string): void {
     this.users$ = this.usersService.users$.pipe(
-      map((users) =>
-        users.filter((user: User) =>
-          this.searchService.searchInObject(value, user)
-        )
-      ),
+      map((users) => this.searchService.search(value, users)),
       takeUntil(this.destroy$)
     );
   }

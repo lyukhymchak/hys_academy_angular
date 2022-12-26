@@ -33,11 +33,7 @@ export class ProductsComponent {
 
   public search(value: string): void {
     this.products$ = this.productsService.products$.pipe(
-      map((products) =>
-        products.filter((product: Product) =>
-          this.searchService.searchInObject(value, product)
-        )
-      ),
+      map((products) => this.searchService.search(value, products)),
       takeUntil(this.destroy$)
     );
   }

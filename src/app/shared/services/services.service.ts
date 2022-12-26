@@ -6,7 +6,11 @@ import { Injectable } from '@angular/core';
 export class SearchService {
   constructor() {}
 
-  public searchInObject(query: string, item: any): boolean {
+  public search(query: string, items: Array<any>): Array<any> {
+    return items.filter((item) => this.searchInItem(query, item));
+  }
+
+  public searchInItem(query: string, item: any): boolean {
     if (!query) {
       return true;
     }
