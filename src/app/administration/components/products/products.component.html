@@ -1,44 +1,50 @@
-<header>
-  <h1>Products</h1>
-  <div class="form-container">
-    <form id="form">
-      <input
-        type="text"
-        id="search"
-        class="input-search"
-        name="search"
-        placeholder="Search..."
-      />
-
-      <div>
-        <select name="" id="" class="select">
-          <option value="">Price more than</option>
-        </select>
+<div>
+  <header>
+    <h1>Products</h1>
+    <div class="form-container">
+      <form id="form">
         <input
           type="text"
-          id="price"
-          class="input-price"
-          name="price"
-          value="10"
+          id="search"
+          class="input-search"
+          name="search"
+          placeholder="Search..."
         />
-      </div>
 
-      <button
-        type="submit"
-        id="apply"
-        name="button"
-        class="btn btn-dark btn-apply"
-      >
-        Apply
-      </button>
-    </form>
-  </div>
-</header>
+        <div>
+          <select name="" id="" class="select">
+            <option value="">Price more than</option>
+          </select>
+          <input
+            type="text"
+            id="price"
+            class="input-price"
+            name="price"
+            value="10"
+          />
+        </div>
 
-<app-table
-  *ngIf="products && products.length > 0"
-  [items]="products"
-></app-table>
+        <button
+          type="submit"
+          id="apply"
+          name="button"
+          class="btn btn-dark btn-apply"
+        >
+          Apply
+        </button>
+      </form>
+    </div>
+  </header>
+  <ng-container *ngIf="products && products.length > 0; else loadingSpinner">
+    <app-table [items]="products"></app-table>
+  </ng-container>
+  <ng-template #loadingSpinner>
+    <div class="spinner">
+      <app-spinner></app-spinner>
+    </div>
+  </ng-template>
+</div>
+
 <footer class="footer">
   <span class="page">5/10</span>
   <button type="button" class="btn-circle"><i class="arrow left"></i></button>

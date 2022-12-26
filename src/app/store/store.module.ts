@@ -11,9 +11,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartTooltipComponent } from './components/cart-tooltip/cart-tooltip.component';
 
 import { StoreRoutingModule } from './store-routing.module';
-import { CurrencyPipe } from './pipes/currency.pipe';
 import { SetColorDirective } from './directives/setcolor.directive';
 import { CartTooltipDirective } from './directives/cart-tooltip.directive';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,13 +22,12 @@ import { CartTooltipDirective } from './directives/cart-tooltip.directive';
     FooterComponent,
     ProductsSectionComponent,
     ProductComponent,
-    CurrencyPipe,
     SetColorDirective,
     CartComponent,
     ProductDetailsComponent,
     CartTooltipComponent,
     CartTooltipDirective,
   ],
-  imports: [CommonModule, StoreRoutingModule],
+  imports: [CommonModule, StoreRoutingModule, SharedModule],
 })
 export class StoreModule {}

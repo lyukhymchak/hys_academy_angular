@@ -1,11 +1,20 @@
 <section class="section">
   <h1 class="section-title">Products</h1>
-  <div class="cards">
-    <app-product
-      *ngFor="let curProduct of products"
-      [product]="curProduct"
-    ></app-product>
-  </div>
+
+  <ng-container *ngIf="!isLoading; else loadingSpinner">
+    <div class="cards">
+      <app-product
+        *ngFor="let curProduct of products"
+        [product]="curProduct"
+      ></app-product>
+    </div>
+  </ng-container>
+  <ng-template #loadingSpinner>
+    <div class="spinner">
+      <app-spinner></app-spinner>
+    </div>
+  </ng-template>
+
   <div class="button-container">
     <button class="btn btn-dark" type="button">Load more</button>
   </div>

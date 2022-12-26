@@ -1,7 +1,11 @@
 @import "/src/assets/scss/variables.scss";
 
 .section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 0 100px;
+  min-height: 1200px;
 }
 
 .cards {
@@ -17,4 +21,9 @@
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
 }

@@ -12,12 +12,18 @@ export class ProductsSectionComponent implements OnInit, OnDestroy {
   private productsSubscription: Subscription;
 
   public products: Array<Product>;
+  public isLoading: boolean;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService) {
+    this.isLoading = true;
+  }
 
   ngOnInit(): void {
     this.productsSubscription = this.productsService.products$.subscribe(
-      (products) => (this.products = products)
+      (products) => {
+        this.products = products;
+        this.isLoading = false;
+      }
     );
   }
 
