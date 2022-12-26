@@ -1,7 +1,10 @@
 <div>
   <header>
     <h1>Users</h1>
-    <app-search (search)="searchItemsInUsersList($event)"></app-search>
+    <app-search
+      (modelChangeEvent)="search($event)"
+      (clickEvent)="search($event)"
+    ></app-search>
   </header>
 
   <section>

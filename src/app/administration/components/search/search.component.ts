@@ -1,49 +1,53 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+
+import { debounceTime, Subject, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
 })
-export class SearchComponent {
-  @Output() public search = new EventEmitter<any>();
+export class SearchComponent implements OnInit, OnDestroy {
+  private change = new Subject<string>();
+  private changeSubscription: Subscription;
+
+  @Output() public modelChangeEvent = new EventEmitter<string>();
+  @Output() public clickEvent = new EventEmitter<string>();
+
   public query: string;
 
-  sendData() {
-    this.search.emit(this.query);
+  constructor() {}
+
+  ngOnDestroy(): void {
+    this.changeSubscription.unsubscribe();
   }
 
-  public searchExpression(item: any) {
-    if (!this.query) {
-      return true;
-    }
-    for (const key of Object.keys(item)) {
-      const value = item[key];
-      const type = typeof value;
-      switch (type) {
-        case 'string':
-          if (value.toLowerCase().includes(this.query.toLowerCase())) {
-            return true;
-          }
-          break;
-        case 'number':
-          if (
-            value.toString().toLowerCase().includes(this.query.toLowerCase())
-          ) {
-            return true;
-          }
-          break;
-        case 'object':
-          if (value instanceof Date) {
-            const dateString = value.toDateString();
-            if (dateString.includes(this.query)) {
-              return true;
-            }
-          }
-          break;
-      }
-    }
+  ngOnInit(): void {
+    this.changeSubscription = this.change
+      .pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.modelChangeEvent.emit(value);
+      });
+  }
 
-    return false;
+  public onModelChange(value: string): void {
+    this.change.next(value);
+  }
+
+  public onClick(value: string): void {
+    this.clickEvent.emit(value);
+
+    this.changeSubscription.unsubscribe();
+    this.changeSubscription = this.change
+      .pipe(debounceTime(500))
+      .subscribe((value) => {
+        this.modelChangeEvent.emit(value);
+      });
   }
 }

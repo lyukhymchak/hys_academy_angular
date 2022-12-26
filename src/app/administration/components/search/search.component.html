@@ -4,7 +4,7 @@
     class="input"
     placeholder="Search"
     [(ngModel)]="query"
-    (ngModelChange)="sendData()"
+    (ngModelChange)="onModelChange($event)"
   />
-  <button type="button" class="btn" (click)="sendData()">Search</button>
+  <button type="button" class="btn" (click)="onClick(query)">Search</button>
 </div>
