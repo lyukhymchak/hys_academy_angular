@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import Product from '../../interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
 
@@ -8,25 +8,26 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   public quantity: number;
   public buttonLabel: string;
+  private subscription: Subscription;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.quantity = this.cartService.getQuantity(this.product);
     this.buttonLabel = 'Add to cart';
     this.checkButtonLabel(this.cartService.getCart(), this.product);
 
-    this.cartService.cartState$.subscribe((cart) => {
+    this.subscription = this.cartService.cartState$.subscribe((cart) => {
       this.checkButtonLabel(cart, this.product);
     });
   }
 
-  public onProductClick(product: Product): void {
-    this.router.navigate(['/store/product', product.id]);
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public addToCart(product: Product, quantity: number): void {

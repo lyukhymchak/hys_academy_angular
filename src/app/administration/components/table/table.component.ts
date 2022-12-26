@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { delay, Subject, of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-table',
