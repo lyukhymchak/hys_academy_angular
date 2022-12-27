@@ -29,4 +29,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.productsSubscription.unsubscribe();
   }
+
+  public search(query: string): void {
+    console.log(query);
+  }
 }
