@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import Product from '../../interfaces/product.interface';
 import { ProductsService } from 'src/app/shared/services/products.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -16,6 +16,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private cartSubscription: Subscription;
   private productsSubscription: Subscription;
 
+  public loading$ = new BehaviorSubject<boolean>(true);
   public product: Product;
   public quantity: number;
   public buttonLabel: string = 'Add to cart';
@@ -33,13 +34,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.productsSubscription = this.productsService.products$.subscribe(
-      (products) =>
-        (this.product = products.find((x) => x.id === this.productId)!)
-    );
-
     this.quantity = this.cartService.getQuantity(this.product);
     this.checkButtonLabel(this.cartService.getCart(), this.product);
+
+    this.productsSubscription = this.productsService.products$.subscribe(
+      (products: Product[]) => {
+        this.product = products.find((x) => x.id === this.productId)!;
+
+        this.loading$.next(false);
+      }
+    );
 
     this.cartSubscription = this.cartService.cartState$.subscribe((cart) => {
       this.quantity = this.cartService.getQuantity(this.product);
@@ -52,7 +56,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.productsSubscription.unsubscribe();
   }
 
-  public addToCart(product: Product, count: number) {
+  public addToCart(product: Product, count: number): void {
     this.cartService.addItemToCart(product, count);
     this.buttonLabel = 'In cart';
   }
@@ -73,7 +77,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private checkButtonLabel(cart: Map<Product, number>, product: Product) {
+  private checkButtonLabel(cart: Map<Product, number>, product: Product): void {
     if (cart.has(this.product)) {
       this.buttonLabel = 'In cart';
     } else {

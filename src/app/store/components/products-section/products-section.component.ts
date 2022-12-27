@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import Product from '../../interfaces/product.interface';
 
@@ -11,18 +11,16 @@ import Product from '../../interfaces/product.interface';
 export class ProductsSectionComponent implements OnInit, OnDestroy {
   private productsSubscription: Subscription;
 
-  public products: Array<Product>;
-  public isLoading: boolean;
+  public products: Product[];
+  public loading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private productsService: ProductsService) {
-    this.isLoading = true;
-  }
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
     this.productsSubscription = this.productsService.products$.subscribe(
       (products) => {
         this.products = products;
-        this.isLoading = false;
+        this.loading$.next(false);
       }
     );
   }
