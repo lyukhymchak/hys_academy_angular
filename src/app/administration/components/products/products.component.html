@@ -35,13 +35,13 @@
       </form>
     </div>
   </header>
-  <ng-container *ngIf="products && products.length > 0; else loadingSpinner">
-    <app-table [items]="products"></app-table>
-  </ng-container>
-  <ng-template #loadingSpinner>
+  <ng-container *ngIf="loading$ | async; else table">
     <div class="spinner">
       <app-spinner></app-spinner>
     </div>
+  </ng-container>
+  <ng-template #table>
+    <app-table [items]="products"></app-table>
   </ng-template>
 </div>
 
