@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdministrationComponent } from './administration.component';
-import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
@@ -16,7 +15,8 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersComponent,
+        loadChildren: () =>
+          import('src/app/users/users.module').then((mod) => mod.UsersModule),
       },
       {
         path: 'products',
