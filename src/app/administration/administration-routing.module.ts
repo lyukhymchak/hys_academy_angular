@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdministrationComponent } from './administration.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
-import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {
@@ -25,10 +24,6 @@ const routes: Routes = [
         component: ProductsComponent,
       },
     ],
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   },
 ];
 
