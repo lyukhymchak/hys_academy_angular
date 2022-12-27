@@ -1,11 +1,15 @@
 <table class="table">
   <thead>
     <tr class="row">
-      <th class="column" *ngFor="let key of keys">
-        <p>
+      <th class="column" (click)="sort(key)" *ngFor="let key of keys">
+        <span
+          [ngClass]="{
+            'sort-asc': sortKey === key && sortDirection === 'asc',
+            'sort-desc': sortKey === key && sortDirection === 'desc'
+          }"
+        >
           {{ capitalizeFirstLetter(key) }}
-          <i class="arrow down"></i>
-        </p>
+        </span>
       </th>
       <th class="column">
         <button type="button" class="btn-circle">+</button>Add
@@ -13,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="row" *ngFor="let item of items">
+    <tr class="row" *ngFor="let item of data">
       <td class="column" *ngFor="let key of keys" [ngSwitch]="key">
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
