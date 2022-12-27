@@ -7,7 +7,7 @@ import { AdministrationComponent } from './administration.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { TableComponent } from './components/table/table.component';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -16,7 +16,6 @@ import { SharedModule } from '../shared/shared.module';
     UsersComponent,
     ProductsComponent,
     SidebarComponent,
-    TableComponent,
   ],
   imports: [CommonModule, AdministrationRoutingModule, SharedModule],
 })
