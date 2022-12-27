@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { BehaviorSubject, Subscription } from 'rxjs';
+
 import { CartService } from '../../services/cart.service';
 import Product from '../../interfaces/product.interface';
 import { ProductsService } from 'src/app/shared/services/products.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -13,7 +14,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   private productId: number;
-  private cartSubscription: Subscription;
   private productsSubscription: Subscription;
 
   public loading$ = new BehaviorSubject<boolean>(true);
@@ -40,19 +40,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.productsSubscription = this.productsService.products$.subscribe(
       (products: Product[]) => {
         this.product = products.find((x) => x.id === this.productId)!;
+        this.quantity = this.cartService.getQuantity(this.product);
+        this.checkButtonLabel(this.cartService.getCart(), this.product);
 
         this.loading$.next(false);
       }
     );
-
-    this.cartSubscription = this.cartService.cartState$.subscribe((cart) => {
-      this.quantity = this.cartService.getQuantity(this.product);
-      this.checkButtonLabel(cart, this.product);
-    });
   }
 
   ngOnDestroy(): void {
-    this.cartSubscription.unsubscribe();
     this.productsSubscription.unsubscribe();
   }
 
