@@ -29,13 +29,16 @@ export class CartService {
   public removeItemFromCart(product: Product): void {
     this.cart.delete(product);
 
-    this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
+    this.isCartEmpty()
+      ? this.localStorageService.clearLocalStorage(LocalStorageKeys.CART)
+      : this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
 
     this.cartChanged.next(this.cart);
   }
 
   public clearCart(): void {
     this.cart.clear();
+    this.localStorageService.clearLocalStorage(LocalStorageKeys.CART);
 
     this.cartChanged.next(this.cart);
   }
