@@ -1,22 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdministrationComponent } from './administration.component';
-
 import { UsersComponent } from './components/users/users.component';
-import { ProductsComponent } from './components/products/products.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
+import { AdministrationRoutingModule } from './administration-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ProductsModule } from '../products/products.module';
 
 @NgModule({
-  declarations: [
-    AdministrationComponent,
-    UsersComponent,
-    ProductsComponent,
-    SidebarComponent,
+  declarations: [AdministrationComponent, UsersComponent, SidebarComponent],
+  imports: [
+    CommonModule,
+    AdministrationRoutingModule,
+    SharedModule,
+    ProductsModule,
   ],
-  imports: [CommonModule, AdministrationRoutingModule, SharedModule],
 })
 export class AdministrationModule {}

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { ProductsService } from 'src/app/shared/services/products.service';
 import Product from 'src/app/store/interfaces/product.interface';
