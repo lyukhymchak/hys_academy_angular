@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import FilterCondition from 'src/app/shared/interfaces/filter-condition.model';
 
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from 'src/app/shared/services/search.service';
@@ -14,7 +15,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private productsSubscription: Subscription;
 
   public products: Product[] = [];
-  public productsFiltered: Product[] = [];
+  public filteredProducts: Product[] = [];
+  public filterOptions = ['Price more than', 'Price less than', 'Equal'];
 
   public loading$ = new BehaviorSubject<boolean>(true);
 
@@ -27,7 +29,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsSubscription = this.productsService.products$.subscribe(
       (products) => {
         this.products = products;
-        this.productsFiltered = [...products];
+        this.filteredProducts = [...products];
         this.loading$.next(false);
       }
     );
@@ -38,9 +40,25 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   public search(query: string): void {
-    this.productsFiltered = this.searchService.searchThroughAllFields(
+    this.filteredProducts = this.searchService.searchThroughAllFields(
       query,
       this.products
     );
+  }
+
+  public filterByPrice(filterData: FilterCondition<string, number>): void {
+    if (filterData.selectedOptionValue === 'Price more than') {
+      this.filteredProducts = this.products.filter(
+        (item) => item.price > filterData.inputValue
+      );
+    } else if (filterData.selectedOptionValue === 'Price less than') {
+      this.filteredProducts = this.products.filter(
+        (item) => item.price < filterData.inputValue
+      );
+    } else if (filterData.selectedOptionValue === 'Equal') {
+      this.filteredProducts = this.products.filter(
+        (item) => item.price === filterData.inputValue
+      );
+    }
   }
 }

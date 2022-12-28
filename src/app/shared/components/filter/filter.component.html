@@ -1,0 +1,9 @@
+<form (submit)="handleSubmit(filterCondition)">
+  <select [(ngModel)]="filterCondition.selectedOptionValue" name="select">
+    <option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </option>
+  </select>
+  <input type="number" [(ngModel)]="filterCondition.inputValue" name="input" />
+  <button type="submit">Filter</button>
+</form>
