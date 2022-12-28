@@ -1,11 +1,13 @@
 <div>
   <header>
     <h1>Products</h1>
-    <app-search (modelChangeEvent)="search($event)"></app-search>
-    <app-filter
-      [options]="filterOptions"
-      (submit)="filterByPrice($event)"
-    ></app-filter>
+    <div class="searchbar">
+      <app-search (modelChangeEvent)="search($event)"></app-search>
+      <app-filter
+        [options]="filterOptions"
+        (submit)="filterByPrice($event)"
+      ></app-filter>
+    </div>
   </header>
   <ng-container *ngIf="loading$ | async; else table">
     <div class="spinner">
