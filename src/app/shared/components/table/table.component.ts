@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 
 enum SortDirection {
   Ascending = 'asc',
@@ -10,10 +16,12 @@ enum SortDirection {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
   @Input() public items: Array<any>;
-  public keys: string[];
   public data: Array<any>;
+
+  public keys: string[];
+
   public sortKey: string;
   public sortDirection: SortDirection = SortDirection.Ascending;
 
@@ -24,6 +32,12 @@ export class TableComponent implements OnInit {
       this.keys = Object.keys(this.items[0]);
       this.data = [...this.items];
       this.sort(this.keys[0]);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['items'].currentValue !== changes['items'].previousValue) {
+      this.data = [...this.items];
     }
   }
 

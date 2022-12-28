@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { ProductsService } from 'src/app/shared/services/products.service';
+import { SearchService } from 'src/app/shared/services/search.service';
 import Product from 'src/app/store/interfaces/product.interface';
 
 @Component({
@@ -13,14 +14,20 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private productsSubscription: Subscription;
 
   public products: Product[] = [];
+  public productsFiltered: Product[] = [];
+
   public loading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private searchService: SearchService
+  ) {}
 
   ngOnInit(): void {
     this.productsSubscription = this.productsService.products$.subscribe(
       (products) => {
         this.products = products;
+        this.productsFiltered = [...products];
         this.loading$.next(false);
       }
     );
@@ -31,6 +38,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   public search(query: string): void {
-    console.log(query);
+    this.productsFiltered = this.searchService.searchThroughAllFields(
+      query,
+      this.products
+    );
   }
 }
