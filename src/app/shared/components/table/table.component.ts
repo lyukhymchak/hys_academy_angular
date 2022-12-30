@@ -4,7 +4,10 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
+
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 enum SortDirection {
   Ascending = 'asc',
@@ -25,20 +28,44 @@ export class TableComponent implements OnInit, OnChanges {
   public sortKey: string;
   public sortDirection: SortDirection = SortDirection.Ascending;
 
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  public totalNumberOfItems: number;
+  public pageIndex: number = 0;
+  public pageSize: number = 12;
+  public hidePageSize: boolean = true;
+  public showFirstLastButtons: boolean = true;
+
   constructor() {}
 
   ngOnInit(): void {
     if (this.items.length) {
       this.keys = Object.keys(this.items[0]);
-      this.data = [...this.items];
-      this.sort(this.keys[0]);
+
+      this.setPaginatorToFirstPage();
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['items'].currentValue !== changes['items'].previousValue) {
-      this.data = [...this.items];
+      this.sortKey = '';
+      this.setPaginatorToFirstPage();
     }
+  }
+
+  public setPaginatorToFirstPage(): void {
+    this.paginator.pageIndex = 0;
+    this.totalNumberOfItems = this.items.length;
+
+    this.pageSize = Math.min(12, this.totalNumberOfItems);
+    if (this.pageSize < 12) {
+      this.hidePageSize = false;
+      this.showFirstLastButtons = false;
+    } else {
+      this.hidePageSize = true;
+      this.showFirstLastButtons = true;
+    }
+    this.data = [...this.items].slice(0, this.pageSize);
   }
 
   public sort(key: string): void {
@@ -51,7 +78,7 @@ export class TableComponent implements OnInit, OnChanges {
       this.sortKey = key;
       this.sortDirection = SortDirection.Ascending;
     }
-    this.data.sort((a, b) => {
+    this.items.sort((a, b) => {
       const fieldA = a[key];
       const fieldB = b[key];
       const type = typeof fieldA;
@@ -77,9 +104,18 @@ export class TableComponent implements OnInit, OnChanges {
       }
       return -1;
     });
+
+    this.setPaginatorToFirstPage();
   }
 
   public capitalizeFirstLetter(word: string): string {
     return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  public changePage(event: PageEvent): void {
+    const startIndex = event.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    this.data = [...this.items].slice(startIndex, endIndex);
   }
 }

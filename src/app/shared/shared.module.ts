@@ -6,6 +6,7 @@ import { TableComponent } from './components/table/table.component';
 import { SearchComponent } from './components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { FilterComponent } from './components/filter/filter.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { FilterComponent } from './components/filter/filter.component';
     SearchComponent,
     FilterComponent,
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatPaginatorModule],
   exports: [
     CurrencyPipe,
     SpinnerComponent,

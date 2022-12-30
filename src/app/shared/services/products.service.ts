@@ -13,7 +13,7 @@ export class ProductsService {
   }
 
   public getProductsAsync(): Observable<Product[]> {
-    return of(this.getProducts()).pipe(delay(500));
+    return of(this.getProducts(50)).pipe(delay(500));
   }
 
   private getProducts(count: number = 8): Array<Product> {

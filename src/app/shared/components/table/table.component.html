@@ -30,3 +30,13 @@
     </tr>
   </tbody>
 </table>
+
+<mat-paginator
+  [length]="totalNumberOfItems"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [hidePageSize]="hidePageSize"
+  [showFirstLastButtons]="showFirstLastButtons"
+  (page)="changePage($event)"
+>
+</mat-paginator>

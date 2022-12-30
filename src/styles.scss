@@ -49,3 +49,6 @@ body {
 .btn-dark:hover {
   box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
