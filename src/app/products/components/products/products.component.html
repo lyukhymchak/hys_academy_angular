@@ -5,7 +5,7 @@
       <app-search (modelChangeEvent)="search($event)"></app-search>
       <app-filter
         [options]="filterOptions"
-        (submit)="filterByPrice($event)"
+        (filter)="filterByPrice($event)"
       ></app-filter>
     </div>
   </header>

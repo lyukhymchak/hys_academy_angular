@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import FilterCondition from 'src/app/shared/interfaces/filter-condition.model';
 
+import { FilterService } from 'src/app/shared/services/filter.service';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from 'src/app/shared/services/search.service';
 import Product from 'src/app/store/interfaces/product.interface';
@@ -22,7 +23,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private productsService: ProductsService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private filterService: FilterService
   ) {}
 
   ngOnInit(): void {
@@ -46,19 +48,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     );
   }
 
-  public filterByPrice(filterData: FilterCondition<string, number>): void {
-    if (filterData.selectedOptionValue === 'Price more than') {
-      this.filteredProducts = this.products.filter(
-        (item) => item.price > filterData.inputValue
-      );
-    } else if (filterData.selectedOptionValue === 'Price less than') {
-      this.filteredProducts = this.products.filter(
-        (item) => item.price < filterData.inputValue
-      );
-    } else if (filterData.selectedOptionValue === 'Equal') {
-      this.filteredProducts = this.products.filter(
-        (item) => item.price === filterData.inputValue
-      );
-    }
+  public filterByPrice(filterCondition: FilterCondition<string, number>): void {
+    console.log('kljl');
+    this.filteredProducts = this.filterService.filterProductsByPrice(
+      filterCondition,
+      this.products
+    );
   }
 }

@@ -8,7 +8,7 @@ import FilterCondition from '../../interfaces/filter-condition.model';
 })
 export class FilterComponent implements OnInit {
   @Input() public options: string[];
-  @Output() public submit = new EventEmitter<FilterCondition<string, number>>();
+  @Output() public filter = new EventEmitter<FilterCondition<string, number>>();
 
   public filterCondition: FilterCondition<string, number>;
 
@@ -22,6 +22,6 @@ export class FilterComponent implements OnInit {
   }
 
   handleSubmit(filterCondition: FilterCondition<string, number>): void {
-    this.submit.emit(filterCondition);
+    this.filter.emit(filterCondition);
   }
 }
