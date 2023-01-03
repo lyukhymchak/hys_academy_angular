@@ -39,7 +39,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     this.productsSubscription = this.productsService.products$.subscribe(
       (products: Product[]) => {
-        this.product = products.find((x) => x.id === this.productId)!;
+        this.product = products.find((x: Product) => x.id === this.productId)!;
         this.quantity = this.cartService.getQuantity(this.product);
         this.checkButtonLabel(this.cartService.getCart(), this.product);
 
@@ -74,10 +74,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   private checkButtonLabel(cart: Map<Product, number>, product: Product): void {
-    if (cart.has(this.product)) {
-      this.buttonLabel = 'In cart';
-    } else {
-      this.buttonLabel = 'Add to cart';
-    }
+    cart.has(this.product)
+      ? (this.buttonLabel = 'In cart')
+      : (this.buttonLabel = 'Add to cart');
   }
 }

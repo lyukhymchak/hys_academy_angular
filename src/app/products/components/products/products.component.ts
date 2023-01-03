@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
 import FilterCondition from 'src/app/shared/interfaces/filter-condition.model';
 
 import { FilterService } from 'src/app/shared/services/filter.service';
@@ -12,7 +12,7 @@ import Product from 'src/app/store/interfaces/product.interface';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit {
   private productsSubscription: Subscription;
 
   public products: Product[] = [];
@@ -28,17 +28,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.productsSubscription = this.productsService.products$.subscribe(
-      (products) => {
+    this.productsSubscription = this.productsService.products$
+      .pipe(take(1))
+      .subscribe((products) => {
         this.products = products;
         this.filteredProducts = [...products];
         this.loading$.next(false);
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.productsSubscription.unsubscribe();
+      });
   }
 
   public search(query: string): void {
@@ -49,7 +45,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   public filterByPrice(filterCondition: FilterCondition<string, number>): void {
-    console.log('kljl');
     this.filteredProducts = this.filterService.filterProductsByPrice(
       filterCondition,
       this.products

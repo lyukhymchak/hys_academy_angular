@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, map, Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import Product from 'src/app/store/interfaces/product.interface';
 
 @Injectable({
@@ -9,14 +9,14 @@ export class ProductsService {
   public products$: Observable<Product[]>;
 
   constructor() {
-    this.products$ = this.getProductsAsync();
+    this.products$ = this.getProducts();
   }
 
-  public getProductsAsync(): Observable<Product[]> {
-    return of(this.getProducts(50)).pipe(delay(500));
+  public getProducts(): Observable<Product[]> {
+    return of(this.generateProducts(50)).pipe(delay(500));
   }
 
-  private getProducts(count: number = 8): Array<Product> {
+  private generateProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
       'Starbucks',
       'Nespresso',
