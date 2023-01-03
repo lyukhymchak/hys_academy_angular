@@ -19,4 +19,8 @@ export class LocalStorageService {
       key === '' ? new Map(value) : value
     );
   }
+
+  public clearLocalStorage<T>(key: LocalStorageKeys): void {
+    localStorage.removeItem(key);
+  }
 }

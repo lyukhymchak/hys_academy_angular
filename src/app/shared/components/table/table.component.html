@@ -1,21 +1,25 @@
 <table class="table">
-  <thead class="thead">
-    <th *ngFor="let key of keys">
-      <p>
-        {{ capitalizeFirstLetter(key) }}
-        <i class="arrow down"></i>
-      </p>
-    </th>
-    <th><button type="button" class="btn-circle">+</button>Add</th>
+  <thead>
+    <tr class="row">
+      <th class="column" *ngFor="let key of keys">
+        <p>
+          {{ capitalizeFirstLetter(key) }}
+          <i class="arrow down"></i>
+        </p>
+      </th>
+      <th class="column">
+        <button type="button" class="btn-circle">+</button>Add
+      </th>
+    </tr>
   </thead>
   <tbody>
     <tr class="row" *ngFor="let item of items">
-      <td *ngFor="let key of keys" [ngSwitch]="key">
+      <td class="column" *ngFor="let key of keys" [ngSwitch]="key">
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
         <span *ngSwitchDefault>{{ item[key] }}</span>
       </td>
-      <td>
+      <td class="column">
         <button type="button" class="btn-circle">&#9998;</button>
         <button type="button" class="btn-circle">&#10007;</button>
       </td>

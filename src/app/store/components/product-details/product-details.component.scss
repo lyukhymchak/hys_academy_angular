@@ -1,8 +1,11 @@
 @import "/src/assets/scss/variables.scss";
 
 .section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 0 100px;
-  margin: 20px 0;
+  min-height: 1200px;
 }
 
 .card {
@@ -42,4 +45,13 @@
   width: 20px;
   text-align: center;
   padding: 0 5px;
+}
+
+.spinner {
+  display: flex;
+  justify-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
 }

@@ -1,17 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+
 import { ProductsService } from 'src/app/shared/services/products.service';
-import Product from '../../interfaces/product.interface';
+import Product from 'src/app/store/interfaces/product.interface';
 
 @Component({
-  selector: 'app-products-section',
-  templateUrl: './products-section.component.html',
-  styleUrls: ['./products-section.component.scss'],
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss'],
 })
-export class ProductsSectionComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
   private productsSubscription: Subscription;
 
-  public products: Product[];
+  public products: Product[] = [];
   public loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(private productsService: ProductsService) {}
