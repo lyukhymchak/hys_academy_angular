@@ -1,11 +1,14 @@
 @import "/src/assets/scss/variables.scss";
 
+:host {
+  min-height: 1200px;
+  padding: 0 100px;
+}
+
 .section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 100px;
-  min-height: 1200px;
 }
 
 .cards {

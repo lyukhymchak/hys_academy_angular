@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Product from 'src/app/shared/interfaces/product.interface';
+import User from 'src/app/shared/interfaces/user.interface';
 import FilterCondition from '../interfaces/filter-condition.model';
 
 @Injectable({
@@ -27,6 +28,31 @@ export class FilterService {
     if (filterCondition.selectedOptionValue === 'Equal') {
       return products.filter(
         (product) => product.price === filterCondition.inputValue
+      );
+    }
+    return [];
+  }
+
+  public filterUsersByCreatedDate(
+    filterCondition: FilterCondition<string, Date>,
+    users: User[]
+  ): User[] {
+    if (filterCondition.selectedOptionValue === 'More than') {
+      return users.filter(
+        (user) => user.created.getTime() > filterCondition.inputValue.getTime()
+      );
+    }
+
+    if (filterCondition.selectedOptionValue === 'Less than') {
+      return users.filter(
+        (user) => user.created.getTime() < filterCondition.inputValue.getTime()
+      );
+    }
+
+    if (filterCondition.selectedOptionValue === 'Equal') {
+      return users.filter(
+        (user) =>
+          user.created.getTime() === filterCondition.inputValue.getTime()
       );
     }
     return [];

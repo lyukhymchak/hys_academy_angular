@@ -9,11 +9,21 @@
     </option>
   </select>
   <input
-    type="number"
-    min="0"
+    type="{{ filterType }}"
     [(ngModel)]="filterCondition.inputValue"
     name="input"
-    class="input"
+    class="input input-{{ filterType }}"
+    *ngIf="filterType === 'date'"
+    #inputDate
+  />
+  <input
+    type="{{ filterType }}"
+    [(ngModel)]="filterCondition.inputValue"
+    name="input"
+    class="input input-{{ filterType }}"
+    *ngIf="filterType === 'number'"
+    min="0"
+    #inputNumber
   />
   <button class="btn" type="submit">Filter</button>
 </form>

@@ -1,46 +1,21 @@
 <div>
   <header>
     <h1>Users</h1>
-    <div class="form-container">
-      <form id="form">
-        <input
-          type="text"
-          id="search"
-          class="input-search"
-          name="search"
-          placeholder="Search..."
-        />
-
-        <div>
-          <select name="" id="" class="select">
-            <option value="">More than</option>
-          </select>
-          <input
-            type="date"
-            id="date"
-            class="input-date"
-            name="date"
-            value=""
-          />
-        </div>
-
-        <button
-          type="submit"
-          id="apply"
-          name="button"
-          class="btn btn-dark btn-apply"
-        >
-          Apply
-        </button>
-      </form>
+    <div class="searchbar">
+      <app-search (modelChangeEvent)="search($event)"></app-search>
+      <app-filter
+        [options]="filterOptions"
+        (filter)="filterByCreatedDate($event)"
+        [filterType]="filterType"
+      ></app-filter>
     </div>
   </header>
-  <ng-container *ngIf="users && users.length > 0; else loadingSpinner">
-    <app-table [items]="users"></app-table>
-  </ng-container>
-  <ng-template #loadingSpinner>
+  <ng-container *ngIf="loading$ | async; else table">
     <div class="spinner">
       <app-spinner></app-spinner>
     </div>
+  </ng-container>
+  <ng-template #table>
+    <app-table [items]="filteredUsers"></app-table>
   </ng-template>
 </div>
