@@ -1,25 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './pages/errors/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./store/store.module').then((mod) => mod.StoreModule),
+      import('./pages/store/store.module').then((mod) => mod.StoreModule),
   },
   {
-    path: 'administration',
+    path: 'admin',
     loadChildren: () =>
-      import('./administration/administration.module').then(
-        (mod) => mod.AdministrationModule
-      ),
+      import('./pages/admin/admin.module').then((mod) => mod.AdminModule),
   },
   {
     path: 'login',
     loadChildren: () =>
-      import('./login/login.module').then((mod) => mod.LoginModule),
+      import('./pages/login/login.module').then((mod) => mod.LoginModule),
   },
   {
     path: '**',
