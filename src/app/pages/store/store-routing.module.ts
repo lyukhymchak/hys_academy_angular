@@ -1,0 +1,43 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ProductsSectionComponent } from './components/products-section/products-section.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { StoreComponent } from './store.component';
+import { CartComponent } from './components/cart/cart.component';
+import { PageNotFoundComponent } from 'src/app/pages/errors/components/page-not-found/page-not-found.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/store',
+    pathMatch: 'full',
+  },
+  {
+    path: 'store',
+    component: StoreComponent,
+    children: [
+      {
+        path: '',
+        component: ProductsSectionComponent,
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
+      },
+      {
+        path: 'product/:id',
+        component: ProductDetailsComponent,
+      },
+      {
+        path: '**',
+        component: PageNotFoundComponent,
+      },
+    ],
+  },
+];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class StoreRoutingModule {}

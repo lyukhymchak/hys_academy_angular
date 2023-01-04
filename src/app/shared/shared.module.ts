@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { TableComponent } from './components/table/table.component';
 
 @NgModule({
-  declarations: [CurrencyPipe, SpinnerComponent, TableComponent],
+  declarations: [CurrencyPipe, SpinnerComponent],
   imports: [CommonModule],
-  exports: [CurrencyPipe, SpinnerComponent, TableComponent],
+  exports: [CurrencyPipe, SpinnerComponent],
 })
 export class SharedModule {}
