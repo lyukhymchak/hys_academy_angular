@@ -6,6 +6,8 @@ import FilterCondition from 'src/app/pages/admin/shared-admin/interfaces/filter-
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateModalComponent } from '../../../shared-admin/components/create-modal/create-modal.component';
 
 @Component({
   selector: 'app-products',
@@ -23,7 +25,8 @@ export class ProductsComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private searchService: SearchService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -46,5 +49,18 @@ export class ProductsComponent implements OnInit {
       filterCondition,
       this.products
     );
+  }
+
+  public openAddDialog(): void {
+    const dialogRef = this.dialog.open(CreateModalComponent, {
+      width: '500px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+      }
+    });
   }
 }

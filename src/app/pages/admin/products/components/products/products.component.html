@@ -16,6 +16,6 @@
     </div>
   </ng-container>
   <ng-template #table>
-    <app-table [items]="filteredProducts"></app-table>
+    <app-table [items]="filteredProducts" (add)="openAddDialog()"></app-table>
   </ng-template>
 </div>

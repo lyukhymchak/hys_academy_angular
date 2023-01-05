@@ -1,0 +1,30 @@
+@import "/src/assets/scss/variables.scss";
+:host {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .btn {
+    cursor: pointer;
+    border-radius: 10px;
+    border-style: none;
+    width: 150px;
+    margin: 0 20px;
+    background-color: $btn-dark-color;
+    color: $btn-dark-text-color;
+    transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+  }
+}

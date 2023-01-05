@@ -11,7 +11,7 @@
           {{ capitalizeFirstLetter(key) }}
         </span>
       </th>
-      <th class="column">
+      <th class="column" (click)="add.emit()">
         <button type="button" class="btn-circle">+</button>Add
       </th>
     </tr>

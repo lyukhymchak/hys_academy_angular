@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +22,8 @@ enum SortDirection {
 })
 export class TableComponent implements OnInit, OnChanges {
   @Input() public items: Array<any>;
+  @Output() add = new EventEmitter();
+
   public data: Array<any>;
 
   public keys: string[];
