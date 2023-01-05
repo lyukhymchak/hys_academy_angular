@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { delay, map, Observable, of } from 'rxjs';
 
 import Product from 'src/app/shared/interfaces/product.interface';
 
@@ -11,13 +11,6 @@ export class ProductsService {
 
   constructor() {
     this.products$ = this.getProducts();
-  }
-
-  public addProduct(product: Product): void {
-    this.products$.subscribe((products) => {
-      products.push(product);
-      this.products$ = of(products);
-    });
   }
 
   public getProducts(): Observable<Product[]> {
@@ -68,5 +61,23 @@ export class ProductsService {
 
   private getRandomInteger(max: number): number {
     return Math.floor(Math.random() * max);
+  }
+
+  public addProduct(product: Product): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) => {
+        return [...products, product];
+      })
+    );
+  }
+
+  public editProduct(product: Product): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) =>
+        products.map((elementOfProducts: Product) =>
+          elementOfProducts.id === product.id ? product : elementOfProducts
+        )
+      )
+    );
   }
 }

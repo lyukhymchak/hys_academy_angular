@@ -17,6 +17,7 @@ import { ProductModalComponent } from '../../../shared-admin/components/product-
 export class ProductsComponent implements OnInit {
   public products: Product[] = [];
   public filteredProducts: Product[] = [];
+
   public filterOptions = ['Price more than', 'Price less than', 'Equal'];
   public filterType = 'number';
 
@@ -33,6 +34,7 @@ export class ProductsComponent implements OnInit {
     this.productsService.products$.pipe(take(1)).subscribe((products) => {
       this.products = products;
       this.filteredProducts = [...products];
+
       this.loading$.next(false);
     });
   }
@@ -58,15 +60,17 @@ export class ProductsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Create modal');
-        console.log(result);
         const newProduct: Product = {
           id: this.products.length + 1,
           name: result.name,
           price: result.price,
         };
-        console.log(newProduct);
+
         this.productsService.addProduct(newProduct);
+        this.productsService.products$.pipe(take(1)).subscribe((products) => {
+          this.products = products;
+          this.filteredProducts = [...products];
+        });
       }
     });
   }
@@ -76,10 +80,15 @@ export class ProductsComponent implements OnInit {
       data: { isEdit: true, item },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: Product) => {
+      console.log(result);
       if (result) {
-        console.log('Edit modal');
         console.log(result);
+        this.productsService.editProduct(result);
+        this.productsService.products$.pipe(take(1)).subscribe((products) => {
+          this.products = products;
+          this.filteredProducts = [...products];
+        });
       }
     });
   }
