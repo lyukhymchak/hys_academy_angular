@@ -13,6 +13,13 @@ export class ProductsService {
     this.products$ = this.getProducts();
   }
 
+  public addProduct(product: Product): void {
+    this.products$.subscribe((products) => {
+      products.push(product);
+      this.products$ = of(products);
+    });
+  }
+
   public getProducts(): Observable<Product[]> {
     return of(this.generateProducts(50)).pipe(delay(500));
   }

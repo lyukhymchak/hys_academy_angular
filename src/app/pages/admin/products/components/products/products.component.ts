@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import Product from 'src/app/shared/interfaces/product.interface';
 import FilterCondition from 'src/app/pages/admin/shared-admin/interfaces/filter-condition.model';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CreateModalComponent } from '../../../shared-admin/components/create-modal/create-modal.component';
+import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
 
 @Component({
   selector: 'app-products',
@@ -52,13 +52,33 @@ export class ProductsComponent implements OnInit {
   }
 
   public openAddDialog(): void {
-    const dialogRef = this.dialog.open(CreateModalComponent, {
-      width: '500px',
-      data: {},
+    const dialogRef = this.dialog.open(ProductModalComponent, {
+      data: { isEdit: false },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        console.log('Create modal');
+        console.log(result);
+        const newProduct: Product = {
+          id: this.products.length + 1,
+          name: result.name,
+          price: result.price,
+        };
+        console.log(newProduct);
+        this.productsService.addProduct(newProduct);
+      }
+    });
+  }
+
+  public openEditDialog(item: Product): void {
+    const dialogRef = this.dialog.open(ProductModalComponent, {
+      data: { isEdit: true, item },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Edit modal');
         console.log(result);
       }
     });

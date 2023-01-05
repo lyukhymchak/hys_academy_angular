@@ -23,6 +23,7 @@ enum SortDirection {
 export class TableComponent implements OnInit, OnChanges {
   @Input() public items: Array<any>;
   @Output() add = new EventEmitter();
+  @Output() edit = new EventEmitter();
 
   public data: Array<any>;
 

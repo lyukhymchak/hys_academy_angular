@@ -1,18 +1,14 @@
 <div class="container">
-  <h1>Product</h1>
+  <h1>{{ title }}</h1>
   <div mat-dialog-content class="fields">
     <mat-form-field>
-      <input matInput [(ngModel)]="data.name" placeholder="Name" />
+      <input matInput [(ngModel)]="item.name" placeholder="Name" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="data.price" placeholder="Price" />
+      <input matInput [(ngModel)]="item.price" placeholder="Price" />
     </mat-form-field>
     <mat-form-field>
-      <textarea
-        matInput
-        [(ngModel)]="data.description"
-        placeholder="Description"
-      ></textarea>
+      <textarea matInput placeholder="Description"></textarea>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
@@ -21,7 +17,7 @@
     </button>
     <button
       mat-button
-      [mat-dialog-close]="data"
+      [mat-dialog-close]="item"
       cdkFocusInitial
       class="btn-ok btn"
     >

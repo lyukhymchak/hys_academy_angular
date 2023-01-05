@@ -24,7 +24,9 @@
         <span *ngSwitchDefault>{{ item[key] }}</span>
       </td>
       <td class="column">
-        <button type="button" class="btn-circle">&#9998;</button>
+        <button type="button" class="btn-circle" (click)="this.edit.emit(item)">
+          &#9998;
+        </button>
         <button type="button" class="btn-circle">&#10007;</button>
       </td>
     </tr>
