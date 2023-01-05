@@ -12,6 +12,7 @@ import { ProductModalComponent } from './components/product-modal/product-modal.
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { UserModalComponent } from './components/user-modal/user-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
     SearchComponent,
     TableComponent,
     ProductModalComponent,
+    UserModalComponent,
   ],
   imports: [
     CommonModule,

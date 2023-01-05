@@ -81,9 +81,7 @@ export class ProductsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Product) => {
-      console.log(result);
       if (result) {
-        console.log(result);
         this.productsService.editProduct(result);
         this.productsService.products$.pipe(take(1)).subscribe((products) => {
           this.products = products;

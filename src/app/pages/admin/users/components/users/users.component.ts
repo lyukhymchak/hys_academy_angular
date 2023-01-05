@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, take } from 'rxjs';
 
 import { UsersService } from 'src/app/shared/services/users.service';
 import User from '../../../../../shared/interfaces/user.interface';
+import { UserModalComponent } from '../../../shared-admin/components/user-modal/user-modal.component';
 import FilterCondition from '../../../shared-admin/interfaces/filter-condition.model';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
@@ -23,7 +25,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private searchService: SearchService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -48,5 +51,43 @@ export class UsersComponent implements OnInit {
       filterCondition,
       this.users
     );
+  }
+
+  public openAddDialog(): void {
+    const dialogRef = this.dialog.open(UserModalComponent, {
+      data: { isEdit: false },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const newUser: User = {
+          id: this.users.length,
+          name: result.name,
+          created: new Date(Date.now()),
+        };
+
+        this.usersService.addUser(newUser);
+        this.usersService.users$.pipe(take(1)).subscribe((users) => {
+          this.users = users;
+          this.filteredUsers = [...users];
+        });
+      }
+    });
+  }
+
+  public openEditDialog(item: User): void {
+    const dialogRef = this.dialog.open(UserModalComponent, {
+      data: { isEdit: true, item },
+    });
+
+    dialogRef.afterClosed().subscribe((result: User) => {
+      if (result) {
+        this.usersService.editUser(result);
+        this.usersService.users$.pipe(take(1)).subscribe((users) => {
+          this.users = users;
+          this.filteredUsers = [...users];
+        });
+      }
+    });
   }
 }

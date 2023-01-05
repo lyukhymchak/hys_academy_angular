@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { delay, Observable, of } from 'rxjs';
+import { delay, map, Observable, of } from 'rxjs';
 
 import User from 'src/app/shared/interfaces/user.interface';
 
@@ -22,5 +22,23 @@ export class UsersService {
       { id: 8, name: 'Lutsenko Bohdan', created: new Date('2002-08-08') },
       { id: 9, name: 'Prygun Olena', created: new Date('2021-11-11') },
     ]).pipe(delay(300));
+  }
+
+  public addUser(user: User): void {
+    this.users$ = this.users$.pipe(
+      map((users: User[]) => {
+        return [...users, user];
+      })
+    );
+  }
+
+  public editUser(user: User): void {
+    this.users$ = this.users$.pipe(
+      map((users: User[]) =>
+        users.map((elementOfUsers: User) =>
+          elementOfUsers.id === user.id ? user : elementOfUsers
+        )
+      )
+    );
   }
 }

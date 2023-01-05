@@ -16,6 +16,10 @@
     </div>
   </ng-container>
   <ng-template #table>
-    <app-table [items]="filteredUsers"></app-table>
+    <app-table
+      [items]="filteredUsers"
+      (add)="openAddDialog()"
+      (edit)="openEditDialog($event)"
+    ></app-table>
   </ng-template>
 </div>
