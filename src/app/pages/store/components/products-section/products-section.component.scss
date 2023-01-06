@@ -1,0 +1,32 @@
+@import "/src/assets/scss/variables.scss";
+
+:host {
+  min-height: 1200px;
+  padding: 0 100px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 40px;
+  row-gap: 50px;
+  margin: 40px 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,29 @@
+<form (submit)="handleSubmit(filterCondition)">
+  <select
+    [(ngModel)]="filterCondition.selectedOptionValue"
+    name="select"
+    class="select"
+  >
+    <option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </option>
+  </select>
+  <input
+    type="{{ filterType }}"
+    [(ngModel)]="filterCondition.inputValue"
+    name="input"
+    class="input input-{{ filterType }}"
+    *ngIf="filterType === 'date'"
+    #inputDate
+  />
+  <input
+    type="{{ filterType }}"
+    [(ngModel)]="filterCondition.inputValue"
+    name="input"
+    class="input input-{{ filterType }}"
+    *ngIf="filterType === 'number'"
+    min="0"
+    #inputNumber
+  />
+  <button class="btn" type="submit">Filter</button>
+</form>
