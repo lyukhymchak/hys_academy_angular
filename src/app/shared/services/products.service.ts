@@ -80,4 +80,12 @@ export class ProductsService {
       )
     );
   }
+
+  public deleteProduct(productId: number): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) => {
+        return products.filter((product: Product) => product.id !== productId);
+      })
+    );
+  }
 }

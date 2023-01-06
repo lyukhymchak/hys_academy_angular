@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
+import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
 
 @Component({
   selector: 'app-products',
@@ -83,6 +84,22 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Product) => {
       if (result) {
         this.productsService.editProduct(result);
+        this.productsService.products$.pipe(take(1)).subscribe((products) => {
+          this.products = products;
+          this.filteredProducts = [...products];
+        });
+      }
+    });
+  }
+
+  public openDeleteDialog(item: Product): void {
+    const dialogRef = this.dialog.open(WarningModalComponent, {
+      data: { item },
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result === 'ok') {
+        this.productsService.deleteProduct(item.id);
         this.productsService.products$.pipe(take(1)).subscribe((products) => {
           this.products = products;
           this.filteredProducts = [...products];

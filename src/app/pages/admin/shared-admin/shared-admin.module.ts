@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { WarningModalComponent } from './components/warning-modal/warning-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UserModalComponent } from './components/user-modal/user-modal.component
     TableComponent,
     ProductModalComponent,
     UserModalComponent,
+    WarningModalComponent,
   ],
   imports: [
     CommonModule,

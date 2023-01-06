@@ -27,7 +27,13 @@
         <button type="button" class="btn-circle" (click)="this.edit.emit(item)">
           &#9998;
         </button>
-        <button type="button" class="btn-circle">&#10007;</button>
+        <button
+          type="button"
+          class="btn-circle"
+          (click)="this.delete.emit(item)"
+        >
+          &#10007;
+        </button>
       </td>
     </tr>
   </tbody>
