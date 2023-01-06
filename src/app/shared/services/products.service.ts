@@ -81,10 +81,16 @@ export class ProductsService {
     );
   }
 
-  public deleteProduct(productId: number): void {
+  public deleteProduct(product: Product): void {
     this.products$ = this.products$.pipe(
       map((products: Product[]) => {
-        return products.filter((product: Product) => product.id !== productId);
+        return products.filter(
+          (elementOfProducts: Product) =>
+            !(
+              elementOfProducts.id === product.id &&
+              elementOfProducts.name === product.name
+            )
+        );
       })
     );
   }

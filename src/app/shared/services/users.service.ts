@@ -41,4 +41,17 @@ export class UsersService {
       )
     );
   }
+
+  public deleteUser(user: User): void {
+    this.users$ = this.users$.pipe(
+      map((users: User[]) => {
+        return users.filter(
+          (elementOfUsers: User) =>
+            !(
+              elementOfUsers.id === user.id && elementOfUsers.name === user.name
+            )
+        );
+      })
+    );
+  }
 }

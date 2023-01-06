@@ -99,7 +99,7 @@ export class ProductsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result === 'ok') {
-        this.productsService.deleteProduct(item.id);
+        this.productsService.deleteProduct(item);
         this.productsService.products$.pipe(take(1)).subscribe((products) => {
           this.products = products;
           this.filteredProducts = [...products];

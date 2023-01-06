@@ -5,6 +5,7 @@ import { BehaviorSubject, take } from 'rxjs';
 import { UsersService } from 'src/app/shared/services/users.service';
 import User from '../../../../../shared/interfaces/user.interface';
 import { UserModalComponent } from '../../../shared-admin/components/user-modal/user-modal.component';
+import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
 import FilterCondition from '../../../shared-admin/interfaces/filter-condition.model';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
@@ -83,6 +84,22 @@ export class UsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
         this.usersService.editUser(result);
+        this.usersService.users$.pipe(take(1)).subscribe((users) => {
+          this.users = users;
+          this.filteredUsers = [...users];
+        });
+      }
+    });
+  }
+
+  public openDeleteDialog(item: User): void {
+    const dialogRef = this.dialog.open(WarningModalComponent, {
+      data: { item },
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result === 'ok') {
+        this.usersService.deleteUser(item);
         this.usersService.users$.pipe(take(1)).subscribe((users) => {
           this.users = users;
           this.filteredUsers = [...users];
