@@ -94,7 +94,7 @@ export class UsersComponent implements OnInit {
 
   public openDeleteDialog(item: User): void {
     const dialogRef = this.dialog.open(WarningModalComponent, {
-      data: { item },
+      data: item,
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {

@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 import Product from 'src/app/shared/interfaces/product.interface';
 import FilterCondition from 'src/app/pages/admin/shared-admin/interfaces/filter-condition.model';
-import { ProductsService } from 'src/app/shared/services/products.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
@@ -26,7 +25,6 @@ export class ProductsComponent implements OnInit {
   public loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(
-    private productsService: ProductsService,
     private searchService: SearchService,
     private filterService: FilterService,
     private dialog: MatDialog,
@@ -34,27 +32,7 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productHTTPService.getList().subscribe((data) => {
-      this.products = data.map((item) => this.createNewProduct(item));
-      this.filteredProducts = [...this.products];
-      this.loading$.next(false);
-    });
-
-    // this.productHTTPService
-    //   .getById('810d7892-0ec6-45dd-ac22-206fe28afd45')
-    //   .subscribe((product) => console.log(product));\
-
-    // const product: Product = { id: 2, name: 'Espresso new', price: 25 };
-    // this.productHTTPService.create(product).subscribe();
-
-    // this.productHTTPService
-    //   .remove('e13840f5-66cc-4a6d-bbc8-0653ef64de27')
-    //   .subscribe();
-
-    //  const updatedProduct: Product = { id: 2, name: 'Espresso new', price: 100 };
-    // this.productHTTPService
-    //   .update('b1a5e5b7-ed0f-4016-93d5-f9d8e922e1a5', updatedProduct)
-    //   .subscribe();
+    this.initTable();
   }
 
   public search(query: string): void {
@@ -79,48 +57,43 @@ export class ProductsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newProduct: Product = {
-          id: this.products.length + 1,
           name: result.name,
           price: result.price,
         };
 
-        this.productsService.addProduct(newProduct);
-        this.productsService.products$.pipe(take(1)).subscribe((products) => {
-          this.products = products;
-          this.filteredProducts = [...products];
+        this.productHTTPService.create(newProduct).subscribe(() => {
+          this.initTable();
         });
       }
     });
   }
 
-  public openEditDialog(item: Product): void {
+  public openEditDialog(currentProduct: Product): void {
     const dialogRef = this.dialog.open(ProductModalComponent, {
-      data: { isEdit: true, item },
+      data: { isEdit: true, currentProduct },
     });
 
     dialogRef.afterClosed().subscribe((result: Product) => {
       if (result) {
-        this.productsService.editProduct(result);
-        this.productsService.products$.pipe(take(1)).subscribe((products) => {
-          this.products = products;
-          this.filteredProducts = [...products];
+        this.productHTTPService.update(result).subscribe(() => {
+          this.initTable();
         });
       }
     });
   }
 
-  public openDeleteDialog(item: Product): void {
+  public openDeleteDialog(currentProduct: Product): void {
     const dialogRef = this.dialog.open(WarningModalComponent, {
-      data: { item },
+      data: currentProduct,
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result === 'ok') {
-        this.productsService.deleteProduct(item);
-        this.productsService.products$.pipe(take(1)).subscribe((products) => {
-          this.products = products;
-          this.filteredProducts = [...products];
-        });
+        this.productHTTPService
+          .remove(String(currentProduct.id))
+          .subscribe(() => {
+            this.initTable();
+          });
       }
     });
   }
@@ -131,5 +104,19 @@ export class ProductsComponent implements OnInit {
       name: data.name,
       price: data.price,
     };
+  }
+
+  private initTable() {
+    this.loading$.next(true);
+
+    this.productHTTPService
+      .getList()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.products = data.map((item) => this.createNewProduct(item));
+        this.filteredProducts = [...this.products];
+
+        this.loading$.next(false);
+      });
   }
 }

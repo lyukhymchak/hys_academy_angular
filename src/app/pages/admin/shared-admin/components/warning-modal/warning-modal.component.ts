@@ -15,7 +15,9 @@ export class WarningModalComponent {
   ) {}
 
   ngOnInit(): void {
-    this.title = this.data.item.name + ' #' + this.data.item.id;
+    this.title = `${this.data.name} #${
+      this.data.id.length > 5 ? this.data.id.substring(0, 5) : this.data.id
+    }`;
   }
 
   onCancel(): void {

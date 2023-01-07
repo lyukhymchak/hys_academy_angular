@@ -18,7 +18,7 @@ export class ProductModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.data.isEdit) {
       this.title = 'Edit Product';
-      this.item = Object.assign({}, this.data.item);
+      this.item = Object.assign({}, this.data.currentProduct);
     } else {
       this.title = 'Create Product';
       this.item = {};

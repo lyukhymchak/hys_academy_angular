@@ -17,11 +17,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="row" *ngFor="let item of data; index as i">
+    <tr class="row" *ngFor="let item of data">
       <td class="column" *ngFor="let key of keys" [ngSwitch]="key">
-        <span *ngSwitchCase="'id'">{{ i + 1 }}</span>
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
+        <span *ngSwitchCase="'id'">
+          <ng-container *ngIf="item[key].length > 5; else elseTemplate">
+            {{ item[key].substring(0, 5) }}
+          </ng-container>
+          <ng-template #elseTemplate>
+            {{ item[key] }}
+          </ng-template>
+        </span>
         <span *ngSwitchDefault>{{ item[key] }}</span>
       </td>
       <td class="column">

@@ -17,26 +17,17 @@ export class ProductHTTPService {
   constructor(private http: HttpClient) {}
 
   public getList(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseURL + 'products/', {
-      params: {
-        filter: 'author;Liana',
-      },
-    });
+    return this.http.get<Product[]>(this.baseURL + 'products/');
   }
 
   public getById(id: string): Observable<Product> {
-    return this.http.get<Product>(this.baseURL + 'products/' + id, {
-      params: {
-        filter: 'author;Liana',
-      },
-    });
+    return this.http.get<Product>(`${this.baseURL}products/${id}`);
   }
 
   public create(product: Product): Observable<Product> {
     const data = {
       name: product.name,
-      author: 'Liana',
-      price: product.price,
+      price: Number(product.price),
       description: 'Кави! Ще Кави! Ще більше Кави!!!',
       extraInfo: {
         ololo: 777,
@@ -55,17 +46,21 @@ export class ProductHTTPService {
     });
   }
 
-  public update(id: string, product: Product): Observable<Product> {
+  public update(product: Product): Observable<Product> {
     const data = {
-      price: product.price,
+      price: Number(product.price),
       extraInfo: {
         ololo: 777,
         image: 'https://content2.rozetka.com.ua/goods/images/big/20509504.jpg',
       },
     };
 
-    return this.http.put<Product>(this.baseURL + 'products/' + id, data, {
-      headers: this.headers,
-    });
+    return this.http.put<Product>(
+      `${this.baseURL}products/${product.id}`,
+      data,
+      {
+        headers: this.headers,
+      }
+    );
   }
 }
