@@ -17,8 +17,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="row" *ngFor="let item of data">
+    <tr class="row" *ngFor="let item of data; index as i">
       <td class="column" *ngFor="let key of keys" [ngSwitch]="key">
+        <span *ngSwitchCase="'id'">{{ i + 1 }}</span>
         <span *ngSwitchCase="'price'">{{ item[key] | currencyPipe }}</span>
         <span *ngSwitchCase="'created'">{{ item[key] | date }}</span>
         <span *ngSwitchDefault>{{ item[key] }}</span>

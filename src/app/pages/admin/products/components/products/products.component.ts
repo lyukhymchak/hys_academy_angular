@@ -9,6 +9,7 @@ import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
 import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
+import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 
 @Component({
   selector: 'app-products',
@@ -28,16 +29,32 @@ export class ProductsComponent implements OnInit {
     private productsService: ProductsService,
     private searchService: SearchService,
     private filterService: FilterService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private productHTTPService: ProductHTTPService
   ) {}
 
   ngOnInit(): void {
-    this.productsService.products$.pipe(take(1)).subscribe((products) => {
-      this.products = products;
-      this.filteredProducts = [...products];
-
+    this.productHTTPService.getList().subscribe((data) => {
+      this.products = data.map((item) => this.createNewProduct(item));
+      this.filteredProducts = [...this.products];
       this.loading$.next(false);
     });
+
+    // this.productHTTPService
+    //   .getById('810d7892-0ec6-45dd-ac22-206fe28afd45')
+    //   .subscribe((product) => console.log(product));\
+
+    // const product: Product = { id: 2, name: 'Espresso new', price: 25 };
+    // this.productHTTPService.create(product).subscribe();
+
+    // this.productHTTPService
+    //   .remove('e13840f5-66cc-4a6d-bbc8-0653ef64de27')
+    //   .subscribe();
+
+    //  const updatedProduct: Product = { id: 2, name: 'Espresso new', price: 100 };
+    // this.productHTTPService
+    //   .update('b1a5e5b7-ed0f-4016-93d5-f9d8e922e1a5', updatedProduct)
+    //   .subscribe();
   }
 
   public search(query: string): void {
@@ -106,5 +123,13 @@ export class ProductsComponent implements OnInit {
         });
       }
     });
+  }
+
+  private createNewProduct(data: any): Product {
+    return {
+      id: data.id,
+      name: data.name,
+      price: data.price,
+    };
   }
 }
