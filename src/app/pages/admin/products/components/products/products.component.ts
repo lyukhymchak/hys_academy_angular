@@ -3,12 +3,13 @@ import { BehaviorSubject, take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import Product from 'src/app/shared/interfaces/product.interface';
+import ProductServer from 'src/app/shared/interfaces/product-server.interface';
 import FilterCondition from 'src/app/pages/admin/shared-admin/interfaces/filter-condition.model';
 import { SearchService } from '../../../shared-admin/services/search.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
+import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
 import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
-import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 
 @Component({
   selector: 'app-products',
@@ -54,7 +55,7 @@ export class ProductsComponent implements OnInit {
       data: { isEdit: false },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: Product) => {
       if (result) {
         const newProduct: Product = {
           name: result.name,
@@ -98,7 +99,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  private createNewProduct(data: any): Product {
+  private toProduct(data: ProductServer): Product {
     return {
       id: data.id,
       name: data.name,
@@ -106,14 +107,14 @@ export class ProductsComponent implements OnInit {
     };
   }
 
-  private initTable() {
+  private initTable(): void {
     this.loading$.next(true);
 
     this.productHTTPService
       .getList()
       .pipe(take(1))
-      .subscribe((data) => {
-        this.products = data.map((item) => this.createNewProduct(item));
+      .subscribe((data: ProductServer[]) => {
+        this.products = data.map((item: ProductServer) => this.toProduct(item));
         this.filteredProducts = [...this.products];
 
         this.loading$.next(false);

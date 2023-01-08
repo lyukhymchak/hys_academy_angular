@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import Product from 'src/app/shared/interfaces/product.interface';
+import ProductServer from '../interfaces/product-server.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +12,20 @@ export class ProductHTTPService {
   private baseURL = 'https://hys-fe-course-api.vercel.app/';
   private headers = new HttpHeaders().set(
     'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJjMWZiNmEyMy1lOTkzLTQ4NWUtYjllNS01MTdhZjkzODgwOTUiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkdXl6NUhlNTlzVkpGb1YxakNsTGxWTzR5RnhNc3NlZ20uUS5kT3o1RThYOHdTZjNUQ2ZrVy4iLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTMwVDEyOjQxOjU2LjAyMloiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTA0VDA0OjEyOjA4LjI5MloiLCJpYXQiOjE2NzMwNDY0NDAsImV4cCI6MTY3MzEzMjg0MH0.5vPye-_S4A9iTuVkx7jmsUZqSTQHTkb70b48YzLIwp4'
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI5Njg3N2NiNy0zZmVlLTRhN2UtODAwMC1mZWQ1YjkzZDAxNWIiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkbEV2VEVEMFVHdk9GQWpJVmpLQnBBZWtqTVFrY0tFcXlNSUhKVEVyNVo1LmJjblRoaHlwQW0iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJpYXQiOjE2NzMxMzQ1MDUsImV4cCI6MTY3MzIyMDkwNX0.zEH-vaKkp3KRejYqX0CNnQ_NfP9E026QNTBbiidSDWw'
   );
 
   constructor(private http: HttpClient) {}
 
-  public getList(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseURL + 'products/');
+  public getList(): Observable<ProductServer[]> {
+    return this.http.get<ProductServer[]>(this.baseURL + 'products/');
   }
 
-  public getById(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.baseURL}products/${id}`);
+  public getById(id: string): Observable<ProductServer> {
+    return this.http.get<ProductServer>(`${this.baseURL}products/${id}`);
   }
 
-  public create(product: Product): Observable<Product> {
+  public create(product: Product): Observable<ProductServer> {
     const data = {
       name: product.name,
       price: Number(product.price),
@@ -35,18 +36,18 @@ export class ProductHTTPService {
       },
     };
 
-    return this.http.post<Product>(this.baseURL + 'products/', data, {
+    return this.http.post<ProductServer>(this.baseURL + 'products/', data, {
       headers: this.headers,
     });
   }
 
-  public remove(id: string): Observable<any> {
-    return this.http.delete(`${this.baseURL}products/${id}`, {
+  public remove(id: string): Observable<ProductServer> {
+    return this.http.delete<ProductServer>(`${this.baseURL}products/${id}`, {
       headers: this.headers,
     });
   }
 
-  public update(product: Product): Observable<Product> {
+  public update(product: Product): Observable<ProductServer> {
     const data = {
       price: Number(product.price),
       extraInfo: {
@@ -55,7 +56,7 @@ export class ProductHTTPService {
       },
     };
 
-    return this.http.put<Product>(
+    return this.http.put<ProductServer>(
       `${this.baseURL}products/${product.id}`,
       data,
       {

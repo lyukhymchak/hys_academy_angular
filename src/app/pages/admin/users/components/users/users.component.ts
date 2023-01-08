@@ -32,15 +32,7 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.usersHTTPService
-      .getList()
-      .pipe(take(1))
-      .subscribe((data: UserServer[]) => {
-        this.users = data.map((item: UserServer) => this.toUser(item));
-        this.filteredUsers = [...this.users];
-
-        this.loading$.next(false);
-      });
+    this.initTable();
   }
 
   public search(query: string): void {
