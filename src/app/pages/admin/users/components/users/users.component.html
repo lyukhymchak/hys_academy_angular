@@ -1,0 +1,26 @@
+<div>
+  <header>
+    <h1>Users</h1>
+    <div class="searchbar">
+      <app-search (modelChangeEvent)="search($event)"></app-search>
+      <app-filter
+        [options]="filterOptions"
+        (filter)="filterByCreatedDate($event)"
+        [filterType]="filterType"
+      ></app-filter>
+    </div>
+  </header>
+  <ng-container *ngIf="loading$ | async; else table">
+    <div class="spinner">
+      <app-spinner></app-spinner>
+    </div>
+  </ng-container>
+  <ng-template #table>
+    <app-table
+      [items]="filteredUsers"
+      (add)="openAddDialog()"
+      (edit)="openEditDialog($event)"
+      (delete)="openDeleteDialog($event)"
+    ></app-table>
+  </ng-template>
+</div>

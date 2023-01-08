@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <div mat-dialog-content class="fields">
+    <mat-form-field>
+      <input matInput [(ngModel)]="item.name" placeholder="Name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="item.price" placeholder="Price" />
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Description"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()" class="btn-cancel btn">
+      Cancel
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="item"
+      cdkFocusInitial
+      class="btn-ok btn"
+    >
+      OK
+    </button>
+  </div>
+</div>
