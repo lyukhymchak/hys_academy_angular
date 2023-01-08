@@ -18,7 +18,7 @@ export class UserModalComponent {
   ngOnInit(): void {
     if (this.data.isEdit) {
       this.title = 'Edit User';
-      this.item = Object.assign({}, this.data.item);
+      this.item = Object.assign({}, this.data.currentUser);
     } else {
       this.title = 'Create User';
       this.item = {};

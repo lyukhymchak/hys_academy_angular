@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, take } from 'rxjs';
 
-import { UsersService } from 'src/app/shared/services/users.service';
 import User from '../../../../../shared/interfaces/user.interface';
+import UserServer from 'src/app/shared/interfaces/user-server.interface';
+import FilterCondition from '../../../shared-admin/interfaces/filter-condition.model';
 import { UserModalComponent } from '../../../shared-admin/components/user-modal/user-modal.component';
 import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
-import FilterCondition from '../../../shared-admin/interfaces/filter-condition.model';
+import { UsersHTTPService } from 'src/app/shared/services/users-http.service';
 import { FilterService } from '../../../shared-admin/services/filter.service';
 import { SearchService } from '../../../shared-admin/services/search.service';
 
@@ -24,18 +25,22 @@ export class UsersComponent implements OnInit {
   public loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(
-    private usersService: UsersService,
     private searchService: SearchService,
     private filterService: FilterService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private usersHTTPService: UsersHTTPService
   ) {}
 
   ngOnInit(): void {
-    this.usersService.users$.pipe(take(1)).subscribe((users) => {
-      this.users = users;
-      this.filteredUsers = [...users];
-      this.loading$.next(false);
-    });
+    this.usersHTTPService
+      .getList()
+      .pipe(take(1))
+      .subscribe((data: UserServer[]) => {
+        this.users = data.map((item: UserServer) => this.toUser(item));
+        this.filteredUsers = [...this.users];
+
+        this.loading$.next(false);
+      });
   }
 
   public search(query: string): void {
@@ -59,52 +64,69 @@ export class UsersComponent implements OnInit {
       data: { isEdit: false },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
         const newUser: User = {
-          id: this.users.length,
           name: result.name,
+          password: result.password,
           created: new Date(Date.now()),
         };
 
-        this.usersService.addUser(newUser);
-        this.usersService.users$.pipe(take(1)).subscribe((users) => {
-          this.users = users;
-          this.filteredUsers = [...users];
+        this.usersHTTPService.create(newUser).subscribe(() => {
+          this.initTable();
         });
       }
     });
   }
 
-  public openEditDialog(item: User): void {
+  public openEditDialog(currentUser: User): void {
     const dialogRef = this.dialog.open(UserModalComponent, {
-      data: { isEdit: true, item },
+      data: { isEdit: true, currentUser },
     });
 
     dialogRef.afterClosed().subscribe((result: User) => {
       if (result) {
-        this.usersService.editUser(result);
-        this.usersService.users$.pipe(take(1)).subscribe((users) => {
-          this.users = users;
-          this.filteredUsers = [...users];
+        currentUser.password = result.password;
+        this.usersHTTPService.update(currentUser).subscribe(() => {
+          this.initTable();
         });
       }
     });
   }
 
-  public openDeleteDialog(item: User): void {
+  public openDeleteDialog(currentUser: User): void {
     const dialogRef = this.dialog.open(WarningModalComponent, {
-      data: item,
+      data: currentUser,
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result === 'ok') {
-        this.usersService.deleteUser(item);
-        this.usersService.users$.pipe(take(1)).subscribe((users) => {
-          this.users = users;
-          this.filteredUsers = [...users];
+        this.usersHTTPService.remove(String(currentUser.id)).subscribe(() => {
+          this.initTable();
         });
       }
     });
+  }
+
+  private toUser(data: UserServer): User {
+    return {
+      id: data.id,
+      name: data.username,
+      created: new Date(data.createdAt!),
+    };
+  }
+
+  private initTable(): void {
+    this.loading$.next(true);
+
+    this.usersHTTPService
+      .getList()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.users = data.map((item: UserServer) => this.toUser(item));
+        this.filteredUsers = [...this.users];
+
+        this.loading$.next(false);
+      });
   }
 }

@@ -1,5 +1,6 @@
 export default interface User {
-  id: number;
   name: string;
   created: Date;
+  password?: string;
+  id?: string | number;
 }
