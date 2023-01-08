@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LoginService } from 'src/app/shared/services/login.service';
 
@@ -14,7 +15,7 @@ export class LoginFormComponent {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   login() {
     const { username, password } = this.loginForm.getRawValue();
@@ -23,7 +24,8 @@ export class LoginFormComponent {
       this.loginService
         .login(username!, password!)
         .subscribe((data: { access_token: string }) => {
-          console.log(data.access_token);
+          localStorage.setItem('authToken', data.access_token);
+          this.router.navigate(['/admin']);
         });
     }
   }

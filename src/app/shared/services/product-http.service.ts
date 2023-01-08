@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import Product from 'src/app/shared/interfaces/product.interface';
 import ProductServer from '../interfaces/product-server.interface';
@@ -10,10 +10,6 @@ import ProductServer from '../interfaces/product-server.interface';
 })
 export class ProductHTTPService {
   private baseURL = 'https://hys-fe-course-api.vercel.app/';
-  private headers = new HttpHeaders().set(
-    'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI5Njg3N2NiNy0zZmVlLTRhN2UtODAwMC1mZWQ1YjkzZDAxNWIiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkbEV2VEVEMFVHdk9GQWpJVmpLQnBBZWtqTVFrY0tFcXlNSUhKVEVyNVo1LmJjblRoaHlwQW0iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJpYXQiOjE2NzMxMzQ1MDUsImV4cCI6MTY3MzIyMDkwNX0.zEH-vaKkp3KRejYqX0CNnQ_NfP9E026QNTBbiidSDWw'
-  );
 
   constructor(private http: HttpClient) {}
 
@@ -36,15 +32,11 @@ export class ProductHTTPService {
       },
     };
 
-    return this.http.post<ProductServer>(this.baseURL + 'products/', data, {
-      headers: this.headers,
-    });
+    return this.http.post<ProductServer>(this.baseURL + 'products/', data);
   }
 
   public remove(id: string): Observable<ProductServer> {
-    return this.http.delete<ProductServer>(`${this.baseURL}products/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<ProductServer>(`${this.baseURL}products/${id}`);
   }
 
   public update(product: Product): Observable<ProductServer> {
@@ -58,10 +50,7 @@ export class ProductHTTPService {
 
     return this.http.put<ProductServer>(
       `${this.baseURL}products/${product.id}`,
-      data,
-      {
-        headers: this.headers,
-      }
+      data
     );
   }
 }

@@ -10,23 +10,15 @@ import User from '../interfaces/user.interface';
 })
 export class UsersHTTPService {
   private baseURL = 'https://hys-fe-course-api.vercel.app/';
-  private headers = new HttpHeaders().set(
-    'Authorization',
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI5Njg3N2NiNy0zZmVlLTRhN2UtODAwMC1mZWQ1YjkzZDAxNWIiLCJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkbEV2VEVEMFVHdk9GQWpJVmpLQnBBZWtqTVFrY0tFcXlNSUhKVEVyNVo1LmJjblRoaHlwQW0iLCJjcmVhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAxLTA3VDIxOjE5OjQ0LjU3M1oiLCJpYXQiOjE2NzMxMzQ1MDUsImV4cCI6MTY3MzIyMDkwNX0.zEH-vaKkp3KRejYqX0CNnQ_NfP9E026QNTBbiidSDWw'
-  );
 
   constructor(private http: HttpClient) {}
 
   public getList(): Observable<UserServer[]> {
-    return this.http.get<UserServer[]>(this.baseURL + 'users/', {
-      headers: this.headers,
-    });
+    return this.http.get<UserServer[]>(this.baseURL + 'users/');
   }
 
   public getById(id: string): Observable<UserServer> {
-    return this.http.get<UserServer>(`${this.baseURL}users/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.get<UserServer>(`${this.baseURL}users/${id}`);
   }
 
   public create(user: User): Observable<UserServer> {
@@ -35,15 +27,11 @@ export class UsersHTTPService {
       password: user.password,
     };
 
-    return this.http.post<UserServer>(this.baseURL + 'users/', data, {
-      headers: this.headers,
-    });
+    return this.http.post<UserServer>(this.baseURL + 'users/', data);
   }
 
   public remove(id: string): Observable<UserServer> {
-    return this.http.delete<UserServer>(`${this.baseURL}users/${id}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<UserServer>(`${this.baseURL}users/${id}`);
   }
 
   public update(user: User): Observable<UserServer> {
@@ -51,8 +39,6 @@ export class UsersHTTPService {
       password: 'user.password',
     };
 
-    return this.http.put<UserServer>(`${this.baseURL}users/${user.id}`, data, {
-      headers: this.headers,
-    });
+    return this.http.put<UserServer>(`${this.baseURL}users/${user.id}`, data);
   }
 }
