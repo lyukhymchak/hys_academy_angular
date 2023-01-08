@@ -1,0 +1,44 @@
+@import "/src/assets/scss/variables.scss";
+
+:host {
+  align-self: center;
+
+  input {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
+    outline: none;
+    height: 60px;
+    border-radius: 10px;
+    padding: 0 0 0 10px;
+    margin-bottom: 16px;
+    border: 1px solid #c2c0ca;
+  }
+}
+
+.form-container {
+  align-self: center;
+  width: 25%;
+  margin: 30px auto;
+  text-align: center;
+  padding: 25px;
+  border-radius: 4px;
+}
+
+.btn {
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+  border-style: none;
+  padding: 15px 15px;
+}
+
+.btn-dark {
+  background: $btn-dark-color;
+  color: $btn-dark-text-color;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-dark:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+}
