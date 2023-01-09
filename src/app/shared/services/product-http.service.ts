@@ -17,6 +17,10 @@ export class ProductHTTPService {
     return this.http.get<ProductServer[]>(this.baseURL + 'products/');
   }
 
+  getListLimited(limit: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseURL}products?limit=${limit}`);
+  }
+
   public getById(id: string): Observable<ProductServer> {
     return this.http.get<ProductServer>(`${this.baseURL}products/${id}`);
   }
