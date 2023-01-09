@@ -5,7 +5,8 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { CartService } from '../../services/cart.service';
 import Product from '../../../../shared/interfaces/product.interface';
-import { ProductsService } from 'src/app/shared/services/products.service';
+
+import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,7 +14,7 @@ import { ProductsService } from 'src/app/shared/services/products.service';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  private productId: number;
+  private productId: string;
   private productsSubscription: Subscription;
 
   public loading$ = new BehaviorSubject<boolean>(true);
@@ -23,29 +24,27 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedroute: ActivatedRoute,
-    private productsService: ProductsService,
+    private productsService: ProductHTTPService,
     private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     if (this.activatedroute.snapshot.paramMap.get('id')) {
-      this.productId = parseInt(
-        this.activatedroute.snapshot.paramMap.get('id')!
-      );
+      this.productId = this.activatedroute.snapshot.paramMap.get('id')!;
     }
 
     this.quantity = this.cartService.getQuantity(this.product);
     this.checkButtonLabel(this.cartService.getCart(), this.product);
 
-    this.productsSubscription = this.productsService.products$.subscribe(
-      (products: Product[]) => {
-        this.product = products.find((x: Product) => x.id === this.productId)!;
+    this.productsSubscription = this.productsService
+      .getById(this.productId)
+      .subscribe((product: Product) => {
+        this.product = product;
         this.quantity = this.cartService.getQuantity(this.product);
         this.checkButtonLabel(this.cartService.getCart(), this.product);
 
         this.loading$.next(false);
-      }
-    );
+      });
   }
 
   ngOnDestroy(): void {
