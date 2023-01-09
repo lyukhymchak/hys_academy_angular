@@ -9,14 +9,8 @@
     <li class="navbar-item" [routerLinkActive]="'active'">
       <a class="navbar-link" [routerLink]="['./products']">Products</a>
     </li>
-    <li
-      class="navbar-item"
-      [routerLinkActive]="'active'"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a class="navbar-link" [routerLink]="['/login']">Log out</a>
-    </li>
   </ul>
+  <button type="button" class="btn" (click)="logout()">Log out</button>
 </nav>
 
 <div class="footer-item">
