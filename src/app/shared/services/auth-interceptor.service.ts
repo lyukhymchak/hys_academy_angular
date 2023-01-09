@@ -4,14 +4,17 @@ import {
   HttpHandler,
   HttpEvent,
   HttpClient,
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { UnauthorizedModalComponent } from '../components/unauthorized-modal/unauthorized-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -24,9 +27,19 @@ export class AuthInterceptor implements HttpInterceptor {
       modifiedReq = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${authToken}`),
       });
-    } else {
-      this.router.navigate(['/login']);
     }
-    return next.handle(modifiedReq).pipe(tap(console.log));
+
+    return next.handle(modifiedReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          const dialogRef = this.dialog.open(UnauthorizedModalComponent);
+          dialogRef.afterClosed().subscribe(() => {
+            localStorage.removeItem('authToken');
+            this.router.navigate(['/login']);
+          });
+        }
+        return throwError(() => {});
+      })
+    );
   }
 }
