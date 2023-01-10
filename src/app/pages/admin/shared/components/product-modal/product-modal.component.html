@@ -2,7 +2,12 @@
   <h1>{{ title }}</h1>
   <div mat-dialog-content class="fields">
     <mat-form-field>
-      <input matInput [(ngModel)]="item.name" placeholder="Name" />
+      <input
+        matInput
+        [(ngModel)]="item.name"
+        placeholder="Name"
+        disabled="{{ this.data.isEdit ? true : false }}"
+      />
     </mat-form-field>
     <mat-form-field>
       <input matInput [(ngModel)]="item.price" placeholder="Price" />
