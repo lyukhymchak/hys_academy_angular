@@ -8,6 +8,7 @@ import Product from '../../../../shared/interfaces/product.interface';
 
 import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 import ProductServer from 'src/app/shared/interfaces/product-server.interface';
+import { CartButtonLabels } from '../../enums/cart-button-labels.enum';
 
 @Component({
   selector: 'app-product-details',
@@ -23,7 +24,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public product: Product;
 
   public quantity: number = 1;
-  public buttonLabel: string = 'Add to cart';
+  public buttonLabel: string = CartButtonLabels.AddToCart;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -67,29 +68,29 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   public addToCart(product: Product, count: number): void {
     this.cartService.addItemToCart(product, count);
-    this.buttonLabel = 'In cart';
+    this.buttonLabel = CartButtonLabels.InCart;
   }
 
   public setCountInc(): void {
     this.quantity++;
-    if (this.buttonLabel === 'In cart') {
-      this.buttonLabel = 'Refresh cart';
+    if (this.buttonLabel === CartButtonLabels.InCart) {
+      this.buttonLabel = CartButtonLabels.RefreshCart;
     }
   }
 
   public setCountDec(): void {
     if (this.quantity > 1) {
       this.quantity--;
-      if (this.buttonLabel === 'In cart') {
-        this.buttonLabel = 'Refresh cart';
+      if (this.buttonLabel === CartButtonLabels.InCart) {
+        this.buttonLabel = CartButtonLabels.RefreshCart;
       }
     }
   }
 
   private checkButtonLabel(cart: Map<Product, number>, product: Product): void {
     this.cartService.isProductInCart(product.id!)
-      ? (this.buttonLabel = 'In cart')
-      : (this.buttonLabel = 'Add to cart');
+      ? (this.buttonLabel = CartButtonLabels.InCart)
+      : (this.buttonLabel = CartButtonLabels.AddToCart);
   }
 
   private getQuantity(product: Product): number {
