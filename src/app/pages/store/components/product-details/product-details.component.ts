@@ -7,6 +7,7 @@ import { CartService } from '../../services/cart.service';
 import Product from '../../../../shared/interfaces/product.interface';
 
 import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
+import ProductServer from 'src/app/shared/interfaces/product-server.interface';
 
 @Component({
   selector: 'app-product-details',
@@ -16,10 +17,12 @@ import { ProductHTTPService } from 'src/app/shared/services/product-http.service
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   private productId: string;
   private productsSubscription: Subscription;
+  private cartSubscription: Subscription;
 
   public loading$ = new BehaviorSubject<boolean>(true);
   public product: Product;
-  public quantity: number;
+
+  public quantity: number = 1;
   public buttonLabel: string = 'Add to cart';
 
   constructor(
@@ -33,15 +36,25 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.productId = this.activatedroute.snapshot.paramMap.get('id')!;
     }
 
-    this.quantity = this.cartService.getQuantity(this.product);
-    this.checkButtonLabel(this.cartService.getCart(), this.product);
-
     this.productsSubscription = this.productsService
       .getById(this.productId)
-      .subscribe((product: Product) => {
-        this.product = product;
-        this.quantity = this.cartService.getQuantity(this.product);
-        this.checkButtonLabel(this.cartService.getCart(), this.product);
+      .subscribe((product: ProductServer) => {
+        this.product = {
+          id: product.id,
+          price: product.price,
+          name: product.name,
+          description: product.description.substring(0, 100),
+        };
+
+        this.quantity = this.getQuantity(this.product);
+        this.checkButtonLabel(this.cartService.cart, this.product);
+
+        this.cartSubscription = this.cartService.cartState$.subscribe(
+          (cart) => {
+            this.quantity = this.getQuantity(this.product);
+            this.checkButtonLabel(cart, this.product);
+          }
+        );
 
         this.loading$.next(false);
       });
@@ -49,6 +62,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.productsSubscription.unsubscribe();
+    this.cartSubscription.unsubscribe();
   }
 
   public addToCart(product: Product, count: number): void {
@@ -73,8 +87,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   private checkButtonLabel(cart: Map<Product, number>, product: Product): void {
-    cart.has(this.product)
+    this.cartService.isProductInCart(product.id!)
       ? (this.buttonLabel = 'In cart')
       : (this.buttonLabel = 'Add to cart');
+  }
+
+  private getQuantity(product: Product): number {
+    const quantity: number = this.cartService.getQuantityOfProduct(product);
+
+    return quantity ? quantity : 1;
   }
 }

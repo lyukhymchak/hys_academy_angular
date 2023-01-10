@@ -8,7 +8,9 @@
     <h1>Products>{{ product.name }}</h1>
     <div class="card" [attr.id]="'card-' + product.id">
       <div class="card-name">{{ product.name }}</div>
-      <div class="card-description">Description</div>
+      <div class="card-description">
+        {{ product.description }}
+      </div>
       <div class="card-price" setColor>
         {{ product.price | currencyPipe }}
       </div>

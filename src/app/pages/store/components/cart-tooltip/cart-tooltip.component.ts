@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import Product from '../../../../shared/interfaces/product.interface';
 import { CartService } from '../../services/cart.service';
 
@@ -9,23 +10,18 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-tooltip.component.scss'],
 })
 export class CartTooltipComponent implements OnInit, OnDestroy {
+  private subscription: Subscription;
   public cart: Map<Product, number>;
   public totalPrice: number;
   public visibility: boolean;
-  private subscription: Subscription;
 
-  constructor(private cartService: CartService) {
-    this.visibility = !this.cartService.isCartEmpty();
-  }
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.cart = this.cartService.getCart();
-    this.totalPrice = this.cartService.getTotalPrice();
+    this.setCartToolTip();
 
-    this.subscription = this.cartService.cartState$.subscribe((cart) => {
-      this.cart = cart;
-      this.totalPrice = this.cartService.getTotalPrice();
-      this.visibility = !this.cartService.isCartEmpty();
+    this.subscription = this.cartService.cartState$.subscribe(() => {
+      this.setCartToolTip();
     });
   }
 
@@ -33,7 +29,13 @@ export class CartTooltipComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public deleteItem(item: Product): void {
+  public removeProduct(item: Product): void {
     this.cartService.removeItemFromCart(item);
+  }
+
+  private setCartToolTip(): void {
+    this.cart = this.cartService.cart;
+    this.totalPrice = this.cartService.getTotalPrice();
+    this.visibility = !this.cartService.isCartEmpty();
   }
 }

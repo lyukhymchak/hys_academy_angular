@@ -1,29 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
+
 import Product from '../../../shared/interfaces/product.interface';
+import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 import { LocalStorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cart: Map<Product, number> = new Map();
-  private cartChanged = new Subject<Map<Product, number>>();
-  public cartState$ = this.cartChanged.asObservable();
+  private _cart: Map<Product, number>;
+  private _cartState$ = new Subject<Map<Product, number>>();
+  public cartState$ = this._cartState$.asObservable();
 
-  constructor(private localStorageService: LocalStorageService) {}
+  private set cart(cart: Map<Product, number>) {
+    this._cart = cart;
+    this._cartState$.next(this._cart);
+  }
+
+  public get cart(): Map<Product, number> {
+    return this._cart;
+  }
+
+  constructor(private localStorageService: LocalStorageService) {
+    this.cart = this.localStorageService.getData(LocalStorageKeys.CART);
+  }
 
   public addItemToCart(item: Product, quantity: number): void {
-    if (quantity !== 0) {
-      this.cart.set(item, quantity);
+    const product = this.findProductInCart(item.id!);
+
+    if (product) {
+      if (quantity !== 0) {
+        this.cart.set(product, quantity);
+      } else {
+        this.cart.delete(product);
+      }
     } else {
-      this.cart.delete(item);
+      this.cart.set(item, quantity);
     }
 
     this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
 
-    this.cartChanged.next(this.cart);
+    this._cartState$.next(this.cart);
   }
 
   public removeItemFromCart(product: Product): void {
@@ -33,32 +51,38 @@ export class CartService {
       ? this.localStorageService.clearLocalStorage(LocalStorageKeys.CART)
       : this.localStorageService.setData(LocalStorageKeys.CART, this.cart);
 
-    this.cartChanged.next(this.cart);
+    this._cartState$.next(this.cart);
   }
 
   public clearCart(): void {
     this.cart.clear();
     this.localStorageService.clearLocalStorage(LocalStorageKeys.CART);
 
-    this.cartChanged.next(this.cart);
+    this._cartState$.next(this.cart);
   }
 
-  public getCart(): Map<Product, number> {
-    return this.cart;
+  public findProductInCart(productId: string): Product | undefined {
+    const foundKey = [...this.cart.keys()].find((key) => key.id === productId);
+    return foundKey;
   }
 
-  public setCart(cart: Map<Product, number>): void {
-    this.cart = cart;
+  public isProductInCart(productId: string): boolean {
+    return this.findProductInCart(productId) ? true : false;
   }
 
-  public getQuantity(product: Product): number {
-    return this.cart.get(product) || 1;
+  public getQuantityOfProduct(product: Product): number {
+    for (const [key, value] of this.cart) {
+      if (key.id === product.id) {
+        return value;
+      }
+    }
+    return 0;
   }
 
   public getTotalQuantityOfItems(): number {
     let totalQuantity = 0;
 
-    for (const [item, quantity] of this.cart) {
+    for (const [, quantity] of this.cart) {
       totalQuantity += quantity;
     }
 
