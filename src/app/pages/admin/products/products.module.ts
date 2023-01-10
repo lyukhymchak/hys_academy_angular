@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './components/products/products.component';
-import { SharedAdminModule } from '../shared-admin/shared-admin.module';
+import { SharedModule as SharedAdminModule } from '../shared/shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({

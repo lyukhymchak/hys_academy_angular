@@ -4,12 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 
 import Product from 'src/app/shared/interfaces/product.interface';
 import ProductServer from 'src/app/shared/interfaces/product-server.interface';
-import FilterCondition from 'src/app/pages/admin/shared-admin/interfaces/filter-condition.model';
-import { SearchService } from '../../../shared-admin/services/search.service';
-import { FilterService } from '../../../shared-admin/services/filter.service';
+import FilterCondition from 'src/app/pages/admin/shared/interfaces/filter-condition.model';
+import { SearchService } from '../../../shared/services/search.service';
+import { FilterService } from '../../../shared/services/filter.service';
 import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
-import { ProductModalComponent } from '../../../shared-admin/components/product-modal/product-modal.component';
-import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
+import { ProductModalComponent } from '../../../shared/components/product-modal/product-modal.component';
+import { WarningModalComponent } from '../../../shared/components/warning-modal/warning-modal.component';
 
 @Component({
   selector: 'app-products',

@@ -4,12 +4,12 @@ import { BehaviorSubject, take } from 'rxjs';
 
 import User from '../../../../../shared/interfaces/user.interface';
 import UserServer from 'src/app/shared/interfaces/user-server.interface';
-import FilterCondition from '../../../shared-admin/interfaces/filter-condition.model';
-import { UserModalComponent } from '../../../shared-admin/components/user-modal/user-modal.component';
-import { WarningModalComponent } from '../../../shared-admin/components/warning-modal/warning-modal.component';
+import FilterCondition from '../../../shared/interfaces/filter-condition.model';
+import { UserModalComponent } from '../../../shared/components/user-modal/user-modal.component';
+import { WarningModalComponent } from '../../../shared/components/warning-modal/warning-modal.component';
 import { UsersHTTPService } from 'src/app/shared/services/users-http.service';
-import { FilterService } from '../../../shared-admin/services/filter.service';
-import { SearchService } from '../../../shared-admin/services/search.service';
+import { FilterService } from '../../../shared/services/filter.service';
+import { SearchService } from '../../../shared/services/search.service';
 
 @Component({
   selector: 'app-users',
