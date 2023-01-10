@@ -13,8 +13,7 @@ export class FilterComponent implements OnInit {
   public options: string[];
   @Input() public filterType: any;
   @Output() public filter = new EventEmitter<FilterCondition<any, any>>();
-
-  public filterCondition: FilterCondition<any, any>;
+  @Input() public filterCondition: FilterCondition<any, any>;
 
   public filterUserOption = FilterUserOption;
   public filterProductOption = FilterProductOption;
@@ -27,11 +26,8 @@ export class FilterComponent implements OnInit {
     this.options = Object.values(this.filterType);
 
     this.filterForm = new FormGroup({
-      select: new FormControl(this.options[0], [Validators.required]),
-      input: new FormControl(
-        this.filterType === FilterUserOption ? new Date(Date.now()) : 0,
-        [Validators.required]
-      ),
+      select: new FormControl(this.filterCondition.selectedOptionValue),
+      input: new FormControl(this.filterCondition.inputValue),
     });
   }
 
@@ -40,7 +36,7 @@ export class FilterComponent implements OnInit {
       if (this.filterType === FilterUserOption) {
         this.filter.emit({
           selectedOptionValue: this.filterForm!.get('select')?.value,
-          inputValue: new Date(this.filterForm!.get('input')?.value),
+          inputValue: this.filterForm!.get('input')?.value,
         });
       }
 

@@ -2,10 +2,11 @@
   <header>
     <h1>Products</h1>
     <div class="searchbar">
-      <app-search (valueChanges)="search($event)"></app-search>
+      <app-search #searchComponent (valueChanges)="search($event)"></app-search>
       <app-filter
         (filter)="filterByPrice($event)"
         [filterType]="filterType"
+        [filterCondition]="filterState"
       ></app-filter>
     </div>
   </header>

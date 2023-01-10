@@ -34,22 +34,32 @@ export class FilterService {
   }
 
   public filterUsersByCreatedDate(
-    filterCondition: FilterCondition<FilterUserOption, Date>,
+    filterCondition: FilterCondition<FilterUserOption, string>,
     users: User[]
   ): User[] {
+    if (!users) {
+      return users;
+    }
     switch (filterCondition.selectedOptionValue) {
       case FilterUserOption.MoreThan:
         return users.filter(
-          (user) => user.created.getDay() > filterCondition.inputValue.getDay()
+          (user) =>
+            new Date(user.created).getTime() >
+            Number(filterCondition.inputValue)
         );
+
       case FilterUserOption.LessThan:
         return users.filter(
-          (user) => user.created.getDay() < filterCondition.inputValue.getDay()
+          (user) =>
+            new Date(user.created).getTime() <
+            Number(filterCondition.inputValue)
         );
+
       case FilterUserOption.Equal:
         return users.filter(
           (user) =>
-            user.created.getDay() === filterCondition.inputValue.getDay()
+            new Date(user.created).getTime() ===
+            Number(filterCondition.inputValue)
         );
       default:
         return [];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -11,6 +11,7 @@ import { ProductHTTPService } from 'src/app/shared/services/product-http.service
 import { ProductModalComponent } from '../../../shared/components/product-modal/product-modal.component';
 import { WarningModalComponent } from '../../../shared/components/warning-modal/warning-modal.component';
 import { FilterProductOption } from '../../../shared/enums/filter-product-option.enum';
+import { SearchComponent } from '../../../shared/components/search/search.component';
 
 @Component({
   selector: 'app-products',
@@ -22,8 +23,15 @@ export class ProductsComponent implements OnInit {
   public filteredProducts: Product[] = [];
 
   public filterType = FilterProductOption;
+  public filterState: FilterCondition<FilterProductOption, number> = {
+    selectedOptionValue: FilterProductOption.PriceMoreThan,
+    inputValue: 0,
+  };
 
   public loading$ = new BehaviorSubject<boolean>(true);
+
+  @ViewChild('searchComponent', { static: false })
+  searchComponent: SearchComponent;
 
   constructor(
     private searchService: SearchService,
@@ -37,15 +45,18 @@ export class ProductsComponent implements OnInit {
   }
 
   public search(query: string): void {
-    this.filteredProducts = this.searchService.searchThroughAllFields(
+    this.filteredProducts = this.searchService.searchByName(
       query,
-      this.products
+      this.filterService.filterProductsByPrice(this.filterState, this.products),
+      'name'
     );
   }
 
   public filterByPrice(
     filterCondition: FilterCondition<FilterProductOption, number>
   ): void {
+    this.searchComponent.searchForm.patchValue({ query: '' });
+    this.filterState = filterCondition;
     this.filteredProducts = this.filterService.filterProductsByPrice(
       filterCondition,
       this.products
@@ -118,6 +129,15 @@ export class ProductsComponent implements OnInit {
       .subscribe((data: ProductServer[]) => {
         this.products = data.map((item: ProductServer) => this.toProduct(item));
         this.filteredProducts = [...this.products];
+
+        this.filterState = {
+          selectedOptionValue: FilterProductOption.PriceMoreThan,
+          inputValue: 0,
+        };
+
+        this.searchComponent.searchForm.patchValue({ query: '' });
+
+        this.filterByPrice(this.filterState);
 
         this.loading$.next(false);
       });

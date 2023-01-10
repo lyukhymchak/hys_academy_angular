@@ -6,12 +6,12 @@ import { Injectable } from '@angular/core';
 export class SearchService {
   constructor() {}
 
-  public searchThroughAllFields(query: string, items: any[]): any[] {
+  public searchByName(query: string, items: any[], key: string): any[] {
     if (!items) {
       return items;
     }
     return items.filter((item) =>
-      this.searchThroughAllFieldsInItem(query, item)
+      item[key].toLowerCase().includes(query.toLowerCase())
     );
   }
 

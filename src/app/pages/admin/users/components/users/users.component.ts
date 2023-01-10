@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, take } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { UsersHTTPService } from 'src/app/shared/services/users-http.service';
 import { FilterService } from '../../../shared/services/filter.service';
 import { SearchService } from '../../../shared/services/search.service';
 import { FilterUserOption } from '../../../shared/enums/filter-user-option.enum';
+import { SearchComponent } from '../../../shared/components/search/search.component';
 
 @Component({
   selector: 'app-users',
@@ -22,8 +23,15 @@ export class UsersComponent implements OnInit {
   public filteredUsers: User[] = [];
 
   public filterType = FilterUserOption;
+  public filterState: FilterCondition<FilterUserOption, string> = {
+    selectedOptionValue: FilterUserOption.LessThan,
+    inputValue: Date.now().toString(),
+  };
 
   public loading$ = new BehaviorSubject<boolean>(true);
+
+  @ViewChild('searchComponent', { static: false })
+  searchComponent: SearchComponent;
 
   constructor(
     private searchService: SearchService,
@@ -37,15 +45,18 @@ export class UsersComponent implements OnInit {
   }
 
   public search(query: string): void {
-    this.filteredUsers = this.searchService.searchThroughAllFields(
+    this.filteredUsers = this.searchService.searchByName(
       query,
-      this.users
+      this.filterService.filterUsersByCreatedDate(this.filterState, this.users),
+      'name'
     );
   }
 
   public filterByCreatedDate(
-    filterCondition: FilterCondition<FilterUserOption, Date>
+    filterCondition: FilterCondition<FilterUserOption, string>
   ): void {
+    this.searchComponent.searchForm.patchValue({ query: '' });
+
     this.filteredUsers = this.filterService.filterUsersByCreatedDate(
       filterCondition,
       this.users
@@ -118,6 +129,15 @@ export class UsersComponent implements OnInit {
       .subscribe((data) => {
         this.users = data.map((item: UserServer) => this.toUser(item));
         this.filteredUsers = [...this.users];
+
+        this.filterState = {
+          selectedOptionValue: FilterUserOption.LessThan,
+          inputValue: Date.now().toString(),
+        };
+
+        this.searchComponent.searchForm.patchValue({ query: '' });
+
+        this.filterByCreatedDate(this.filterState);
 
         this.loading$.next(false);
       });
