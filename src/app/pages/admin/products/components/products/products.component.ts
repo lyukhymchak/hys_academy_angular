@@ -10,6 +10,7 @@ import { FilterService } from '../../../shared/services/filter.service';
 import { ProductHTTPService } from 'src/app/shared/services/product-http.service';
 import { ProductModalComponent } from '../../../shared/components/product-modal/product-modal.component';
 import { WarningModalComponent } from '../../../shared/components/warning-modal/warning-modal.component';
+import { FilterProductOption } from '../../../shared/enums/filter-product-option.enum';
 
 @Component({
   selector: 'app-products',
@@ -43,7 +44,9 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  public filterByPrice(filterCondition: FilterCondition<string, number>): void {
+  public filterByPrice(
+    filterCondition: FilterCondition<FilterProductOption, number>
+  ): void {
     this.filteredProducts = this.filterService.filterProductsByPrice(
       filterCondition,
       this.products

@@ -10,6 +10,7 @@ import { WarningModalComponent } from '../../../shared/components/warning-modal/
 import { UsersHTTPService } from 'src/app/shared/services/users-http.service';
 import { FilterService } from '../../../shared/services/filter.service';
 import { SearchService } from '../../../shared/services/search.service';
+import { FilterUserOption } from '../../../shared/enums/filter-user-option.enum';
 
 @Component({
   selector: 'app-users',
@@ -43,7 +44,7 @@ export class UsersComponent implements OnInit {
   }
 
   public filterByCreatedDate(
-    filterCondition: FilterCondition<string, Date>
+    filterCondition: FilterCondition<FilterUserOption, Date>
   ): void {
     this.filteredUsers = this.filterService.filterUsersByCreatedDate(
       filterCondition,

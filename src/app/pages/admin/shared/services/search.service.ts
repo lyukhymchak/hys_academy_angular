@@ -7,6 +7,9 @@ export class SearchService {
   constructor() {}
 
   public searchThroughAllFields(query: string, items: any[]): any[] {
+    if (!items) {
+      return items;
+    }
     return items.filter((item) =>
       this.searchThroughAllFieldsInItem(query, item)
     );

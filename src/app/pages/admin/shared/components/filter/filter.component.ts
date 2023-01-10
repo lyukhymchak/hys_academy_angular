@@ -9,9 +9,9 @@ import FilterCondition from '../../interfaces/filter-condition.model';
 export class FilterComponent implements OnInit {
   @Input() public options: string[];
   @Input() public filterType: string;
-  @Output() public filter = new EventEmitter<FilterCondition<string, any>>();
+  @Output() public filter = new EventEmitter<FilterCondition<any, any>>();
 
-  public filterCondition: FilterCondition<string, any>;
+  public filterCondition: FilterCondition<any, any>;
 
   constructor() {}
 
@@ -19,7 +19,7 @@ export class FilterComponent implements OnInit {
     if (this.filterType === 'date') {
       this.filterCondition = {
         selectedOptionValue: this.options[0],
-        inputValue: new Date(),
+        inputValue: new Date(Date.now()),
       };
     }
 
@@ -31,7 +31,7 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  handleSubmit(filterCondition: FilterCondition<string, any>): void {
+  handleSubmit(filterCondition: FilterCondition<any, any>): void {
     if (this.filterType === 'date') {
       this.filter.emit({
         selectedOptionValue: filterCondition.selectedOptionValue,
@@ -40,7 +40,7 @@ export class FilterComponent implements OnInit {
     }
 
     if (this.filterType === 'number') {
-      this.filter.emit(filterCondition as FilterCondition<string, number>);
+      this.filter.emit(filterCondition as FilterCondition<any, number>);
     }
   }
 }
