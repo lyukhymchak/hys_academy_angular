@@ -30,9 +30,6 @@ export class UsersComponent implements OnInit {
 
   public loading$ = new BehaviorSubject<boolean>(true);
 
-  @ViewChild('searchComponent', { static: false })
-  searchComponent: SearchComponent;
-
   constructor(
     private searchService: SearchService,
     private filterService: FilterService,
@@ -47,7 +44,7 @@ export class UsersComponent implements OnInit {
   public search(query: string): void {
     this.filteredUsers = this.searchService.searchByName(
       query,
-      this.filterService.filterUsersByCreatedDate(this.filterState, this.users),
+      this.users,
       'name'
     );
   }
@@ -55,8 +52,6 @@ export class UsersComponent implements OnInit {
   public filterByCreatedDate(
     filterCondition: FilterCondition<FilterUserOption, string>
   ): void {
-    this.searchComponent.searchForm.patchValue({ query: '' });
-
     this.filteredUsers = this.filterService.filterUsersByCreatedDate(
       filterCondition,
       this.users
@@ -129,15 +124,6 @@ export class UsersComponent implements OnInit {
       .subscribe((data) => {
         this.users = data.map((item: UserServer) => this.toUser(item));
         this.filteredUsers = [...this.users];
-
-        this.filterState = {
-          selectedOptionValue: FilterUserOption.LessThan,
-          inputValue: Date.now().toString(),
-        };
-
-        this.searchComponent.searchForm.patchValue({ query: '' });
-
-        this.filterByCreatedDate(this.filterState);
 
         this.loading$.next(false);
       });

@@ -27,7 +27,11 @@ export class FilterComponent implements OnInit {
 
     this.filterForm = new FormGroup({
       select: new FormControl(this.filterCondition.selectedOptionValue),
-      input: new FormControl(this.filterCondition.inputValue),
+      input: new FormControl(
+        new Date(Number(this.filterCondition.inputValue))
+          .toISOString()
+          .split('T')[0]
+      ),
     });
   }
 

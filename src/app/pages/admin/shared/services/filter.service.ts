@@ -40,26 +40,26 @@ export class FilterService {
     if (!users) {
       return users;
     }
+
+    const currentFilterTime = new Date(filterCondition.inputValue);
+
     switch (filterCondition.selectedOptionValue) {
       case FilterUserOption.MoreThan:
         return users.filter(
           (user) =>
-            new Date(user.created).getTime() >
-            Number(filterCondition.inputValue)
+            new Date(user.created).getTime() > currentFilterTime.getTime()
         );
 
       case FilterUserOption.LessThan:
         return users.filter(
           (user) =>
-            new Date(user.created).getTime() <
-            Number(filterCondition.inputValue)
+            new Date(user.created).getTime() < currentFilterTime.getTime()
         );
 
       case FilterUserOption.Equal:
         return users.filter(
           (user) =>
-            new Date(user.created).getTime() ===
-            Number(filterCondition.inputValue)
+            new Date(user.created).getDay() === currentFilterTime.getDay()
         );
       default:
         return [];
