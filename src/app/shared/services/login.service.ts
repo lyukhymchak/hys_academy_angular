@@ -3,11 +3,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
+import { LocalStorageService } from './localstorage.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private localStorageService: LocalStorageService
+  ) {}
 
   login(
     username: string,
@@ -23,7 +30,7 @@ export class LoginService {
   }
 
   logout() {
-    localStorage.removeItem('authToken');
+    this.localStorageService.clearLocalStorage(LocalStorageKeys.TOKEN);
     this.router.navigate(['/login']);
   }
 }

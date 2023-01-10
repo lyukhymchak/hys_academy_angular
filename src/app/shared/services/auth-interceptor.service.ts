@@ -11,16 +11,24 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { UnauthorizedModalComponent } from '../components/unauthorized-modal/unauthorized-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageService } from './localstorage.service';
+import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private localStorageService: LocalStorageService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = this.localStorageService.getData<string>(
+      LocalStorageKeys.TOKEN
+    );
 
     let modifiedReq = req;
     if (authToken) {
@@ -34,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           const dialogRef = this.dialog.open(UnauthorizedModalComponent);
           dialogRef.afterClosed().subscribe(() => {
-            localStorage.removeItem('authToken');
+            this.localStorageService.clearLocalStorage(LocalStorageKeys.TOKEN);
             this.router.navigate(['/login']);
           });
         }

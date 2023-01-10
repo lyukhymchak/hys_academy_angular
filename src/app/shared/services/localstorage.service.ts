@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
 
@@ -15,7 +16,12 @@ export class LocalStorageService {
   }
 
   public getData<T>(key: LocalStorageKeys): T {
-    return JSON.parse(localStorage.getItem(key)!, (key, value) =>
+    const result = localStorage.getItem(key);
+    if (typeof JSON.parse(result!) === 'string') {
+      return JSON.parse(result!);
+    }
+
+    return JSON.parse(result!, (key, value) =>
       key === '' ? new Map(value) : value
     );
   }

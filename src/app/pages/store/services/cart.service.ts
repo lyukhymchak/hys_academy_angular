@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import Product from '../../../shared/interfaces/product.interface';
-import { LocalStorageKeys } from '../enums/localstorage-keys.enum';
-import { LocalStorageService } from './localstorage.service';
+import { LocalStorageKeys } from '../../../shared/enums/localstorage-keys.enum';
+import { LocalStorageService } from '../../../shared/services/localstorage.service';
 
 @Injectable({
   providedIn: 'root',
