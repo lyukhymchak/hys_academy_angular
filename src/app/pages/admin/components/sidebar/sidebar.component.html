@@ -1,0 +1,20 @@
+<nav class="side-navbar">
+  <div class="navbar-item">
+    <img class="logo" src="../favicon.ico" width="50" alt="coffee cup" />
+  </div>
+  <ul class="navbar-list">
+    <li class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['./users']">Users</a>
+    </li>
+    <li class="navbar-item" [routerLinkActive]="'active'">
+      <a class="navbar-link" [routerLink]="['./products']">Products</a>
+    </li>
+  </ul>
+  <button type="button" class="btn" (click)="logout()">Log out</button>
+</nav>
+
+<div class="footer-item">
+  <a class="footer-link" [routerLink]="['/store']">
+    Landing <span class="arrow">→</span>
+  </a>
+</div>

@@ -1,0 +1,48 @@
+@import "/src/assets/scss/variables.scss";
+
+:host {
+  min-height: 1200px;
+  padding: 0 100px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 40px;
+  row-gap: 50px;
+  margin: 40px 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 10px;
+  height: 450px;
+  padding: 30px;
+  border: 2px solid $text-color;
+  background: $bg-card-color;
+  border-radius: 10px;
+}
+
+.card-name {
+  font-size: 36px;
+  color: $text-color;
+}
+
+.card-price {
+  font-size: 36px;
+  margin: 20px 0;
+}
+
+.btn-circle-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.count {
+  width: 20px;
+  text-align: center;
+  padding: 0 5px;
+}

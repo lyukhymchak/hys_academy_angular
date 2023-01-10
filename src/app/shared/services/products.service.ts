@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { delay, map, Observable, of } from 'rxjs';
-import Product from 'src/app/store/interfaces/product.interface';
+
+import Product from 'src/app/shared/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +10,14 @@ export class ProductsService {
   public products$: Observable<Product[]>;
 
   constructor() {
-    this.products$ = this.getProductsAsync();
+    this.products$ = this.getProducts();
   }
 
-  public getProductsAsync(): Observable<Product[]> {
-    return of(this.getProducts()).pipe(delay(500));
+  public getProducts(): Observable<Product[]> {
+    return of(this.generateProducts(50)).pipe(delay(500));
   }
 
-  private getProducts(count: number = 8): Array<Product> {
+  private generateProducts(count: number = 8): Array<Product> {
     const producers: string[] = [
       'Starbucks',
       'Nespresso',
@@ -60,5 +61,37 @@ export class ProductsService {
 
   private getRandomInteger(max: number): number {
     return Math.floor(Math.random() * max);
+  }
+
+  public addProduct(product: Product): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) => {
+        return [...products, product];
+      })
+    );
+  }
+
+  public editProduct(product: Product): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) =>
+        products.map((elementOfProducts: Product) =>
+          elementOfProducts.id === product.id ? product : elementOfProducts
+        )
+      )
+    );
+  }
+
+  public deleteProduct(product: Product): void {
+    this.products$ = this.products$.pipe(
+      map((products: Product[]) => {
+        return products.filter(
+          (elementOfProducts: Product) =>
+            !(
+              elementOfProducts.id === product.id &&
+              elementOfProducts.name === product.name
+            )
+        );
+      })
+    );
   }
 }

@@ -1,0 +1,25 @@
+<form [formGroup]="filterForm" (submit)="handleSubmit()">
+  <select formControlName="select" name="select" class="select">
+    <option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </option>
+  </select>
+  <input
+    *ngIf="filterType === filterProductOption"
+    type="number"
+    formControlName="input"
+    name="input"
+    class="input input-number"
+    [value]="filterForm!.get('input')?.value"
+  />
+  <input
+    *ngIf="filterType === filterUserOption"
+    type="date"
+    formControlName="input"
+    name="input"
+    class="input input-date"
+    min="0"
+    [value]="filterForm!.get('input')?.value"
+  />
+  <button class="btn" type="submit">Filter</button>
+</form>

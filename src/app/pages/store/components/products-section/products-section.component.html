@@ -1,0 +1,21 @@
+<section class="section">
+  <h1 class="section-title">Products</h1>
+  <ng-container *ngIf="loading$ | async; else cards">
+    <div class="spinner">
+      <app-spinner></app-spinner>
+    </div>
+  </ng-container>
+  <ng-template #cards>
+    <div class="cards">
+      <app-product
+        *ngFor="let curProduct of products"
+        [product]="curProduct"
+      ></app-product>
+    </div>
+    <div class="button-container">
+      <button class="btn btn-dark" type="button" (click)="loadMore()">
+        Load more
+      </button>
+    </div>
+  </ng-template>
+</section>

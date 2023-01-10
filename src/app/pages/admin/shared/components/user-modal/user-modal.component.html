@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <div mat-dialog-content class="fields">
+    <mat-form-field>
+      <input
+        matInput
+        [(ngModel)]="item.name"
+        placeholder="Name"
+        disabled="{{ this.data.isEdit ? true : false }}"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        [(ngModel)]="item.password"
+        type="password"
+        placeholder="Password"
+      />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()" class="btn-cancel btn">
+      Cancel
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="item"
+      cdkFocusInitial
+      class="btn-ok btn"
+    >
+      OK
+    </button>
+  </div>
+</div>
