@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule as GlobalSharedModule } from 'src/app/shared/shared.module';
 import { FilterComponent } from './components/filter/filter.component';
@@ -32,6 +32,7 @@ import { WarningModalComponent } from './components/warning-modal/warning-modal.
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
   ],
   exports: [
     FilterComponent,

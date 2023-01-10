@@ -5,7 +5,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { debounceTime, Subject, Subscription } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime, map, startWith, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -13,28 +14,28 @@ import { debounceTime, Subject, Subscription } from 'rxjs';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  private change = new Subject<string>();
-  private changeSubscription: Subscription;
+  private valueChangesSubscription: Subscription;
 
-  @Output() public modelChangeEvent = new EventEmitter<string>();
-
-  public query: string;
+  @Output() public valueChanges = new EventEmitter<string>();
+  public searchForm = new FormGroup({
+    query: new FormControl(''),
+  });
 
   constructor() {}
 
   ngOnInit(): void {
-    this.changeSubscription = this.change
-      .pipe(debounceTime(500))
+    this.valueChangesSubscription = this.searchForm.controls.query.valueChanges
+      .pipe(
+        startWith(''),
+        map((value) => value!.trim()),
+        debounceTime(500)
+      )
       .subscribe((value) => {
-        this.modelChangeEvent.emit(value);
+        this.valueChanges.emit(value);
       });
   }
 
   ngOnDestroy(): void {
-    this.changeSubscription.unsubscribe();
-  }
-
-  public onModelChange(value: string): void {
-    this.change.next(value);
+    this.valueChangesSubscription.unsubscribe();
   }
 }

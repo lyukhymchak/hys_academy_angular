@@ -2,7 +2,7 @@
   <header>
     <h1>Users</h1>
     <div class="searchbar">
-      <app-search (modelChangeEvent)="search($event)"></app-search>
+      <app-search (valueChanges)="search($event)"></app-search>
       <app-filter
         [options]="filterOptions"
         (filter)="filterByCreatedDate($event)"
