@@ -1,29 +1,25 @@
-<form (submit)="handleSubmit(filterCondition)">
-  <select
-    [(ngModel)]="filterCondition.selectedOptionValue"
-    name="select"
-    class="select"
-  >
+<form [formGroup]="filterForm" (submit)="handleSubmit()">
+  <select formControlName="select" name="select" class="select">
     <option *ngFor="let option of options" [value]="option">
       {{ option }}
     </option>
   </select>
   <input
-    type="{{ filterType }}"
-    [(ngModel)]="filterCondition.inputValue"
+    *ngIf="filterType === filterProductOption"
+    type="number"
+    formControlName="input"
     name="input"
-    class="input input-{{ filterType }}"
-    *ngIf="filterType === 'date'"
-    #inputDate
+    class="input input-number"
+    [value]="filterForm!.get('input')?.value"
   />
   <input
-    type="{{ filterType }}"
-    [(ngModel)]="filterCondition.inputValue"
+    *ngIf="filterType === filterUserOption"
+    type="date"
+    formControlName="input"
     name="input"
-    class="input input-{{ filterType }}"
-    *ngIf="filterType === 'number'"
+    class="input input-date"
     min="0"
-    #inputNumber
+    [value]="filterForm!.get('input')?.value"
   />
   <button class="btn" type="submit">Filter</button>
 </form>

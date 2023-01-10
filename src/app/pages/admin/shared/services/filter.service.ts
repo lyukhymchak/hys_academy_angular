@@ -40,18 +40,16 @@ export class FilterService {
     switch (filterCondition.selectedOptionValue) {
       case FilterUserOption.MoreThan:
         return users.filter(
-          (user) =>
-            user.created.getTime() > filterCondition.inputValue.getTime()
+          (user) => user.created.getDay() > filterCondition.inputValue.getDay()
         );
       case FilterUserOption.LessThan:
         return users.filter(
-          (user) =>
-            user.created.getTime() < filterCondition.inputValue.getTime()
+          (user) => user.created.getDay() < filterCondition.inputValue.getDay()
         );
       case FilterUserOption.Equal:
         return users.filter(
           (user) =>
-            user.created.getTime() === filterCondition.inputValue.getTime()
+            user.created.getDay() === filterCondition.inputValue.getDay()
         );
       default:
         return [];

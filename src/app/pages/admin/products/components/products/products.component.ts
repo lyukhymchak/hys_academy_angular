@@ -21,8 +21,7 @@ export class ProductsComponent implements OnInit {
   public products: Product[] = [];
   public filteredProducts: Product[] = [];
 
-  public filterOptions = ['Price more than', 'Price less than', 'Equal'];
-  public filterType = 'number';
+  public filterType = FilterProductOption;
 
   public loading$ = new BehaviorSubject<boolean>(true);
 

@@ -4,7 +4,6 @@
     <div class="searchbar">
       <app-search (valueChanges)="search($event)"></app-search>
       <app-filter
-        [options]="filterOptions"
         (filter)="filterByPrice($event)"
         [filterType]="filterType"
       ></app-filter>

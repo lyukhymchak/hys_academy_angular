@@ -20,8 +20,8 @@ import { FilterUserOption } from '../../../shared/enums/filter-user-option.enum'
 export class UsersComponent implements OnInit {
   public users: User[];
   public filteredUsers: User[] = [];
-  public filterOptions = ['More than', 'Less than', 'Equal'];
-  public filterType = 'date';
+
+  public filterType = FilterUserOption;
 
   public loading$ = new BehaviorSubject<boolean>(true);
 

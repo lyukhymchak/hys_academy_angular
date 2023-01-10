@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FilterProductOption } from '../../enums/filter-product-option.enum';
+import { FilterUserOption } from '../../enums/filter-user-option.enum';
 import FilterCondition from '../../interfaces/filter-condition.model';
 
 @Component({
@@ -7,40 +10,46 @@ import FilterCondition from '../../interfaces/filter-condition.model';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  @Input() public options: string[];
-  @Input() public filterType: string;
+  public options: string[];
+  @Input() public filterType: any;
   @Output() public filter = new EventEmitter<FilterCondition<any, any>>();
 
   public filterCondition: FilterCondition<any, any>;
 
+  public filterUserOption = FilterUserOption;
+  public filterProductOption = FilterProductOption;
+
+  filterForm: FormGroup;
+
   constructor() {}
 
   ngOnInit(): void {
-    if (this.filterType === 'date') {
-      this.filterCondition = {
-        selectedOptionValue: this.options[0],
-        inputValue: new Date(Date.now()),
-      };
-    }
+    this.options = Object.values(this.filterType);
 
-    if (this.filterType === 'number') {
-      this.filterCondition = {
-        selectedOptionValue: this.options[0],
-        inputValue: 5,
-      };
-    }
+    this.filterForm = new FormGroup({
+      select: new FormControl(this.options[0], [Validators.required]),
+      input: new FormControl(
+        this.filterType === FilterUserOption ? new Date(Date.now()) : 0,
+        [Validators.required]
+      ),
+    });
   }
 
-  handleSubmit(filterCondition: FilterCondition<any, any>): void {
-    if (this.filterType === 'date') {
-      this.filter.emit({
-        selectedOptionValue: filterCondition.selectedOptionValue,
-        inputValue: new Date(filterCondition.inputValue),
-      });
-    }
+  handleSubmit() {
+    if (this.filterForm.valid) {
+      if (this.filterType === FilterUserOption) {
+        this.filter.emit({
+          selectedOptionValue: this.filterForm!.get('select')?.value,
+          inputValue: new Date(this.filterForm!.get('input')?.value),
+        });
+      }
 
-    if (this.filterType === 'number') {
-      this.filter.emit(filterCondition as FilterCondition<any, number>);
+      if (this.filterType === FilterProductOption) {
+        this.filter.emit({
+          selectedOptionValue: this.filterForm!.get('select')?.value,
+          inputValue: this.filterForm!.get('input')?.value,
+        });
+      }
     }
   }
 }
