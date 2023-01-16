@@ -1,0 +1,17 @@
+$text-color: rgb(38, 27, 50);
+$bg-color: rgb(229, 234, 245);
+$bg-header-color: linear-gradient(
+  0deg,
+  rgba(143, 103, 227, 0.9),
+  rgba(81, 40, 131, 0.9)
+);
+$header-text-color: $bg-color;
+$bg-card-color: linear-gradient(
+  0deg,
+  rgba(143, 103, 227, 0.5),
+  rgba(81, 40, 131, 0.5)
+);
+$btn-dark-color: rgb(143, 103, 227);
+$btn-dark-text-color: $bg-color;
+$btn-light-text-color: rgb(51, 37, 66);
+$btn-light-color: $bg-color;
